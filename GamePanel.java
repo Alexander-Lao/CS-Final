@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   public GamePanel(){
 
     maps();
-    maps = new Maps();
+    // maps = new Maps();
 
     this.setFocusable(true); 
     this.addKeyListener(this); 
@@ -56,9 +56,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
     else if(screen == 1){
       game.draw(g);
     }
-
-    
-    
   }
   
 
@@ -118,33 +115,27 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
   private void displayMap(Graphics g){
     if (screen >= 0){
-      for (int i = 0; i < grid[screen].length; i++){
-        for(int j = 0; j < grid[screen][0].length; j++){
+      for (int i = 0; i < grid[screen][0].length; i++){
+        for(int j = 0; j < grid[screen].length; j++){
 
           int pos= grid[screen][j][i];
 
-          switch (pos){
-            
-              case 0:
-                g.setColor(java.awt.Color.black);
-                g.fillRect(i*50-(int)(time), j*50, 50, 50);
-                break;
-              case 1:
-                g.setColor(java.awt.Color.yellow);
-                g.fillRect(i*50-(int)(time), j*50, 50, 50);
-                break;
-              case 2:  
-                g.setColor(java.awt.Color.red);
-                g.fillRect(i*50-(int)(time), j*50, 50, 50);
-                break;
-              case 3:  
-                g.setColor(java.awt.Color.blue);
-                g.fillRect(i*50-(int)(time), j*50, 50, 50);
-                break;  
-              case 4:
-                //White
-                  break;
+          if(pos == 0){
+            g.setColor(java.awt.Color.black);
+            g.fillRect(i*50-(int)(time), j*50, 50, 50);
           }
+          else if(pos == 1){
+            g.setColor(java.awt.Color.yellow);
+            g.fillRect(i*50-(int)(time), j*50, 50, 50);
+          }
+          else if(pos == 2){
+            g.setColor(java.awt.Color.red);
+            g.fillRect(i*50-(int)(time), j*50, 50, 50);
+          }
+          else if(pos == 3){
+            g.setColor(java.awt.Color.blue);
+            g.fillRect(i*50-(int)(time), j*50, 50, 50);
+          } 
         }
       }
     }
@@ -152,10 +143,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
   private void maps(){
 
-    int[][] grid0 ={{1,1,1,1,1,1,1,1,1,1},
+    int[][] grid0 ={{1,1,1,1,1,1,1,1,1,0},
                     {1,0,0,0,0,0,0,0,0,1},
-                    {1,0,0,0,3,1,0,0,0,1},
                     {1,0,0,0,0,0,0,0,0,1},
+                    {1,0,0,0,0,0,0,0,0,1},
+                    {1,1,1,1,0,0,0,0,0,1},
                     {1,1,1,1,0,0,0,0,0,1},
                     {1,0,0,0,0,1,0,0,0,1},
                     {1,0,0,0,0,1,0,0,0,1},
