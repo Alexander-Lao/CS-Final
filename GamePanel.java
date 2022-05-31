@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
   private int screen = 0; 
   private int[] grid[][] = new int[2][][];
+  private double time = 0;
 
 
   public GamePanel(){
@@ -48,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
     displayMap(g);
 
     if(screen == 0){
-      g.fillRect(0, 0, 100, 100);
+      //g.fillRect(0, 0, 100, 100);
     }
     else if(screen == 1){
       game.draw(g);
@@ -72,6 +73,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
     while(true){
       now = System.nanoTime();
       delta = delta + (now-lastTime)/ns;
+      time += (now-lastTime)/ns;
       lastTime = now;
 
       if(delta >= 1){
@@ -123,19 +125,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
             
               case 0:
                 g.setColor(java.awt.Color.black);
-                g.fillRect(i*50, j*50, 50, 50);
+                g.fillRect(i*50-(int)(time), j*50, 50, 50);
                 break;
               case 1:
                 g.setColor(java.awt.Color.yellow);
-                g.fillRect(i*50, j*50, 50, 50);
+                g.fillRect(i*50-(int)(time), j*50, 50, 50);
                 break;
               case 2:  
                 g.setColor(java.awt.Color.red);
-                g.fillRect(i*50, j*50, 50, 50);
+                g.fillRect(i*50-(int)(time), j*50, 50, 50);
                 break;
               case 3:  
                 g.setColor(java.awt.Color.blue);
-                g.fillRect(i*50, j*50, 50, 50);
+                g.fillRect(i*50-(int)(time), j*50, 50, 50);
                 break;  
               case 4:
                 //White
