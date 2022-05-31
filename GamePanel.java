@@ -12,15 +12,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   public Image image;
   public Graphics graphics;
   public Game game;
+  public Maps maps;
+  public static int[] grid[][] = new int[2][][];
 
   private int screen = 0; 
-  private int[] grid[][] = new int[2][][];
   private double time = 0;
 
 
   public GamePanel(){
 
     maps();
+    maps = new Maps();
 
     this.setFocusable(true); 
     this.addKeyListener(this); 
