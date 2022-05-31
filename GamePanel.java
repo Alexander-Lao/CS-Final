@@ -5,8 +5,8 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Runnable, KeyListener{
 
   //dimensions of window
-  public static final int GAME_WIDTH = 250;
-  public static final int GAME_HEIGHT = 250;
+  public static final int GAME_WIDTH = 1000;
+  public static final int GAME_HEIGHT = 800;
 
   public Thread gameThread;
   public Image image;
@@ -14,9 +14,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   public Game game;
 
   private int screen = 0; 
+  private int[] grid[][] = new int[2][][];
 
 
   public GamePanel(){
+
+    maps();
+
     this.setFocusable(true); 
     this.addKeyListener(this); 
     
@@ -41,12 +45,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   }
 
   public void draw(Graphics g){
+    displayMap(g);
+
     if(screen == 0){
       g.fillRect(0, 0, 100, 100);
     }
     else if(screen == 1){
       game.draw(g);
     }
+
+    
     
   }
   
@@ -103,4 +111,68 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   public void keyTyped(KeyEvent e){
 
   }
+
+  private void displayMap(Graphics g){
+    if (screen >= 0){
+      for (int i = 0; i < grid[screen].length; i++){
+        for(int j = 0; j < grid[screen][0].length; j++){
+
+          int pos= grid[screen][j][i];
+
+          switch (pos){
+            
+              case 0:
+                g.setColor(java.awt.Color.black);
+                g.fillRect(i*50, j*50, 50, 50);
+                break;
+              case 1:
+                g.setColor(java.awt.Color.yellow);
+                g.fillRect(i*50, j*50, 50, 50);
+                break;
+              case 2:  
+                g.setColor(java.awt.Color.red);
+                g.fillRect(i*50, j*50, 50, 50);
+                break;
+              case 3:  
+                g.setColor(java.awt.Color.blue);
+                g.fillRect(i*50, j*50, 50, 50);
+                break;  
+              case 4:
+                //White
+                  break;
+          }
+        }
+      }
+    }
+  }
+
+  private void maps(){
+
+    int[][] grid0 ={{1,1,1,1,1,1,1,1,1,1},
+                    {1,0,0,0,0,0,0,0,0,1},
+                    {1,0,0,0,3,1,0,0,0,1},
+                    {1,0,0,0,0,0,0,0,0,1},
+                    {1,1,1,1,0,0,0,0,0,1},
+                    {1,0,0,0,0,1,0,0,0,1},
+                    {1,0,0,0,0,1,0,0,0,1},
+                    {1,0,0,0,0,0,0,0,0,1},
+                    {1,4,0,0,0,0,0,0,0,1},
+                    {1,1,1,1,1,1,1,1,1,1}};
+
+
+    int[][] grid1 ={{1,1,1,1,1,1,1,1,1,1},
+                    {1,0,2,0,0,0,0,1,0,1},
+                    {1,0,0,0,0,0,0,0,0,1},
+                    {1,0,0,0,3,0,2,0,0,1},
+                    {1,1,1,0,0,0,1,0,1,1},
+                    {1,0,0,0,0,0,1,0,0,1},
+                    {1,0,0,0,0,0,1,0,0,1},
+                    {1,0,0,0,0,1,1,0,0,1},
+                    {1,4,0,0,0,0,0,0,0,1},
+                    {1,1,1,1,1,1,1,1,1,1}};
+
+    grid[0] = grid0;
+    grid[1] = grid1;
+  }
+
 }
