@@ -11,17 +11,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   public Thread gameThread;
   public Image image;
   public Graphics graphics;
-  public Game game;
+  // public Game game;
   public Maps maps;
+  public Menu menu;
   public static int[] grid[][] = new int[2][100][500];
 
-  private int screen = 0; 
-  private double time = 0;
+  public static int screen = 0; 
+  public static double time = 0;
 
 
   public GamePanel(){
 
     maps = new Maps();
+    menu = new Menu();
 
     this.setFocusable(true); 
     this.addKeyListener(this); 
@@ -47,13 +49,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   }
 
   public void draw(Graphics g){
-    displayMap(g);
-
+    
     if(screen == 0){
-      //g.fillRect(0, 0, 100, 100);
+      menu.draw(g);
     }
-    else if(screen == 1){
-      game.draw(g);
+    else if(screen > 0){
+      displayMap(g);
     }
   }
   
@@ -79,8 +80,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
           
         }
         else if(screen == 1){
-          game.move();
-          game.checkCollision();
+
         }
 
         repaint();
@@ -94,17 +94,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
       
     }
     else if(screen == 1){
-      game.keyPressed(e);
+
     }
   }
 
   public void keyReleased(KeyEvent e){
     if(screen == 0){
-      game = new Game();
-      screen = 1;
+      menu.keyReleased(e);
     }
     else if(screen == 1){
-      game.keyReleased(e);
+      screen(2);
     }
   }
 
@@ -113,30 +112,33 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   }
 
   private void displayMap(Graphics g){
-    if (screen >= 0){
-      for (int i = 0; i < grid[screen][0].length; i++){
-        for(int j = 0; j < grid[screen].length; j++){
+    for (int i = 0; i < grid[screen-1][0].length; i++){
+      for(int j = 0; j < grid[screen-1].length; j++){
 
-          int pos= grid[screen][j][i];
+        int pos= grid[screen-1][j][i];
 
-          if(pos == 0){
-            g.setColor(java.awt.Color.black);
-            g.fillRect(i*50-(int)(time), j*50, 50, 50);
-          }
-          else if(pos == 1){
-            g.setColor(java.awt.Color.yellow);
-            g.fillRect(i*50-(int)(time), j*50, 50, 50);
-          }
-          else if(pos == 2){
-            g.setColor(java.awt.Color.red);
-            g.fillRect(i*50-(int)(time), j*50, 50, 50);
-          }
-          else if(pos == 3){
-            g.setColor(java.awt.Color.blue);
-            g.fillRect(i*50-(int)(time), j*50, 50, 50);
-          } 
+        if(pos == 0){
+          g.setColor(java.awt.Color.black);
+          g.fillRect(i*50-(int)(time), j*50, 50, 50);
         }
+        else if(pos == 1){
+          g.setColor(java.awt.Color.yellow);
+          g.fillRect(i*50-(int)(time), j*50, 50, 50);
+        }
+        else if(pos == 2){
+          g.setColor(java.awt.Color.red);
+          g.fillRect(i*50-(int)(time), j*50, 50, 50);
+        }
+        else if(pos == 3){
+          g.setColor(java.awt.Color.blue);
+          g.fillRect(i*50-(int)(time), j*50, 50, 50);
+        } 
       }
-    }
+    }    
+  }
+
+  public static void screen(int s){
+    screen = s;
+    time = 0;
   }
 }
