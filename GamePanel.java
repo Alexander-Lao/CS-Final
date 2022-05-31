@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   public Graphics graphics;
   public Game game;
   public Maps maps;
-  public static int[] grid[][] = new int[2][][];
+  public static int[] grid[][] = new int[2][100][500];
 
   private int screen = 0; 
   private double time = 0;
@@ -21,8 +21,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
   public GamePanel(){
 
-    maps();
-    // maps = new Maps();
+    //maps();
+    maps = new Maps();
 
     this.setFocusable(true); 
     this.addKeyListener(this); 

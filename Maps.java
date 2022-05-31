@@ -5,33 +5,28 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class Maps {
     public Maps(){
         int mapNumber = 0;
-
         try {
             File myObj = new File("Maps.txt");
             Scanner myReader = new Scanner(myObj);
-
-            int width = Integer.parseInt(myReader.next());
-            int height = Integer.parseInt(myReader.next());
-            myReader.nextLine();
-            
-            int[][] tempMap = new int[height][width];
-
             while (myReader.hasNextLine()) {
-                for(int i = 0; i < height; i++){
-                    String data = myReader.nextLine();
-
-                    for(int j = 0; j < width; j++){
-                        tempMap[i][j] = Integer.parseInt(data.charAt(j) +"");
+                int rows = Integer.parseInt(myReader.next());
+                int cols = Integer.parseInt(myReader.next());
+                myReader.nextLine();
+                for(int i = 0; i < rows; i++){
+                    String data=myReader.nextLine();
+                    for(int j=0; j<cols; j++) {
+                        GamePanel.grid[mapNumber][i][j]=Integer.parseInt(data.charAt(j)+"");
                     }
+                    System.out.println(i);
                 }
-                    GamePanel.grid[mapNumber] = tempMap;
-                    mapNumber++;
-                    myReader.nextLine();
+                mapNumber++;
+                System.out.println(mapNumber);
             }
             myReader.close();
-          } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
-          }
+        }
     }
 }
