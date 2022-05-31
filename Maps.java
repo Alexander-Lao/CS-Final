@@ -17,10 +17,8 @@ public class Maps {
                     for(int j=0; j<cols; j++) {
                         GamePanel.grid[mapNumber][i][j]=Integer.parseInt(data.charAt(j)+"");
                     }
-                    System.out.println(i);
                 }
                 mapNumber++;
-                System.out.println(mapNumber);
             }
             myReader.close();
         }
