@@ -103,7 +103,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
       menu.keyReleased(e);
     }
     else if(screen == 1){
-      screen(2);
+      if(e.getKeyChar() == '1'){
+        screen(2);
+      }
+      
     }
   }
 
@@ -112,27 +115,31 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
   }
 
   private void displayMap(Graphics g){
+
+    g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
+
     for (int i = 0; i < grid[screen-1][0].length; i++){
       for(int j = 0; j < grid[screen-1].length; j++){
 
         int pos= grid[screen-1][j][i];
 
-        if(pos == 0){
-          g.setColor(java.awt.Color.black);
-          g.fillRect(i*50-(int)(time), j*50, 50, 50);
-        }
-        else if(pos == 1){
+        if(pos == 1){
           g.setColor(java.awt.Color.yellow);
-          g.fillRect(i*50-(int)(time), j*50, 50, 50);
+
         }
         else if(pos == 2){
           g.setColor(java.awt.Color.red);
-          g.fillRect(i*50-(int)(time), j*50, 50, 50);
         }
         else if(pos == 3){
           g.setColor(java.awt.Color.blue);
-          g.fillRect(i*50-(int)(time), j*50, 50, 50);
         } 
+        else if(pos == 4){
+          g.setColor(java.awt.Color.black);
+        }
+
+        if(pos != 0){
+          g.fillRect(i*50-(int)(time), j*50, 50, 50);
+        }
       }
     }    
   }

@@ -6,10 +6,15 @@ Runs the constructor in GamePanel class
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class GameFrame extends JFrame{
 
   GamePanel panel;
+  private static String[] images = {"Menu picture.png", "Menu picture.png"};
+  public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
   public GameFrame(){
     panel = new GamePanel(); //run GamePanel constructor
@@ -21,6 +26,15 @@ public class GameFrame extends JFrame{
     this.pack();//makes components fit in window - don't need to set JFrame size, as it will adjust accordingly
     this.setVisible(true); //makes window visible to user
     this.setLocationRelativeTo(null);//set window in middle of screen
+
+    for(int i = 0; i < images.length; i++){
+      try {
+        backgroundImage[i] = resize(ImageIO.read(new File(images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+      } catch (IOException e) {
+        
+      }
+    }
+    
   }
 
   public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
