@@ -12,6 +12,7 @@ public class Maps {
             File myObj = new File("Maps.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
+                mapNumber++;
                 int rows = Integer.parseInt(myReader.next());
                 int cols = Integer.parseInt(myReader.next());
                 myReader.nextLine();
@@ -21,7 +22,6 @@ public class Maps {
                         GamePanel.grid[mapNumber][i][j] = Integer.parseInt(data.charAt(j) + "");
                     }
                 }
-                mapNumber++;
             }
             myReader.close();
         } catch (FileNotFoundException e) {

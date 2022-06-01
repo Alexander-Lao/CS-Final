@@ -11,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public Maps maps;
     public Menu menu;
     public Game game;
-    public static int[] grid[][] = new int[2][100][500];
+    public static int[] grid[][] = new int[3][100][500];
     public static int screen = 0;
     public static double time = 0;
 
@@ -60,12 +60,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             time += (now - lastTime) / ns;
             lastTime = now;
             if (delta >= 1) {
-                if (screen == 0) {
+                if (screen == 0) { //menu
                     //
                 }
-                else if (screen > 0) {
+                else if (screen > 0) { //level
                     game.move();
                     game.checkCollision();
+                }
+                else {
+                    //TODO
                 }
                 repaint();
                 delta--;
@@ -90,32 +93,31 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
+    //here to be overriden
     public void keyTyped(KeyEvent e) {
-
+        //
     }
 
     private void displayMap(Graphics g) {
-
         // g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
 
-        for (int i = 0; i < grid[screen - 1][0].length; i++) {
-            for (int j = 0; j < grid[screen - 1].length; j++) {
-
-                int pos = grid[screen - 1][j][i];
-
+        for (int i = 0; i < grid[screen].length; i++) {
+            for (int j = 0; j < grid[screen][0].length; j++) {
+                int pos = grid[screen][i][j];
                 if (pos == 1) {
                     g.setColor(java.awt.Color.yellow);
-
-                } else if (pos == 2) {
+                }
+                else if (pos == 2) {
                     g.setColor(java.awt.Color.red);
-                } else if (pos == 3) {
+                }
+                else if (pos == 3) {
                     g.setColor(java.awt.Color.blue);
-                } else if (pos == 4) {
+                }
+                else if (pos == 4) {
                     g.setColor(java.awt.Color.black);
                 }
-
                 if (pos != 0) {
-                    g.fillRect(i * Maps.blockWidth - (int) (time), j * Maps.blockHeight, Maps.blockWidth, Maps.blockHeight);
+                    g.fillRect(j * Maps.blockHeight - (int) (time), i * Maps.blockWidth, Maps.blockWidth, Maps.blockHeight);
                 }
             }
         }
