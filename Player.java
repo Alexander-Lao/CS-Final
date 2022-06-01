@@ -10,7 +10,7 @@ public class Player extends Rectangle{
     private boolean keyIsPressed;
 
     public Player(){
-        super(100, 100, 50, 50);
+        super(100, 1000, 50, 50);
         velocity = 10;
         blockAbove = false;
         blockBelow = false;
@@ -40,15 +40,26 @@ public class Player extends Rectangle{
 
     public void blockCollision(){
         //Check block above
-        if(GamePanel.grid[GamePanel.screen-1][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
-        || GamePanel.grid[GamePanel.screen-1][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
+        if(GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
             //Set player to proper Y position
-            y = (y+49) - (y+49)%50;
+            y = (y+49) - (y+49)%Maps.blockHeight;
             blockAbove = true;
         }
         else{
             blockAbove = false;
         }
+/*
+        //Check block below
+        if(GamePanel.grid[GamePanel.screen][(int)(y-1 + Maps.blockHeight*2)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y-1 + Maps.blockHeight*2)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
+            //Set player to proper Y position
+            // y = (y-1) - (y-1)%Maps.blockHeight;
+            // blockBelow = true;
+        }
+        else{
+            blockBelow = false;
+        }*/
     }
 
     public void move(){
