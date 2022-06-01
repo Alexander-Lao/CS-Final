@@ -40,10 +40,10 @@ public class Player extends Rectangle{
 
     public void blockCollision(){
         //Check block above
-        if(GamePanel.grid[GamePanel.screen-1][(int)y/50][(int)(x + (int)GamePanel.time)/50] > 0
-        || GamePanel.grid[GamePanel.screen-1][(int)y/50][(int)(x + (int)GamePanel.time)/50 + 1] > 0){
+        if(GamePanel.grid[GamePanel.screen-1][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
+        || GamePanel.grid[GamePanel.screen-1][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
             //Set player to proper Y position
-            y = (y+49) - (y+49)%50 - 1;
+            y = (y+49) - (y+49)%50;
             blockAbove = true;
         }
         else{
