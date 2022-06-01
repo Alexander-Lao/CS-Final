@@ -51,14 +51,21 @@ public class Player extends Rectangle{
         }
 
         //Check block below
-        if(GamePanel.grid[GamePanel.screen][(int)(y + 1 + Maps.blockHeight)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y + 1 + Maps.blockHeight)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
+        if(GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockHeight)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockHeight)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
             //Set player to proper Y position
             y = (y+49) - (y+49)%Maps.blockHeight;
             blockBelow = true;
         }
         else{
             blockBelow = false;
+        }
+
+        //Check block infront
+        if(GamePanel.grid[GamePanel.screen][(int)(y)/Maps.blockHeight][(int)(x + Maps.blockWidth + (int)GamePanel.time)/Maps.blockWidth] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y - 1 + Maps.blockHeight)/Maps.blockHeight][(int)(x + Maps.blockWidth + (int)GamePanel.time)/Maps.blockWidth] > 0){
+            // GamePanel.screen(0);
+            GamePanel.time = 0;
         }
     }
 
