@@ -9,10 +9,10 @@ public class Game extends JPanel implements KeyListener {
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
-    public PlayerBall ball;
+    public Player player;
 
     public Game() {
-        ball = new PlayerBall(GamePanel.GAME_WIDTH / 2, GamePanel.GAME_HEIGHT / 2);
+        player = new Player();
     }
 
     public void paint(Graphics g) {
@@ -23,34 +23,36 @@ public class Game extends JPanel implements KeyListener {
     }
 
     public void draw(Graphics g) {
-        ball.draw(g);
+        player.draw(g);
     }
 
     public void move() {
-        ball.move();
+        player.move();
     }
 
     public void checkCollision() {
-        if (ball.y <= 0) {
-            ball.y = 0;
+        player.blockCollision();
+
+        //Temporary code to keep player on the map. Falling off the map should "kill" the player
+        if(player.y < 0){
+            player.y = 0;
+            player.blockAbove = true;
         }
-        if (ball.y >= GamePanel.GAME_HEIGHT - PlayerBall.BALL_DIAMETER) {
-            ball.y = GamePanel.GAME_HEIGHT - PlayerBall.BALL_DIAMETER;
-        }
-        if (ball.x <= 0) {
-            ball.x = 0;
-        }
-        if (ball.x + PlayerBall.BALL_DIAMETER >= GamePanel.GAME_WIDTH) {
-            ball.x = GamePanel.GAME_WIDTH - PlayerBall.BALL_DIAMETER;
+        if(player.y + player.height > GamePanel.GAME_HEIGHT){
+            player.y = GamePanel.GAME_HEIGHT - player.height;
+            player.blockBelow = true;
         }
     }
 
     public void keyPressed(KeyEvent e) {
-        ball.keyPressed(e);
+        player.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {
-        ball.keyReleased(e);
+        player.keyReleased(e);
+        if (e.getKeyChar() == '1') {
+            GamePanel.screen(2);
+      }
     }
     
     public void keyTyped(KeyEvent e) {

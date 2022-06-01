@@ -10,6 +10,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public Graphics graphics;
     public Maps maps;
     public Menu menu;
+    public Game game;
     public static int[] grid[][] = new int[2][100][500];
     public static int screen = 0;
     public static double time = 0;
@@ -17,6 +18,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public GamePanel() {
         maps = new Maps();
         menu = new Menu();
+        game = new Game();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
@@ -42,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         else if (screen > 0) {
             displayMap(g);
+            game.draw(g);
         }
     }
 
@@ -60,8 +63,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 if (screen == 0) {
                     //
                 }
-                else if (screen == 1) {
-                    //
+                else if (screen > 0) {
+                    game.move();
+                    game.checkCollision();
                 }
                 repaint();
                 delta--;
@@ -71,21 +75,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void keyPressed(KeyEvent e) {
         if (screen == 0) {
-            //
+            
         }
-        else if (screen == 1) {
-
+        else if (screen > 0) {
+            game.keyPressed(e);
         }
     }
 
     public void keyReleased(KeyEvent e) {
         if (screen == 0) {
             menu.keyReleased(e);
-        } else if (screen == 1) {
-            if (e.getKeyChar() == '1') {
-                screen(2);
-            }
-
+        } else if (screen > 0) {
+            game.keyReleased(e);
         }
     }
 
@@ -95,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private void displayMap(Graphics g) {
 
-        g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
+        // g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
 
         for (int i = 0; i < grid[screen - 1][0].length; i++) {
             for (int j = 0; j < grid[screen - 1].length; j++) {
@@ -114,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 }
 
                 if (pos != 0) {
-                    g.fillRect(i * 50 - (int) (time), j * 50, 50, 50);
+                    g.fillRect(i * Maps.blockWidth - (int) (time), j * Maps.blockHeight, Maps.blockWidth, Maps.blockHeight);
                 }
             }
         }
