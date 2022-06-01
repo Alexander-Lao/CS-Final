@@ -31,10 +31,9 @@ public class GameFrame extends JFrame{
       try {
         backgroundImage[i] = resize(ImageIO.read(new File(images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
       } catch (IOException e) {
-        
+
       }
     }
-    
   }
 
   public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
