@@ -18,7 +18,14 @@ public class Maps {
                 for (int i = 0; i < rows; i++) {
                     String data = myReader.nextLine();
                     for (int j = 0; j < cols; j++) {
-                        GamePanel.grid[mapNumber][i][j] = Integer.parseInt(data.charAt(j) + "");
+                        try {
+                            //For numbers 0 - 9
+                            GamePanel.grid[mapNumber][i][j] = Integer.parseInt(data.charAt(j) + "");
+                        } catch (Exception e) {
+                            //for converting letters to numbers, starting with a = 10
+                            GamePanel.grid[mapNumber][i][j] = data.charAt(j) - 'a' + 10;
+                        }
+                        
                     }
                 }
             }
