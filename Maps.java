@@ -3,8 +3,7 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Maps {
-    public static int blockWidth = 50;
-    public static int blockHeight = 50;
+    public static final int blockSize = 50;
 
     public Maps() {
         int mapNumber = 0;

@@ -117,7 +117,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     g.setColor(java.awt.Color.black);
                 }
                 if (pos != 0) {
-                    g.fillRect(j * Maps.blockHeight - (int) (time), i * Maps.blockWidth, Maps.blockWidth, Maps.blockHeight);
+                    g.fillRect(j * Maps.blockSize - (int) (time), i * Maps.blockSize, Maps.blockSize, Maps.blockSize);
                 }
             }
         }

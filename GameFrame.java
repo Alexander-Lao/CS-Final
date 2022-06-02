@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 public class GameFrame extends JFrame{
 
   GamePanel panel;
-  private static String[] images = {"Menu picture.png", "Menu picture.png"};
+  private static String[] images = {"menuPicture.png"};
   public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
   public GameFrame(){
@@ -29,7 +29,7 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < images.length; i++){
       try {
-        backgroundImage[i] = resize(ImageIO.read(new File(images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+        backgroundImage[i] = resize(ImageIO.read(new File("assets/"+images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
       } catch (IOException e) {
 
       }
