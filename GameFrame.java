@@ -13,8 +13,9 @@ import javax.imageio.ImageIO;
 public class GameFrame extends JFrame{
 
   GamePanel panel;
+
   //Background Images
-  private static String[] images = {"Menu picture.png", "Menu picture.png"};
+  private static String[] images = {"menuPicture.png"};
   public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
   //Sprites
@@ -39,7 +40,7 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < images.length; i++){
       try {
-        backgroundImage[i] = ImageIO.read(new File(images[i]));    
+        backgroundImage[i] = resize(ImageIO.read(new File("assets/"+images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);   
       } catch (IOException e) {
 
       }
@@ -47,7 +48,7 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < images.length; i++){
       try {
-        sprites[i] = resize(ImageIO.read(new File(sprite[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+        sprites[i] = resize(ImageIO.read(new File("assets/"+sprite[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
       } catch (IOException e) {
 
       }
@@ -55,7 +56,8 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < terrain.length; i++){
       try {
-        blocks[i] = resize(ImageIO.read(new File(terrain[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+        blocks[i] = resize(ImageIO.read(new File("assets/"+terrain[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+
       } catch (IOException e) {
 
       }

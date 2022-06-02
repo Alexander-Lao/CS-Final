@@ -34,14 +34,15 @@ public class Game extends JPanel implements KeyListener {
         player.blockCollision();
 
         //Temporary code to keep player on the map. Falling off the map should "kill" the player
-        if(player.y < 0){
+        //removed for now
+        /*if(player.y < 0){
             player.y = 0;
             player.blockAbove = true;
         }
         if(player.y + player.height > GamePanel.GAME_HEIGHT){
             player.y = GamePanel.GAME_HEIGHT - player.height;
             player.blockBelow = true;
-        }
+        }*/
     }
 
     public void keyPressed(KeyEvent e) {

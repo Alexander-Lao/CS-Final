@@ -1,49 +1,81 @@
 import java.awt.*;
 import java.awt.event.*;
 
-public class Player extends Rectangle{
-    
-    private int velocity;
-    public boolean blockAbove;
-    public boolean blockBelow;
-
-    private boolean keyIsPressed;
+public class Player extends Rectangle{    
+    public final int velocity = 10;
+    public boolean touchingSurface = false;
+    public boolean gravity = false;
+    private boolean keyIsPressed = false;
 
     public Player(){
-        super(100, 610, 50, 50);
-        velocity = 10;
-        blockAbove = false;
-        blockBelow = false;
-        keyIsPressed = false;
+        super(100, 700, 50, 50);
     }
 
     public void keyPressed(KeyEvent e){
-        if(e.getKeyChar() == 'q' && !keyIsPressed){
+        if (e.getKeyChar() == 'q' && !keyIsPressed && touchingSurface) {
             keyIsPressed = true;
-            if(blockAbove){
-                velocity = 10;
-                blockAbove = false;
-            }
-            else if(blockBelow){
-                velocity = -10;
-                blockBelow = false;
-            }
+            if (GamePanel.screen > 0) gravity = !gravity;
         }
     }
 
     public void keyReleased(KeyEvent e){
-        if(e.getKeyChar() == 'q'){
+        if (e.getKeyChar() == 'q') {
             keyIsPressed = false;
         }
-
     }
 
     public void blockCollision(){
         //Check block above
-        if(GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
+        //left corner (x,y)
+        //bottom right (x+blocksize)
+        int xcol,yrow;
+        int xx = (x + (int)GamePanel.time);
+        if (!gravity) { //gravity going down so check down
+            xcol = (xx)/Maps.blockSize;
+            yrow = y/Maps.blockSize + 1;
+            if (y % Maps.blockSize == 0) yrow--;
+            if (GamePanel.grid[GamePanel.screen][yrow][xcol] > 0) {
+                //collision
+                y = Maps.blockSize*(yrow - 1);
+                touchingSurface = true;
+            }
+            if ((xx % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow][xcol+1] > 0)) {
+                //collision
+                y = Maps.blockSize*(yrow - 1);
+                touchingSurface = true;
+            }
+        }
+        else { //gravity going up so check up
+            xcol = xx/Maps.blockSize;
+            yrow = y/Maps.blockSize;
+            if (GamePanel.grid[GamePanel.screen][yrow][xcol] > 0) {
+                //collision
+                y = Maps.blockSize*(yrow + 1);
+                touchingSurface = true;
+            }
+            if ((xx % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow][xcol+1] > 0)) {
+                //collision
+                y = Maps.blockSize*(yrow + 1);
+                touchingSurface = true;
+            }
+        }
+        //check right collision
+        xcol = xx/Maps.blockSize + 1;
+        yrow = y/Maps.blockSize;
+        if (xx % Maps.blockSize == 0) xcol--;
+        if (GamePanel.grid[GamePanel.screen][yrow][xcol] != 0) {
+            //collision
+            GamePanel.time = 0;
+        }
+        if ((y % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow+1][xcol] != 0)) {
+            //collision
+            GamePanel.time = 0;
+        }
+        /*
+        if(GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize + 1] > 0){
             //Set player to proper Y position
-            y = (y+49) - (y+49)%Maps.blockHeight;
+            y = (y+49) - (y+49)%Maps.blockSize;
             blockAbove = true;
         }
         else{
@@ -51,10 +83,10 @@ public class Player extends Rectangle{
         }
 
         //Check block below
-        if(GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockHeight)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockHeight)/Maps.blockHeight][(int)(x + (int)GamePanel.time)/Maps.blockWidth + 1] > 0){
+        if(GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockSize)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockSize)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize + 1] > 0){
             //Set player to proper Y position
-            y = (y+49) - (y+49)%Maps.blockHeight;
+            y = (y+49) - (y+49)%Maps.blockSize;
             blockBelow = true;
         }
         else{
@@ -62,23 +94,27 @@ public class Player extends Rectangle{
         }
 
         //Check block infront
-        if(GamePanel.grid[GamePanel.screen][(int)(y)/Maps.blockHeight][(int)(x + Maps.blockWidth + (int)GamePanel.time)/Maps.blockWidth] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y - 1 + Maps.blockHeight)/Maps.blockHeight][(int)(x + Maps.blockWidth + (int)GamePanel.time)/Maps.blockWidth] > 0){
+        if(GamePanel.grid[GamePanel.screen][(int)(y)/Maps.blockSize][(int)(x + Maps.blockSize + (int)GamePanel.time)/Maps.blockSize] > 0
+        || GamePanel.grid[GamePanel.screen][(int)(y - 1 + Maps.blockSize)/Maps.blockSize][(int)(x + Maps.blockSize + (int)GamePanel.time)/Maps.blockSize] > 0){
             // GamePanel.screen(0);
             GamePanel.time = 0;
-        }
+        }*/
     }
 
     public void move(){
-        if(!blockAbove && !blockBelow){
+        if (gravity) {
+            y-=velocity;
+        }
+        if (!gravity) {
             y+=velocity;
         }
+        touchingSurface = false;
     }
 
     public void draw(Graphics g){
         // g.setColor(Color.black);
         // g.fillRect(x, y, width, height);
-        g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockWidth, Maps.blockHeight), x, y, null);
+        g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockSize, Maps.blockSize), x, y, null);
         
     }
 }
