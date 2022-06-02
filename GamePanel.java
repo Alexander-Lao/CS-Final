@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                //
+                menu.mousePressed(e);
             }
         });
         this.setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
@@ -61,7 +61,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             lastTime = now;
             if (delta >= 1) {
                 if (screen == 0) { //menu
-                    //
+                    try {
+                        menu.mousePosition(MouseInfo.getPointerInfo().getLocation().x - getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y - getLocationOnScreen().y);
+                    } catch (Exception e) {
+
+                    }
                 }
                 else if (screen > 0) { //level
                     game.move();
