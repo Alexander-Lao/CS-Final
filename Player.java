@@ -114,7 +114,12 @@ public class Player extends Rectangle{
     public void draw(Graphics g){
         // g.setColor(Color.black);
         // g.fillRect(x, y, width, height);
-        g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockSize, Maps.blockSize), x, y, null);
+        if(!gravity){
+            g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockSize, Maps.blockSize), x, y, null);
+        }
+        else{
+            g.drawImage(GameFrame.resize(GameFrame.sprites[1], Maps.blockSize, Maps.blockSize), x, y, null);
+        }
         
     }
 }

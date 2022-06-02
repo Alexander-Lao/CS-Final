@@ -15,15 +15,15 @@ public class GameFrame extends JFrame{
   GamePanel panel;
 
   //Background Images
-  private static String[] images = {"menuPicture.png"};
+  private static String[] images = {"menuPicture.png", "blueLand.png"};
   public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
   //Sprites
-  private static String[] sprite = {"robotDrive1.png", "robotDrive2.png"};
+  private static String[] sprite = {"robotDrive1.png", "robotDrive1Flipped.png"};
   public static BufferedImage[] sprites = new BufferedImage[sprite.length];
 
   //Terrain
-  private static String[] terrain = {"robotDrive1.png", "robotDrive2.png"};
+  private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png" };
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
 
@@ -46,9 +46,9 @@ public class GameFrame extends JFrame{
       }
     }
 
-    for(int i = 0; i < images.length; i++){
+    for(int i = 0; i < sprite.length; i++){
       try {
-        sprites[i] = resize(ImageIO.read(new File("assets/"+sprite[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+        sprites[i] = ImageIO.read(new File("assets/"+sprite[i]));    
       } catch (IOException e) {
 
       }
@@ -56,7 +56,7 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < terrain.length; i++){
       try {
-        blocks[i] = resize(ImageIO.read(new File("assets/"+terrain[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+        blocks[i] = resize(ImageIO.read(new File("assets/"+terrain[i])), Maps.blockSize, Maps.blockSize);    
 
       } catch (IOException e) {
 

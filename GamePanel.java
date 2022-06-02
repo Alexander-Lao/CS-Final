@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         while (true) {
             now = System.nanoTime();
             delta = delta + (now - lastTime) / ns;
-            time += ((now - lastTime) / ns)*5;
+            time += ((now - lastTime) / ns)*3;
             lastTime = now;
             if (delta >= 1) {
                 if (screen == 0) { //menu
@@ -99,32 +99,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private void displayMap(Graphics g) {
-        // g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
+        g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
 
         for (int i = 0; i < grid[screen].length; i++) {
             for (int j = 0; j < grid[screen][0].length; j++) {
-                int pos = grid[screen][i][j];
-                if (pos == 1) {
-                    g.setColor(java.awt.Color.yellow);
-                }
-                else if (pos == 2) {
-                    g.setColor(java.awt.Color.red);
-                }
-                else if (pos == 3) {
-                    g.setColor(java.awt.Color.blue);
-                }
-                else if (pos == 4) {
-                    g.setColor(java.awt.Color.black);
-                }
+                int pos = grid[screen][i][j];                    
+
                 if (pos != 0) {
-                    g.fillRect(j * Maps.blockSize - (int) (time), i * Maps.blockSize, Maps.blockSize, Maps.blockSize);
+                    g.drawImage(GameFrame.blocks[pos-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
                 }
             }
         }
     }
 
     public static void screen(int s) {
-        screen = s;
         time = 0;
+        screen = s;
+        System.out.println(time);
     }
 }
