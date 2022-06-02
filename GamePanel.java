@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         while (true) {
             now = System.nanoTime();
             delta = delta + (now - lastTime) / ns;
-            time += ((now - lastTime) / ns)*3;
+            time += ((now - lastTime) / ns)*5;
             lastTime = now;
             if (delta >= 1) {
                 if (screen == 0) { //menu

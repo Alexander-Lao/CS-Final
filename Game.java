@@ -53,7 +53,10 @@ public class Game extends JPanel implements KeyListener {
         player.keyReleased(e);
         if (e.getKeyChar() == '1') {
             GamePanel.screen(2);
-      }
+        }
+        if (e.getKeyChar() == 'r') {
+            GamePanel.screen(GamePanel.screen);
+        }
     }
     
     public void keyTyped(KeyEvent e) {

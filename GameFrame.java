@@ -15,7 +15,7 @@ public class GameFrame extends JFrame{
   GamePanel panel;
 
   //Background Images
-  private static String[] images = {"menuPicture.png", "blueLand.png"};
+  private static String[] images = {"blueLand.png", "blueLand.png"};
   public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
   //Sprites
