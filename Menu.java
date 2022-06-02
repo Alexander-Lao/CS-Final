@@ -29,17 +29,17 @@ public class Menu extends JPanel implements KeyListener {
 
         int titleWidth = g.getFontMetrics().stringWidth(title);
         // int titleHeight = (g.getFontMetrics().getDescent() + g.getFontMetrics().getAscent());
-
         g.drawString(title, (GamePanel.GAME_WIDTH - titleWidth) / 2, (GamePanel.GAME_HEIGHT) / 4);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
         int playWidth = g.getFontMetrics().stringWidth(play);
         int howToPlayWidth = g.getFontMetrics().stringWidth(howToPlay);
         int settingsWidth = g.getFontMetrics().stringWidth(settings);
+        int height = (g.getFontMetrics().getDescent() + g.getFontMetrics().getAscent());
 
-        g.drawString(play, (GamePanel.GAME_WIDTH - playWidth) / 2, (GamePanel.GAME_HEIGHT)/2);
-        g.drawString(howToPlay, (GamePanel.GAME_WIDTH - howToPlayWidth) / 2, (GamePanel.GAME_HEIGHT)*3/4);
-        g.drawString(settings, (GamePanel.GAME_WIDTH - settingsWidth) / 2, (GamePanel.GAME_HEIGHT));
+        g.drawString(play, (GamePanel.GAME_WIDTH - playWidth) / 2, (GamePanel.GAME_HEIGHT - height)/2);
+        g.drawString(howToPlay, (GamePanel.GAME_WIDTH - howToPlayWidth) / 2, (GamePanel.GAME_HEIGHT - height)*11/16);
+        g.drawString(settings, (GamePanel.GAME_WIDTH - settingsWidth) / 2, (GamePanel.GAME_HEIGHT - height)*7/8);
     }
 
     public void keyPressed(KeyEvent e) {

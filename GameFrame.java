@@ -40,7 +40,7 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < images.length; i++){
       try {
-        backgroundImage[i] = resize(ImageIO.read(new File("assets/"+images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);   
+        backgroundImage[i] = resize(ImageIO.read(new File("assets/"+images[i])),GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);   
       } catch (IOException e) {
 
       }
