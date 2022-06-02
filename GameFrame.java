@@ -13,8 +13,18 @@ import javax.imageio.ImageIO;
 public class GameFrame extends JFrame{
 
   GamePanel panel;
+  //Background Images
   private static String[] images = {"Menu picture.png", "Menu picture.png"};
   public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
+
+  //Sprites
+  private static String[] sprite = {"robotDrive1.png", "robotDrive2.png"};
+  public static BufferedImage[] sprites = new BufferedImage[sprite.length];
+
+  //Terrain
+  private static String[] terrain = {"robotDrive1.png", "robotDrive2.png"};
+  public static BufferedImage[] blocks = new BufferedImage[terrain.length];
+
 
   public GameFrame(){
     panel = new GamePanel(); //run GamePanel constructor
@@ -29,7 +39,23 @@ public class GameFrame extends JFrame{
 
     for(int i = 0; i < images.length; i++){
       try {
-        backgroundImage[i] = resize(ImageIO.read(new File(images[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+        backgroundImage[i] = ImageIO.read(new File(images[i]));    
+      } catch (IOException e) {
+
+      }
+    }
+
+    for(int i = 0; i < images.length; i++){
+      try {
+        sprites[i] = resize(ImageIO.read(new File(sprite[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
+      } catch (IOException e) {
+
+      }
+    }
+
+    for(int i = 0; i < terrain.length; i++){
+      try {
+        blocks[i] = resize(ImageIO.read(new File(terrain[i])),GamePanel.GAME_WIDTH,GamePanel.GAME_HEIGHT);    
       } catch (IOException e) {
 
       }
