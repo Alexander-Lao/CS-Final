@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Player extends Rectangle{    
-    public final int velocity = 10;
+    public final int velocity = 1;
     public boolean touchingSurface = false;
     public boolean gravity = false;
     private boolean keyIsPressed = false;
@@ -36,13 +36,17 @@ public class Player extends Rectangle{
             if (y % Maps.blockSize == 0) yrow--;
             if (GamePanel.grid[GamePanel.screen][yrow][xcol] > 0) {
                 //collision
-                y = Maps.blockSize*(yrow - 1);
-                touchingSurface = true;
+                if (Math.abs(y - (Maps.blockSize*(yrow - 1))) < 3) {
+                    y = Maps.blockSize*(yrow - 1);
+                    touchingSurface = true;
+                }
             }
             if ((xx % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow][xcol+1] > 0)) {
                 //collision
-                y = Maps.blockSize*(yrow - 1);
-                touchingSurface = true;
+                if (Math.abs(y - (Maps.blockSize*(yrow - 1))) < 3) {
+                    y = Maps.blockSize*(yrow - 1);
+                    touchingSurface = true;
+                }
             }
         }
         else { //gravity going up so check up
@@ -50,13 +54,17 @@ public class Player extends Rectangle{
             yrow = y/Maps.blockSize;
             if (GamePanel.grid[GamePanel.screen][yrow][xcol] > 0) {
                 //collision
-                y = Maps.blockSize*(yrow + 1);
-                touchingSurface = true;
+                if (Math.abs(y - (Maps.blockSize*(yrow + 1))) < 3) {
+                    y = Maps.blockSize*(yrow + 1);
+                    touchingSurface = true;
+                }
             }
             if ((xx % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow][xcol+1] > 0)) {
                 //collision
-                y = Maps.blockSize*(yrow + 1);
-                touchingSurface = true;
+                if (Math.abs(y - (Maps.blockSize*(yrow + 1))) < 3) {
+                    y = Maps.blockSize*(yrow + 1);
+                    touchingSurface = true;
+                }
             }
         }
         //check right collision

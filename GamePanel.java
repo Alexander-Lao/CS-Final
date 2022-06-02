@@ -50,14 +50,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void run() {
         long lastTime = System.nanoTime();
-        double amountOfTicks = 60;
+        double amountOfTicks = 1000;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long now;
         while (true) {
             now = System.nanoTime();
             delta = delta + (now - lastTime) / ns;
-            time += ((now - lastTime) / ns)*5;
+            time += ((now - lastTime) / ns) / 2;
             lastTime = now;
             if (delta >= 1) {
                 if (screen == 0) { //menu
