@@ -21,10 +21,25 @@ public class Menu extends JPanel implements KeyListener {
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
         String title = "Put Cringy Title Here";
+        String play = "Play";
+        String howToPlay = "How To Play";
+        String settings = "Settings";
         g.setColor(java.awt.Color.green);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-        int width = g.getFontMetrics().stringWidth(title);
-        g.drawString(title, (GamePanel.GAME_WIDTH - width) / 2, GamePanel.GAME_HEIGHT / 2);
+
+        int titleWidth = g.getFontMetrics().stringWidth(title);
+        // int titleHeight = (g.getFontMetrics().getDescent() + g.getFontMetrics().getAscent());
+
+        g.drawString(title, (GamePanel.GAME_WIDTH - titleWidth) / 2, (GamePanel.GAME_HEIGHT) / 4);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+        int playWidth = g.getFontMetrics().stringWidth(play);
+        int howToPlayWidth = g.getFontMetrics().stringWidth(howToPlay);
+        int settingsWidth = g.getFontMetrics().stringWidth(settings);
+
+        g.drawString(play, (GamePanel.GAME_WIDTH - playWidth) / 2, (GamePanel.GAME_HEIGHT)/2);
+        g.drawString(howToPlay, (GamePanel.GAME_WIDTH - howToPlayWidth) / 2, (GamePanel.GAME_HEIGHT)*3/4);
+        g.drawString(settings, (GamePanel.GAME_WIDTH - settingsWidth) / 2, (GamePanel.GAME_HEIGHT));
     }
 
     public void keyPressed(KeyEvent e) {
