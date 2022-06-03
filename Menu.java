@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Menu extends JPanel implements KeyListener {
+public class Menu extends JPanel{
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
@@ -92,27 +92,15 @@ public class Menu extends JPanel implements KeyListener {
         g.drawString(settings, settingsX, settingsY);
     }
 
-    public void keyPressed(KeyEvent e) {
-        //
-    }
-
-    public void keyReleased(KeyEvent e) {
-        
-    }
-
-    public void keyTyped(KeyEvent e) {
-        //
-    }
-
     public void mousePressed(MouseEvent e){
         if(playHover){
             GamePanel.screen(1);
         }
         else if(howToPlayHover){
-
+            GamePanel.screen(-1);
         }
         else if(settingsHover){
-            
+            GamePanel.screen(-2);
         }
     }
 
