@@ -30,6 +30,7 @@ public class Player extends Rectangle{
         //bottom right (x+blocksize)
         int xcol,yrow;
         int xx = (x + (int)GamePanel.time);
+        System.out.println(xx+" "+y);
         if (!gravity) { //gravity going down so check down
             xcol = (xx)/Maps.blockSize;
             yrow = y/Maps.blockSize + 1;
