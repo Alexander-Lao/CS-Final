@@ -2,13 +2,42 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Menu extends JPanel implements KeyListener {
+public class Menu extends JPanel{
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
 
+    private String title;
+    private String play;
+    private String howToPlay;
+    private String settings;
+
+    private int playWidth;
+    private int howToPlayWidth;
+    private int settingsWidth;
+    private int height;
+
+    private int playX;
+    private int playY;
+    private int howToPlayX;
+    private int howToPlayY;
+    private int settingsX;
+    private int settingsY;
+
+    private boolean playHover;
+    private boolean howToPlayHover;
+    private boolean settingsHover;
+
+
     public Menu() {
-        //
+        title = "Put Cringy Title Here";
+        play = "Play";
+        howToPlay = "How To Play";
+        settings = "Settings";
+
+        playHover = false;
+        howToPlayHover = false;
+        settingsHover = false;
     }
 
     public void paint(Graphics g) {
@@ -20,37 +49,81 @@ public class Menu extends JPanel implements KeyListener {
 
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
-        String title = "Put Cringy Title Here";
-        String play = "Play";
-        String howToPlay = "How To Play";
-        String settings = "Settings";
+
         g.setColor(java.awt.Color.green);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-
-        int titleWidth = g.getFontMetrics().stringWidth(title);
-        // int titleHeight = (g.getFontMetrics().getDescent() + g.getFontMetrics().getAscent());
-        g.drawString(title, (GamePanel.GAME_WIDTH - titleWidth) / 2, (GamePanel.GAME_HEIGHT) / 4);
+        g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-        int playWidth = g.getFontMetrics().stringWidth(play);
-        int howToPlayWidth = g.getFontMetrics().stringWidth(howToPlay);
-        int settingsWidth = g.getFontMetrics().stringWidth(settings);
-        int height = (g.getFontMetrics().getDescent() + g.getFontMetrics().getAscent());
+        playWidth = g.getFontMetrics().stringWidth(play);
+        howToPlayWidth = g.getFontMetrics().stringWidth(howToPlay);
+        settingsWidth = g.getFontMetrics().stringWidth(settings);
+        height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
 
-        g.drawString(play, (GamePanel.GAME_WIDTH - playWidth) / 2, (GamePanel.GAME_HEIGHT - height)/2);
-        g.drawString(howToPlay, (GamePanel.GAME_WIDTH - howToPlayWidth) / 2, (GamePanel.GAME_HEIGHT - height)*11/16);
-        g.drawString(settings, (GamePanel.GAME_WIDTH - settingsWidth) / 2, (GamePanel.GAME_HEIGHT - height)*7/8);
+        playX = (GamePanel.GAME_WIDTH - playWidth)/2;
+        playY = (GamePanel.GAME_HEIGHT - height)/2;
+        howToPlayX = (GamePanel.GAME_WIDTH - howToPlayWidth)/2;
+        howToPlayY = (GamePanel.GAME_HEIGHT - height)*11/16;
+        settingsX = (GamePanel.GAME_WIDTH - settingsWidth) / 2;
+        settingsY = (GamePanel.GAME_HEIGHT - height)*7/8;
+
+        if(playHover){
+            g.setColor(java.awt.Color.red);
+        }
+        else{
+            g.setColor(java.awt.Color.green);
+        }
+        g.drawString(play, playX , playY);
+
+        if(howToPlayHover){
+            g.setColor(java.awt.Color.red);
+        }
+        else{
+            g.setColor(java.awt.Color.green);
+        }
+        g.drawString(howToPlay, howToPlayX , howToPlayY);
+
+        if(settingsHover){
+            g.setColor(java.awt.Color.red);
+        }
+        else{
+            g.setColor(java.awt.Color.green);
+        }
+        g.drawString(settings, settingsX, settingsY);
     }
 
-    public void keyPressed(KeyEvent e) {
-        //
+    public void mousePressed(MouseEvent e){
+        if(playHover){
+            GamePanel.screen(1);
+        }
+        else if(howToPlayHover){
+            GamePanel.screen(-1);
+        }
+        else if(settingsHover){
+            GamePanel.screen(-2);
+        }
     }
 
-    public void keyReleased(KeyEvent e) {
-        GamePanel.screen(1);
-    }
+    public void mousePosition(int x, int y){
+        if(x > playX && x < playX +playWidth && y > playY - height && y < playY){
+            playHover = true;
+        }
+        else{
+            playHover = false;
+        }
 
-    public void keyTyped(KeyEvent e) {
-        //
+        if(x > howToPlayX && x < howToPlayX +howToPlayWidth && y > howToPlayY - height && y < howToPlayY){
+            howToPlayHover = true;
+        }
+        else{
+            howToPlayHover = false;
+        }
+
+        if(x > settingsX && x < settingsX +settingsWidth && y > settingsY - height && y < settingsY){
+            settingsHover = true;
+        }
+        else{
+            settingsHover = false;
+        }
     }
 }

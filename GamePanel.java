@@ -11,6 +11,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public Maps maps;
     public Menu menu;
     public Game game;
+    public HowToPlay howToPlay;
+    public Settings settings;
     public static int[] grid[][] = new int[3][100][500];
     public static int screen = 0;
     public static double time = 0;
@@ -19,11 +21,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         maps = new Maps();
         menu = new Menu();
         game = new Game();
+        howToPlay = new HowToPlay();
+        settings = new Settings();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                //
+                if(screen == 0){
+                    menu.mousePressed(e);
+                }
+                else if(screen == -1){
+                    howToPlay.mousePressed(e);
+                }
+                else if(screen == -2){
+                    settings.mousePressed(e);
+                }
             }
         });
         this.setPreferredSize(new Dimension(GAME_WIDTH, GAME_HEIGHT));
@@ -46,6 +58,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             displayMap(g);
             game.draw(g);
         }
+        else if(screen == -1){
+            howToPlay.draw(g);
+        }
+        else if(screen == -2){
+            settings.draw(g);
+        }
     }
 
     public void run() {
@@ -54,21 +72,36 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long now;
+
+        int mouseX;
+        int mouseY;
+
         while (true) {
             now = System.nanoTime();
             delta = delta + (now - lastTime) / ns;
             time += ((now - lastTime) / ns) / 2;
             lastTime = now;
+
             if (delta >= 1) {
-                if (screen == 0) { //menu
-                    //
-                }
-                else if (screen > 0) { //level
-                    game.move();
-                    game.checkCollision();
-                }
-                else {
-                    //TODO
+                try {
+                    mouseX = MouseInfo.getPointerInfo().getLocation().x - getLocationOnScreen().x;
+                    mouseY = MouseInfo.getPointerInfo().getLocation().y - getLocationOnScreen().y;
+                    if (screen > 0) { //level
+                        game.move();
+                        game.checkCollision();
+                    }
+                    else if(screen == 0){ // menu
+                        menu.mousePosition(mouseX, mouseY);             
+                    }
+                    else if(screen == -1){ // how to play
+                        howToPlay.mousePosition(mouseX, mouseY);
+                    }
+                    else if(screen == -2){ // settings
+                        settings.mousePosition(mouseX, mouseY);
+                    }
+                        
+                } catch (Exception e) {
+
                 }
                 repaint();
                 delta--;
@@ -87,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void keyReleased(KeyEvent e) {
         if (screen == 0) {
-            menu.keyReleased(e);
+
         } else if (screen > 0) {
             game.keyReleased(e);
         }
