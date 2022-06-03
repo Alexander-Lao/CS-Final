@@ -15,7 +15,7 @@ public class GameFrame extends JFrame{
   GamePanel panel;
 
   //Background Images
-  private static String[] images = {"blueLand.png", "blueLand.png"};
+  private static String[] images = {"blueLand.png", "blueDesert.png", "blueShroom.png", "greenLand.png", "greenGrass.png", "coloredDesert.png", "coloredShroom.png"};
   public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
   //Sprites
@@ -73,6 +73,5 @@ public class GameFrame extends JFrame{
     g2d.dispose();
 
     return dimg;
-}  
-  
+  }  
 }

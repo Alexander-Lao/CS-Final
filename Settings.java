@@ -28,7 +28,7 @@ public class Settings extends JPanel{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
+        g.drawImage(GameFrame.backgroundImage[3], 0, 0, this);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
         backWidth = g.getFontMetrics().stringWidth(back);
         height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
