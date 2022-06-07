@@ -18,6 +18,9 @@ public class LevelMaker extends JPanel{
     private boolean ifNone;
     private int xMoves;
 
+    public int ticksMouseHeld;
+    private boolean mouseHeld;
+
     public int[][] map = new int[100][500];
 
     public LevelMaker() {
@@ -26,6 +29,9 @@ public class LevelMaker extends JPanel{
         mouseBlockY = 0;
         mouseBlockXWithShifts = 0;
         screenShifts = 0;
+
+        ticksMouseHeld = 0;
+        mouseHeld = false;
 
 
         /*These current positions are temporary, I did it like this because I didnt want to type each one out
@@ -117,6 +123,7 @@ public class LevelMaker extends JPanel{
     }
 
     public void mousePressed(MouseEvent e){
+        mouseHeld = true;
         ifNone = true;
         if(mouseBlockX >= GamePanel.GAME_WIDTH/Maps.blockSize - 7){
             for(int i = 0; i < pos.length; i++){
@@ -144,6 +151,20 @@ public class LevelMaker extends JPanel{
                 //TODO: handle exception
             } 
         }        
+    }
+
+    public void mouseReleased(MouseEvent e){
+        mouseHeld = false;
+        ticksMouseHeld = 0;
+    }
+
+    public void drag(){
+        if(mouseHeld){
+            if(ticksMouseHeld > 100 && mouseBlockX < GamePanel.GAME_WIDTH/Maps.blockSize - 7){
+                map[mouseBlockY][mouseBlockXWithShifts] = currentBlockNumber; 
+            }
+            ticksMouseHeld++;
+        }
     }
 
     public void mousePosition(int x, int y){
