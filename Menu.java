@@ -94,7 +94,8 @@ public class Menu extends JPanel{
 
     public void mousePressed(MouseEvent e){
         if(playHover){
-            GamePanel.screen(1);
+            // GamePanel.screen(1);
+            GamePanel.screen(-3);
         }
         else if(howToPlayHover){
             GamePanel.screen(-1);

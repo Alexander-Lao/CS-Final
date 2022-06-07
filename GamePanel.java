@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
-    public static final int GAME_WIDTH = 1000;
+    public static final int GAME_WIDTH = 1200;
     public static final int GAME_HEIGHT = 800;
     public Thread gameThread;
     public Image image;
@@ -13,9 +13,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public Game game;
     public HowToPlay howToPlay;
     public Settings settings;
+    public LevelMaker levelMaker;
     public static int[] grid[][] = new int[3][100][500];
     public static int screen = 0;
     public static double time = 0;
+
+    public static int parallaxRatio = 10;
 
     public GamePanel() {
         maps = new Maps();
@@ -23,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         game = new Game();
         howToPlay = new HowToPlay();
         settings = new Settings();
+        levelMaker = new LevelMaker();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
@@ -35,6 +39,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 }
                 else if(screen == -2){
                     settings.mousePressed(e);
+                }
+                else if(screen == -3){
+                    levelMaker.mousePressed(e);
+                }
+            }
+
+            public void mouseReleased(MouseEvent e){
+                if(screen == -3){
+                    levelMaker.mouseReleased(e);
                 }
             }
         });
@@ -63,6 +76,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         else if(screen == -2){
             settings.draw(g);
+        }
+        else if(screen == -3){
+            levelMaker.draw(g);
         }
     }
 
@@ -99,6 +115,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     else if(screen == -2){ // settings
                         settings.mousePosition(mouseX, mouseY);
                     }
+                    else if(screen == -3){ // settings
+                        levelMaker.mousePosition(mouseX, mouseY);
+                        levelMaker.drag();
+                    }
                         
                 } catch (Exception e) {
 
@@ -116,6 +136,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         else if (screen > 0) {
             game.keyPressed(e);
         }
+        else if (screen == -3) {
+            levelMaker.keyPressed(e);
+        }
     }
 
     public void keyReleased(KeyEvent e) {
@@ -132,7 +155,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private void displayMap(Graphics g) {
-        g.drawImage(GameFrame.backgroundImage[1], 0, 0, this);
+        g.drawImage(GameFrame.backgroundImage[1], (int)(-time/parallaxRatio % GAME_WIDTH), 0, GAME_WIDTH, GAME_HEIGHT, null);
+        g.drawImage(GameFrame.backgroundImage[1], (int)(-time/parallaxRatio % GAME_WIDTH) + GAME_WIDTH - 1, 0, GAME_WIDTH, GAME_HEIGHT, null);
 
         for (int i = 0; i < grid[screen].length; i++) {
             for (int j = 0; j < grid[screen][0].length; j++) {

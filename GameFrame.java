@@ -23,11 +23,12 @@ public class GameFrame extends JFrame{
   public static BufferedImage[] sprites = new BufferedImage[sprite.length];
 
   //Terrain
-  private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png" };
+  private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png", "eraser.png" };
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
 
   public GameFrame(){
+    loadImages();
     panel = new GamePanel(); //run GamePanel constructor
     this.add(panel);
     this.setTitle("GUI is cool!"); //set title for frame
@@ -38,6 +39,10 @@ public class GameFrame extends JFrame{
     this.setVisible(true); //makes window visible to user
     this.setLocationRelativeTo(null);//set window in middle of screen
 
+    
+  }
+
+  public void loadImages(){
     for(int i = 0; i < images.length; i++){
       try {
         backgroundImage[i] = resize(ImageIO.read(new File("assets/"+images[i])),GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);   

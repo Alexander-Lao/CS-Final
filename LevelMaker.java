@@ -8,8 +8,8 @@ public class LevelMaker extends JPanel{
     public Image image;
     public Graphics graphics;
 
-    private boolean[] hover = new boolean[13];
-    private int[][] pos = new int[13][2];
+    private boolean[] hover = new boolean[14];
+    private int[][] pos = new int[14][2];
     private int currentBlockNumber;
     private int mouseBlockX;
     private int mouseBlockY;
@@ -33,51 +33,52 @@ public class LevelMaker extends JPanel{
         ticksMouseHeld = 0;
         mouseHeld = false;
 
-
-        /*These current positions are temporary, I did it like this because I didnt want to type each one out
-        I plan to keep the spacing the same but change the order of how the blocks are displayed
-        Currently:
-        1 2 3
-        4 5 6
-        7 8 9
-        a b c
-        d
-        
-        Plan:
-        9 2 3
-        8 1 4
-        7 6 5
-        b c
-        a d
-        */
-
         //Row 1
-        for(int i = 0; i < 3; i++){
-            pos[i][0] = GamePanel.GAME_WIDTH - (6-i*2)*Maps.blockSize;
-            pos[i][1] = 2*Maps.blockSize;
-        }
+        pos[8][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
+        pos[8][1] = 2*Maps.blockSize;
+
+        pos[1][0] = GamePanel.GAME_WIDTH - 4*Maps.blockSize;
+        pos[1][1] = 2*Maps.blockSize;
+
+        pos[5][0] = GamePanel.GAME_WIDTH - 2*Maps.blockSize;
+        pos[5][1] = 2*Maps.blockSize;
 
         //Row 2
-        for(int i = 0; i < 3; i++){
-            pos[i+3][0] = GamePanel.GAME_WIDTH - (6-i*2)*Maps.blockSize;
-            pos[i+3][1] = 4*Maps.blockSize;
-        }
+        pos[4][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
+        pos[4][1] = 4*Maps.blockSize;
+
+        pos[0][0] = GamePanel.GAME_WIDTH - 4*Maps.blockSize;
+        pos[0][1] = 4*Maps.blockSize;
+
+        pos[2][0] = GamePanel.GAME_WIDTH - 2*Maps.blockSize;
+        pos[2][1] = 4*Maps.blockSize;
 
         //Row 3
-        for(int i = 0; i < 3; i++){
-            pos[i+6][0] = GamePanel.GAME_WIDTH - (6-i*2)*Maps.blockSize;
-            pos[i+6][1] = 6*Maps.blockSize;
-        }
+        pos[7][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
+        pos[7][1] = 6*Maps.blockSize;
+
+        pos[3][0] = GamePanel.GAME_WIDTH - 4*Maps.blockSize;
+        pos[3][1] = 6*Maps.blockSize;
+
+        pos[6][0] = GamePanel.GAME_WIDTH - 2*Maps.blockSize;
+        pos[6][1] = 6*Maps.blockSize;
 
         //Row 4
-        for(int i = 0; i < 3; i++){
-            pos[i+9][0] = GamePanel.GAME_WIDTH - (6-i*2)*Maps.blockSize;
-            pos[i+9][1] = 8*Maps.blockSize;
-        }
+        pos[10][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
+        pos[10][1] = 8*Maps.blockSize;
+
+        pos[11][0] = GamePanel.GAME_WIDTH - 4*Maps.blockSize;
+        pos[11][1] = 8*Maps.blockSize;
 
         //Row 5
-        pos[12][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
+        pos[9][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
+        pos[9][1] = 10*Maps.blockSize;
+
+        pos[12][0] = GamePanel.GAME_WIDTH - 4*Maps.blockSize;
         pos[12][1] = 10*Maps.blockSize;
+
+        pos[13][0] = GamePanel.GAME_WIDTH - 2*Maps.blockSize;
+        pos[13][1] = 10*Maps.blockSize;
     }
 
     public void paint(Graphics g) {
@@ -90,7 +91,7 @@ public class LevelMaker extends JPanel{
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
         displayMap(g);
-        //Set width (Currently every other vertical line is thicker IDK why)
+        //Set width (Currently every other vertical line is thicker IDK why. But it looks nice /shrug)
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(1));
@@ -103,7 +104,7 @@ public class LevelMaker extends JPanel{
             g2.drawLine(0, i * Maps.blockSize, GamePanel.GAME_WIDTH - 7*50, i * Maps.blockSize);
         }
 
-        //Shown editor blocks on the side
+        //Show editor blocks on the right side
         for(int i = 0; i < pos.length; i++){
             g.drawImage(GameFrame.blocks[i], pos[i][0], pos[i][1], null);
         }
@@ -111,20 +112,21 @@ public class LevelMaker extends JPanel{
         //Draw current block display
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
         g.drawString("Current:", GamePanel.GAME_WIDTH - (6)*Maps.blockSize, 13*Maps.blockSize - 10);
-        //Draw empty rectange for no block selected
+        //Draw eraser for no block selected
         if(currentBlockNumber == 0){
-            g.drawRect(GamePanel.GAME_WIDTH - (2)*Maps.blockSize, 12*Maps.blockSize, Maps.blockSize, Maps.blockSize);
+            g.drawImage(GameFrame.blocks[13], GamePanel.GAME_WIDTH - (2)*Maps.blockSize, 12*Maps.blockSize, null);
         }
         //Draw image of current block otherwise
         else{
             g.drawImage(GameFrame.blocks[currentBlockNumber-1], GamePanel.GAME_WIDTH - (2)*Maps.blockSize, 12*Maps.blockSize, null);
         }
- 
     }
 
     public void mousePressed(MouseEvent e){
         mouseHeld = true;
-        ifNone = true;
+        ifNone = true; //This boolean for checking if none of the blocks were clicked. It will set the block to eraser. Can be removed
+        
+        //If mouse is on the right side where the block selector is
         if(mouseBlockX >= GamePanel.GAME_WIDTH/Maps.blockSize - 7){
             for(int i = 0; i < pos.length; i++){
                 if(hover[i]){
@@ -136,10 +138,11 @@ public class LevelMaker extends JPanel{
                 currentBlockNumber = 0;
             }
         }
+        //If mouse is in the grid
         else{
             try {
                 //Remove block if the block is the same
-                if(map[mouseBlockY][mouseBlockXWithShifts] == currentBlockNumber){
+                if(map[mouseBlockY][mouseBlockXWithShifts] == currentBlockNumber || currentBlockNumber == 14){
                     map[mouseBlockY][mouseBlockXWithShifts] = 0;
                 }
                 //Add block otherwise
@@ -158,10 +161,17 @@ public class LevelMaker extends JPanel{
         ticksMouseHeld = 0;
     }
 
+    //This gets called in the run() function which gets constantly called every tick
     public void drag(){
         if(mouseHeld){
+            //100 tick requirement so blocks can be removed without the "hold" bringing it back
             if(ticksMouseHeld > 100 && mouseBlockX < GamePanel.GAME_WIDTH/Maps.blockSize - 7){
-                map[mouseBlockY][mouseBlockXWithShifts] = currentBlockNumber; 
+                if(currentBlockNumber == 14){
+                    map[mouseBlockY][mouseBlockXWithShifts] = 0;
+                }
+                else{
+                    map[mouseBlockY][mouseBlockXWithShifts] = currentBlockNumber; 
+                }
             }
             ticksMouseHeld++;
         }
@@ -210,7 +220,6 @@ public class LevelMaker extends JPanel{
         }
         if (e.getKeyChar() == 'd') {
             screenShifts += Maps.blockSize;
-            // System.out.println("pressed");
         }
     }
 
