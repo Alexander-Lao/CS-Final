@@ -1,8 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
-
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -248,7 +250,15 @@ public class LevelMaker extends JPanel{
             screenShifts += Maps.blockSize;
         }
         if (e.getKeyChar() == 's') {
-            saveGame();
+            //Alert dialague
+            int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to save?", 
+            "WARNING", JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.YES_OPTION){
+                saveGame();
+            }
+        }
+        if (e.getKeyChar() == 'l') {
+            loadGame();
         }
     }
 
@@ -261,13 +271,38 @@ public class LevelMaker extends JPanel{
         //
     }
 
-    public void saveGame(){
-        int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to save?", 
-        "WARNING", JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.NO_OPTION){
-            return;
+    //Copid from maps.java
+    public void loadGame(){
+        try {
+            File myObj = new File("customLevel.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                int rows = Integer.parseInt(myReader.next());
+                int cols = Integer.parseInt(myReader.next());
+                myReader.nextLine();
+                for (int i = 0; i < rows; i++) {
+                    String data = myReader.nextLine();
+                    for (int j = 0; j < cols; j++) {
+                        try {
+                            //For numbers 0 - 9
+                            map[i][j] = Integer.parseInt(data.charAt(j) + "");
+                        } catch (Exception e) {
+                            //for converting letters to numbers, starting with a = 10
+                            map[i][j] = data.charAt(j) - 'a' + 10;
+                        }
+                        
+                    }
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
-        
+    }
+
+
+    public void saveGame(){     
         int maxX = 0;
         int maxY = 0;
         try {
