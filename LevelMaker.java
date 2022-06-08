@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -8,8 +9,8 @@ public class LevelMaker extends JPanel{
     public Image image;
     public Graphics graphics;
 
-    private boolean[] hover = new boolean[14];
-    private int[][] pos = new int[14][2];
+    private boolean[] hover = new boolean[15];
+    private int[][] pos = new int[15][2];
     private int currentBlockNumber;
     private int mouseBlockX;
     private int mouseBlockY;
@@ -77,8 +78,13 @@ public class LevelMaker extends JPanel{
         pos[12][0] = GamePanel.GAME_WIDTH - 4*Maps.blockSize;
         pos[12][1] = 10*Maps.blockSize;
 
+        //Eraser
         pos[13][0] = GamePanel.GAME_WIDTH - 2*Maps.blockSize;
-        pos[13][1] = 10*Maps.blockSize;
+        pos[13][1] = 8*Maps.blockSize;
+
+        //Trash
+        pos[14][0] = GamePanel.GAME_WIDTH - 2*Maps.blockSize;
+        pos[14][1] = 10*Maps.blockSize;
     }
 
     public void paint(Graphics g) {
@@ -131,7 +137,25 @@ public class LevelMaker extends JPanel{
             for(int i = 0; i < pos.length; i++){
                 if(hover[i]){
                     currentBlockNumber = i + 1;
-                    ifNone = false;
+
+                    //Erase all with warning message
+                    if(currentBlockNumber == 15){
+                        mouseHeld = false;
+                        int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete EVERYTHING?", 
+                        "WARNING", JOptionPane.YES_NO_OPTION);
+
+                        if(result == JOptionPane.YES_OPTION){
+                            for(int j = 0; j < map.length; j++){
+                                for(int k = 0; k < map[0].length; k++){
+                                    map[j][k] = 0;
+                                }
+                            }
+                        } 
+                    }
+                    else{
+                       ifNone = false; 
+                    }
+                    
                 }
             }
             if(ifNone){
@@ -142,7 +166,7 @@ public class LevelMaker extends JPanel{
         else{
             try {
                 //Remove block if the block is the same
-                if(map[mouseBlockY][mouseBlockXWithShifts] == currentBlockNumber || currentBlockNumber == 14){
+                if(map[mouseBlockY][mouseBlockXWithShifts] == currentBlockNumber || currentBlockNumber >= 14){
                     map[mouseBlockY][mouseBlockXWithShifts] = 0;
                 }
                 //Add block otherwise
@@ -166,7 +190,7 @@ public class LevelMaker extends JPanel{
         if(mouseHeld){
             //100 tick requirement so blocks can be removed without the "hold" bringing it back
             if(ticksMouseHeld > 100 && mouseBlockX < GamePanel.GAME_WIDTH/Maps.blockSize - 7){
-                if(currentBlockNumber == 14){
+                if(currentBlockNumber >= 14){
                     map[mouseBlockY][mouseBlockXWithShifts] = 0;
                 }
                 else{
