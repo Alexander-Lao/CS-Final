@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.IOException;  // Import the IOException class to handle errors
+
 
 import javax.swing.*;
 
@@ -245,6 +247,9 @@ public class LevelMaker extends JPanel{
         if (e.getKeyChar() == 'd') {
             screenShifts += Maps.blockSize;
         }
+        if (e.getKeyChar() == 's') {
+            saveGame();
+        }
     }
 
     public void keyReleased(KeyEvent e) {
@@ -254,5 +259,46 @@ public class LevelMaker extends JPanel{
     //here to be overriden
     public void keyTyped(KeyEvent e) {
         //
+    }
+
+    public void saveGame(){
+        int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to save?", 
+        "WARNING", JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.NO_OPTION){
+            return;
+        }
+        
+        int maxX = 0;
+        int maxY = 0;
+        try {
+            FileWriter myWriter = new FileWriter("customLevel.txt");
+            for(int i = 0; i < map.length; i++){
+                for(int j = 0; j < map[0].length; j++){
+                    if(map[i][j] != 0){
+                        if(i > maxX){
+                            maxX = i;
+                        }
+                        if(j > maxY){
+                            maxY = j;
+                        }
+                    }
+                }
+            }
+            maxX++;
+            maxY++;
+
+            myWriter.write(maxX + " " + maxY + "\n");
+            for(int i = 0; i < maxX; i++){
+                for(int j = 0; j < maxY; j++){
+                    myWriter.write(map[i][j] + "");
+                }
+                myWriter.write("\n");
+            }
+
+            myWriter.close();
+            } 
+            catch (IOException e) {
+            System.out.println("An error occurred.");
+            }
     }
 }
