@@ -5,16 +5,20 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static final int GAME_WIDTH = 1200;
     public static final int GAME_HEIGHT = 800;
+    public static final int NOTE_SIZE = 15;
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
     public Maps maps;
+    public Notes temporary;
     public Menu menu;
     public Game game;
     public HowToPlay howToPlay;
     public Settings settings;
     public LevelMaker levelMaker;
+    public static int nextNote = 0;
     public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
+    public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
     public static int screen = 0;
     public static double time = 0;
 
@@ -22,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public GamePanel() {
         maps = new Maps();
+        temporary = new Notes();
         menu = new Menu();
         game = new Game();
         howToPlay = new HowToPlay();
@@ -69,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         else if (screen > 0) {
             displayMap(g);
+            displayNotes(g);
             game.draw(g);
         }
         else if(screen == -1){
@@ -169,6 +175,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     g.drawImage(GameFrame.blocks[pos-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
                 }
             }
+        }
+    }
+    
+    private void displayNotes(Graphics g) {
+        for (int i = nextNote; i < notes[screen].length; i++) {
+            int xpos = notes[screen][i][0], ypos = notes[screen][i][1];
+            g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
         }
     }
 
