@@ -162,7 +162,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             for (int j = 0; j < grid[screen][0].length; j++) {
                 int pos = grid[screen][i][j];                    
 
-                if (pos != 0) {
+                //This only loads the blocks on the screen but its laggier for some reason
+                // if (pos != 0 && j < GamePanel.GAME_WIDTH/Maps.blockSize + 10 + time/Maps.blockSize
+                // && j > time/Maps.blockSize - 10) {
+                if(pos != 0){
                     g.drawImage(GameFrame.blocks[pos-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
                 }
             }
