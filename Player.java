@@ -6,6 +6,7 @@ public class Player extends Rectangle{
     public boolean touchingSurface = false;
     public boolean gravity = false;
     private boolean keyIsPressed = false;
+    public int xx;
 
     public Player(){
         super(100, 700, 50, 50);
@@ -29,7 +30,7 @@ public class Player extends Rectangle{
         //left corner (x,y)
         //bottom right (x+blocksize)
         int xcol,yrow;
-        int xx = (x + (int)GamePanel.time);
+        xx = (x + (int)GamePanel.time);
         if (!gravity) { //gravity going down so check down
             xcol = (xx)/Maps.blockSize;
             yrow = y/Maps.blockSize + 1;
