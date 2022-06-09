@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public HowToPlay howToPlay;
     public Settings settings;
     public LevelMaker levelMaker;
-    public static int[] grid[][] = new int[3][100][500];
+    public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int screen = 0;
     public static double time = 0;
 

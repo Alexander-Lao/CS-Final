@@ -28,6 +28,7 @@ public class LevelMaker extends JPanel{
 
     public int[][] map = new int[100][500];
 
+    //Initalize all variables
     public LevelMaker() {
         currentBlockNumber = 0;
         mouseBlockX = 0;
@@ -132,6 +133,7 @@ public class LevelMaker extends JPanel{
         }
     }
 
+    //Does a lot of damn stuff. Lots of stuff to click haha
     public void mousePressed(MouseEvent e){
         mouseHeld = true;
         ifNone = true; //This boolean for checking if none of the blocks were clicked. It will set the block to eraser. Can be removed
@@ -149,11 +151,7 @@ public class LevelMaker extends JPanel{
                         "WARNING", JOptionPane.YES_NO_OPTION);
 
                         if(result == JOptionPane.YES_OPTION){
-                            for(int j = 0; j < map.length; j++){
-                                for(int k = 0; k < map[0].length; k++){
-                                    map[j][k] = 0;
-                                }
-                            }
+                            clearGrid();
                         } 
                     }
                     else{
@@ -184,6 +182,7 @@ public class LevelMaker extends JPanel{
         }        
     }
 
+    //Currently only used for detecting release to stop the "drag" effect
     public void mouseReleased(MouseEvent e){
         mouseHeld = false;
         ticksMouseHeld = 0;
@@ -205,6 +204,7 @@ public class LevelMaker extends JPanel{
         }
     }
 
+    //Uses the mouse X and Y position for game elements
     public void mousePosition(int x, int y){
         xMoves = x + screenShifts;
         for(int i = 0; i < pos.length; i++){
@@ -221,6 +221,7 @@ public class LevelMaker extends JPanel{
         mouseBlockXWithShifts = (int)xMoves/Maps.blockSize;
     }
 
+    //Displays current map by constantly updating the maps matrix
     private void displayMap(Graphics g) {
         //parallax (the background moves)
         g.drawImage(GameFrame.backgroundImage[1], (int)(-screenShifts/GamePanel.parallaxRatio % GamePanel.GAME_WIDTH), 0, GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT, null);
@@ -240,6 +241,7 @@ public class LevelMaker extends JPanel{
     }
 
     //This shifts the editor left and right
+    //Also currently used for save and load cuz I'm lazy, NEED TO ADD SOME MENU/PAUSE BUTTON TO DO THIS.
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == 'a') {
             if(screenShifts > 0){
@@ -273,6 +275,7 @@ public class LevelMaker extends JPanel{
 
     //Copid from maps.java
     public void loadGame(){
+        clearGrid();
         try {
             File myObj = new File("customLevel.txt");
             Scanner myReader = new Scanner(myObj);
@@ -301,31 +304,35 @@ public class LevelMaker extends JPanel{
         }
     }
 
-
+    //Loads current state of game into customLevel.txt file
     public void saveGame(){     
         int maxX = 0;
         int maxY = 0;
-        try {
-            FileWriter myWriter = new FileWriter("customLevel.txt");
-            for(int i = 0; i < map.length; i++){
-                for(int j = 0; j < map[0].length; j++){
-                    if(map[i][j] != 0){
-                        if(i > maxX){
-                            maxX = i;
-                        }
-                        if(j > maxY){
-                            maxY = j;
-                        }
+        for(int i = 0; i < map.length; i++){
+            for(int j = 0; j < map[0].length; j++){
+                if(map[i][j] != 0){
+                    if(i > maxX){
+                        maxX = i;
+                    }
+                    if(j > maxY){
+                        maxY = j;
                     }
                 }
             }
-            maxX++;
-            maxY++;
-
+        }
+        maxX++;
+        maxY++;
+        try {
+            FileWriter myWriter = new FileWriter("customLevel.txt");
             myWriter.write(maxX + " " + maxY + "\n");
             for(int i = 0; i < maxX; i++){
                 for(int j = 0; j < maxY; j++){
-                    myWriter.write(map[i][j] + "");
+                    if(map[i][j] >= 10){
+                        myWriter.write(getCharForNumber(map[i][j]));
+                    }
+                    else{
+                        myWriter.write(map[i][j] + "");
+                    }
                 }
                 myWriter.write("\n");
             }
@@ -335,5 +342,20 @@ public class LevelMaker extends JPanel{
             catch (IOException e) {
             System.out.println("An error occurred.");
             }
+    }
+
+    //Simple turns 10 -> a, 11 -> b etc... Used for the numbers >= 10
+    private String getCharForNumber(int i) {
+        return i > 0 && i < 27 ? String.valueOf((char)(i + 'a' - 10)) : null;
+
+    }
+
+    //Sets the entire grid to zero
+    private void clearGrid(){
+        for(int j = 0; j < map.length; j++){
+            for(int k = 0; k < map[0].length; k++){
+                map[j][k] = 0;
+            }
+        }
     }
 }
