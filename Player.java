@@ -6,7 +6,7 @@ public class Player extends Rectangle{
     public boolean touchingSurface = false;
     public boolean gravity = false;
     private boolean keyIsPressed = false;
-    public int xx;
+    public static int xx;
 
     public Player(){
         super(100, 650, 50, 50);
