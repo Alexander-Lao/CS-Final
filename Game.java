@@ -11,7 +11,7 @@ public class Game extends JPanel implements KeyListener {
     public Image image;
     public Graphics graphics;
     public Player player;
-    boolean noteClicked = false;
+    boolean noteClicked = false, tap = false;
 
     public Game() {
         player = new Player();
@@ -39,29 +39,47 @@ public class Game extends JPanel implements KeyListener {
             int xpos = GamePanel.notes[GamePanel.screen][i][0], ypos = GamePanel.notes[GamePanel.screen][i][1];
             // player: [player.x, player.x+blockSize] [player.y, player.x+blockSize]
             // note: [xpos,xpos+GamePanel.NOTE_SIZE] [ypos,ypos+GamePanel.NOTE_SIZE]
-            if (xpos+GamePanel.NOTE_SIZE <= player.xx) {
-                GamePanel.screen = 0;
-                //TODO
-            }
-            else if (((player.xx <= xpos) && (xpos <= player.xx+blockSize)) || ((player.xx <= xpos+GamePanel.NOTE_SIZE) && (xpos+GamePanel.NOTE_SIZE <= player.xx+blockSize))) {
-                if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
-                    if (noteClicked) GamePanel.nextNote++;
+            if (tap) {
+                tap = false;
+                if (player.xx+blockSize < xpos) { //clicked too early
+                    GamePanel.screen = 0;
+                    //TODO reset stuff
                 }
+                else {
+                    if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
+                        GamePanel.nextNote++;
+                    }
+                    else { //missed note vertically
+                        GamePanel.screen = 0;
+                        //TODO reset stuff
+                    }
+                }
+            }
+            else {
+                if (xpos+GamePanel.NOTE_SIZE < player.xx) { //did not click note
+                    GamePanel.screen = 0;
+                    System.out.println(xpos+GamePanel.NOTE_SIZE+" "+player.xx);
+                    //TODO reset stuff
+                }
+            }
+            if (player.y < 0){
+                player.y = 0;
+                player.touchingSurface = true;
+            }
+            if (player.y + player.height > GamePanel.GAME_HEIGHT){
+                player.y = GamePanel.GAME_HEIGHT - player.height;
+                player.touchingSurface = true;
             }
         }
         //Temporary code to keep player on the map. Falling off the map should "kill" the player
-        if(player.y < 0){
-            player.y = 0;
-            player.touchingSurface = true;
-        }
-        if(player.y + player.height > GamePanel.GAME_HEIGHT){
-            player.y = GamePanel.GAME_HEIGHT - player.height;
-            player.touchingSurface = true;
-        }
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == 'p') {noteClicked = true; return;}
+        if (e.getKeyChar() == 'p' && noteClicked == false) {
+            tap = true;
+            noteClicked = true;
+            return;
+        }
         player.keyPressed(e);
     }
 
