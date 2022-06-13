@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static final int GAME_WIDTH = 1200;
-    public static final int GAME_HEIGHT = 800;
-    public static final int NOTE_SIZE = 25;
+    public static final int GAME_HEIGHT = 750;
+    public static final int NOTE_SIZE = 15;
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
     public static int screen = 0;
-    public static double time = 0;
+    public static volatile double time = 0;
 
     public static int parallaxRatio = 10;
 
@@ -188,6 +188,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static void screen(int s) {
         time = 0;
         screen = s;
-        System.out.println(time);
+        System.out.println(time+" asdf");
     }
 }
