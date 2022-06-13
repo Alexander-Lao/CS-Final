@@ -13,13 +13,15 @@ public class Menu extends JPanel{
 
     private String title;
     private int height;
+    private int padding;
 
 
     public Menu() {
-        title = "Put Cringy Title Here";
+        title = "Pellets Lmao";
         names[0] = "Play";
         names[1] = "How To Play";
         names[2] = "Settings";
+        padding = 10;
     }
 
     public void paint(Graphics g) {
@@ -32,7 +34,7 @@ public class Menu extends JPanel{
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
 
-        g.setColor(java.awt.Color.green);
+        g.setColor(java.awt.Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
 
@@ -50,14 +52,21 @@ public class Menu extends JPanel{
         pos[2][0] = (GamePanel.GAME_WIDTH - pos[2][2]) / 2;
         pos[2][1] = (GamePanel.GAME_HEIGHT - height)*7/8;
 
-        for(int i = 0; i < pos.length; i++){
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
+        for(int i = 0; i < pos.length; i++){            
             if(hover[i]){
-                g.setColor(java.awt.Color.red);
+                g.setColor(java.awt.Color.darkGray);
             }
             else{
-                g.setColor(java.awt.Color.green);
+                g.setColor(java.awt.Color.gray);
             }
-            g.drawString(names[i], pos[i][0], pos[i][1]);
+            
+            g2.drawRoundRect(pos[i][0] - padding, pos[i][1] - height - padding, pos[i][2] + padding*2 , height + padding*2, 30, 30);
+            g2.fillRoundRect(pos[i][0] - padding, pos[i][1] - height - padding, pos[i][2] + padding*2 , height + padding*2, 30, 30);
+            
+            g.setColor(java.awt.Color.black);
+            g2.drawString(names[i], pos[i][0], pos[i][1]);
         }
     }
 
@@ -76,7 +85,7 @@ public class Menu extends JPanel{
 
     public void mousePosition(int x, int y){
         for(int i = 0; i < pos.length; i++){
-            if(x > pos[i][0] && x < pos[i][0] + pos[i][2] && y > pos[i][1] - height && y < pos[i][1]){
+            if(x > pos[i][0] - padding && x < pos[i][0] - padding + pos[i][2] + padding*2 && y > pos[i][1] - height - padding && y < pos[i][1] + padding*2){
                 hover[i] = true;
             }
             else{
