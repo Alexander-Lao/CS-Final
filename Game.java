@@ -41,23 +41,37 @@ public class Game extends JPanel implements KeyListener {
             // note: [xpos,xpos+GamePanel.NOTE_SIZE] [ypos,ypos+GamePanel.NOTE_SIZE]
             if (xpos+GamePanel.NOTE_SIZE <= player.xx) {
                 GamePanel.screen = 0;
+                System.out.println(xpos+GamePanel.NOTE_SIZE+" "+player.xx);
                 //TODO
             }
-            else if (((player.xx <= xpos) && (xpos <= player.xx+blockSize)) || ((player.xx <= xpos+GamePanel.NOTE_SIZE) && (xpos+GamePanel.NOTE_SIZE <= player.xx+blockSize))) {
-                if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
-                    if (noteClicked) GamePanel.nextNote++;
+            else if (player.xx+blockSize < xpos) {
+                if (noteClicked) {
+                    GamePanel.screen = 0;
                 }
+            }
+            else {
+                if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
+                    if (noteClicked) {
+                        GamePanel.nextNote++;
+                    }
+                }
+                else {
+                    if (noteClicked) {
+                        GamePanel.screen = 0;
+                        System.out.println("asdflkj");
+                    }
+                }
+            }
+            if(player.y < 0){
+                player.y = 0;
+                player.touchingSurface = true;
+            }
+            if(player.y + player.height > GamePanel.GAME_HEIGHT){
+                player.y = GamePanel.GAME_HEIGHT - player.height;
+                player.touchingSurface = true;
             }
         }
         //Temporary code to keep player on the map. Falling off the map should "kill" the player
-        if(player.y < 0){
-            player.y = 0;
-            player.touchingSurface = true;
-        }
-        if(player.y + player.height > GamePanel.GAME_HEIGHT){
-            player.y = GamePanel.GAME_HEIGHT - player.height;
-            player.touchingSurface = true;
-        }
     }
 
     public void keyPressed(KeyEvent e) {
