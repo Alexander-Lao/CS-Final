@@ -6,7 +6,7 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static final int GAME_WIDTH = 1200;
     public static final int GAME_HEIGHT = 750;
-    public static final int NOTE_SIZE = 15;
+    public static final int NOTE_SIZE = 50;
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
@@ -20,8 +20,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static int nextNote = 0;
     public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
+    public static int[] noteCount = new int[3];
     public static int screen = 0;
-    public static volatile double time = 0;
+    public static double time = 0;
+    public static boolean timeReset = false;
+    public static boolean debugTimer = false; //set true to retime maps
 
     public static int parallaxRatio = 10;
 
@@ -100,7 +103,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             delta = delta + (now - lastTime) / ns;
             time += ((now - lastTime) / ns) / 2;
             lastTime = now;
-
+            if (timeReset) {time = 0; timeReset = false;}
             if (delta >= 1) {
                 try {
                     mouseX = MouseInfo.getPointerInfo().getLocation().x - getLocationOnScreen().x;
@@ -173,15 +176,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
     
     private void displayNotes(Graphics g) {
-        for (int i = nextNote; i < notes[screen].length; i++) {
+        for (int i = nextNote; i < noteCount[screen]; i++) {
             int xpos = notes[screen][i][0], ypos = notes[screen][i][1];
             g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
         }
     }
 
     public static void screen(int s) {
-        time = 0;
         screen = s;
-        System.out.println(time+" asdf");
+        timeReset = true;
     }
 }
