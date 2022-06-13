@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -40,18 +41,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     menu.mousePressed(e);
                 }
                 else if(screen == -1){
-                    howToPlay.mousePressed(e);
-                }
-                else if(screen == -2){
-                    settings.mousePressed(e);
-                }
-                else if(screen == -3){
                     levelMaker.mousePressed(e);
                 }
+                else if(screen == -2){
+                    howToPlay.mousePressed(e);
+                }
+                settings.mousePressed(e);
             }
 
             public void mouseReleased(MouseEvent e){
-                if(screen == -3){
+                if(screen == -1){
                     levelMaker.mouseReleased(e);
                 }
             }
@@ -78,14 +77,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             game.draw(g);
         }
         else if(screen == -1){
-            howToPlay.draw(g);
-        }
-        else if(screen == -2){
-            settings.draw(g);
-        }
-        else if(screen == -3){
             levelMaker.draw(g);
         }
+        else if(screen == -2){
+            howToPlay.draw(g);
+        }
+        settings.draw(g);
     }
 
     public void run() {
@@ -115,17 +112,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     else if(screen == 0){ // menu
                         menu.mousePosition(mouseX, mouseY);             
                     }
-                    else if(screen == -1){ // how to play
-                        howToPlay.mousePosition(mouseX, mouseY);
-                    }
-                    else if(screen == -2){ // settings
-                        settings.mousePosition(mouseX, mouseY);
-                    }
-                    else if(screen == -3){ // settings
+                    else if(screen == -1){ 
                         levelMaker.mousePosition(mouseX, mouseY);
                         levelMaker.drag();
                     }
-                        
+                    else if(screen == -2){ 
+                        howToPlay.mousePosition(mouseX, mouseY);
+                    }
+                    settings.mousePosition(mouseX, mouseY);
                 } catch (Exception e) {
 
                 }
@@ -142,7 +136,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         else if (screen > 0) {
             game.keyPressed(e);
         }
-        else if (screen == -3) {
+        else if (screen == -1) {
             levelMaker.keyPressed(e);
         }
     }

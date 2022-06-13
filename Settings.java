@@ -1,3 +1,5 @@
+//Screen -3, but also runs in all files as a "pause button" in top right corner
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,17 +9,12 @@ public class Settings extends JPanel{
     public Image image;
     public Graphics graphics;
 
-    private String back;
-    private int backWidth;
-    private int height;
-    private int backX;
-    private int backY;
-    private boolean backHover;
+    private boolean hover;
 
+    private String title;
 
-    public Settings() {
-        back = "Back";
-        backHover = false;
+    public Settings(){
+        title = "Pause";
     }
 
     public void paint(Graphics g) {
@@ -28,36 +25,40 @@ public class Settings extends JPanel{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(GameFrame.backgroundImage[3], 0, 0, this);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-        backWidth = g.getFontMetrics().stringWidth(back);
-        height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
+        if(GamePanel.screen != 0){ //if not menu screen
+            if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
+                g.drawImage(GameFrame.blocks[15], GamePanel.GAME_WIDTH - Maps.blockSize, 0, null);
+                if(hover){
 
-        backX = 50;
-        backY = 50;
+                }
+                else{
+                    
+                }
+            }
+            else{
+                g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
 
-        if(backHover){
-            g.setColor(java.awt.Color.red);
+                g.setColor(java.awt.Color.black);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+                g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+            }
         }
-        else{
-            g.setColor(java.awt.Color.green);
-        }
-        g.drawString(back, backX , backY);
     }
 
     public void mousePressed(MouseEvent e){
-        if(backHover){
-            GamePanel.screen(0);
+        if(hover){ 
+            GamePanel.screen(-3);
         }
-
     }
 
     public void mousePosition(int x, int y){
-        if(x > backX && x < backX + backWidth && y > backY - height && y < backY){
-            backHover = true;
+        if(x > GamePanel.GAME_WIDTH - Maps.blockSize && x < GamePanel.GAME_WIDTH + Maps.blockSize && y > 0 && y < Maps.blockSize){
+            hover = true;
         }
         else{
-            backHover = false;
+            hover = false;
         }
     }
 }

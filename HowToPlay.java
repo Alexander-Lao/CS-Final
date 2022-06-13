@@ -1,3 +1,5 @@
+//Screen -2
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -14,10 +16,13 @@ public class HowToPlay extends JPanel{
     private int backY;
     private boolean backHover;
 
+    private String title;
+
 
     public HowToPlay() {
         back = "Back";
         backHover = false;
+        title = "How To Play";
     }
 
     public void paint(Graphics g) {
@@ -29,6 +34,11 @@ public class HowToPlay extends JPanel{
 
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[3], 0, 0, this);
+
+        g.setColor(java.awt.Color.black);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+        g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
         backWidth = g.getFontMetrics().stringWidth(back);
         height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
