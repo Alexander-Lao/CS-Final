@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
     public static int[] noteCount = new int[3];
-    public static int screen = 0;
+    public static int screen = 0, setScreen = -100;
     public static double time = 0;
     public static boolean timeReset = false;
     public static boolean debugTimer = false; //set true to retime maps
@@ -103,7 +103,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             delta = delta + (now - lastTime) / ns;
             time += ((now - lastTime) / ns) / 2;
             lastTime = now;
-            if (timeReset) {time = 0; timeReset = false;}
+            if (timeReset) {
+                time = 0;
+                timeReset = false;
+            }
+            if (setScreen!=-100) {
+                screen = setScreen;
+                setScreen = -100;
+            } 
             if (delta >= 1) {
                 try {
                     mouseX = MouseInfo.getPointerInfo().getLocation().x - getLocationOnScreen().x;
@@ -123,8 +130,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                         howToPlay.mousePosition(mouseX, mouseY);
                     }
                     settings.mousePosition(mouseX, mouseY);
-                } catch (Exception e) {
-
+                }
+                catch (Exception e) {
                 }
                 repaint();
                 delta--;
@@ -183,7 +190,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public static void screen(int s) {
-        screen = s;
+        setScreen = s;
         timeReset = true;
     }
 }

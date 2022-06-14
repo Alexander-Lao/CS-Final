@@ -43,11 +43,18 @@ public class Game extends JPanel implements KeyListener {
         newTiming[newNoteCount][0]=x; newTiming[newNoteCount][1]=y;
         newNoteCount++;
     }
+    public void reset() {
+        GamePanel.timeReset = true;
+        GamePanel.nextNote = 0;
+        player.y = 650;
+        player.gravity = false;
+        player.touchingSurface = false;
+    }
     public void checkCollision() {
         player.blockCollision();
         if (GamePanel.debugTimer) {
             if (tap) {
-                addNote(player.xx,player.y);
+                addNote(Player.xx,player.y);
                 tap = false;
             }
             return;
@@ -59,25 +66,21 @@ public class Game extends JPanel implements KeyListener {
             // note: [xpos,xpos+GamePanel.NOTE_SIZE] [ypos,ypos+GamePanel.NOTE_SIZE]
             if (tap) {
                 tap = false;
-                if (player.xx+blockSize < xpos) { //clicked too early
-                    GamePanel.screen = 0;
-                    //TODO reset stuff
+                if (Player.xx+blockSize < xpos) { //clicked too early
+                    reset();
                 }
                 else {
                     if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
                         GamePanel.nextNote++;
                     }
                     else { //missed note vertically
-                        GamePanel.screen = 0;
-                        //TODO reset stuff
+                        reset();
                     }
                 }
             }
             else {
-                if (xpos+GamePanel.NOTE_SIZE < player.xx) { //did not click note
-                    GamePanel.screen = 0;
-                    System.out.println(xpos+GamePanel.NOTE_SIZE+" "+player.xx);
-                    //TODO reset stuff
+                if (xpos+GamePanel.NOTE_SIZE < Player.xx) { //did not click note
+                    reset();
                 }
             }
             if (player.y < 0){
