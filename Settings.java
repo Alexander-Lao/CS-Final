@@ -13,6 +13,12 @@ public class Settings extends JPanel{
 
     private String title;
 
+    private int previousScreen;
+    // private double previousTime;
+
+    private int settingsX;
+    private int settingsY;
+
     public Settings(){
         title = "Pause";
     }
@@ -25,40 +31,63 @@ public class Settings extends JPanel{
     }
 
     public void draw(Graphics g) {
-        if(GamePanel.screen != 0){ //if not menu screen
-            if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
-                g.drawImage(GameFrame.blocks[15], GamePanel.GAME_WIDTH - Maps.blockSize, 0, null);
-                if(hover){
+        if(GamePanel.screen != -3){ //if not on pause screen, draw pause button 
 
-                }
-                else{
-                    
-                }
+            if(GamePanel.screen == 0){
+                settingsX = GamePanel.GAME_WIDTH - Maps.blockSize;
+                settingsY = GamePanel.GAME_HEIGHT - Maps.blockSize;
             }
             else{
-                g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
+                settingsX = GamePanel.GAME_WIDTH - Maps.blockSize;
+                settingsY = 0;
+            }
 
-                g.setColor(java.awt.Color.black);
-                g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-                g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+            g.drawImage(GameFrame.blocks[15], settingsX, settingsY, null);
 
-                g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+            //Draw hover over settings effect
+            if(hover){
+
+            }
+            else{
+                
             }
         }
+        else{
+            g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
+
+            g.setColor(java.awt.Color.black);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
+            g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+        }
     }
+    
 
     public void mousePressed(MouseEvent e){
-        if(hover){ 
-            GamePanel.screen(-3);
+        if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
+            if(hover){ 
+                previousScreen = GamePanel.screen;
+                // previousTime = GamePanel.time;
+                GamePanel.screen(-3);
+            }
         }
+        else{
+            GamePanel.screen(previousScreen);
+            // GamePanel.timeReset = previousTime;
+        }
+
     }
 
     public void mousePosition(int x, int y){
-        if(x > GamePanel.GAME_WIDTH - Maps.blockSize && x < GamePanel.GAME_WIDTH + Maps.blockSize && y > 0 && y < Maps.blockSize){
-            hover = true;
+        if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
+            if(x > settingsX - Maps.blockSize && x < settingsX + Maps.blockSize && y > settingsY && y < settingsY + Maps.blockSize){
+                hover = true;
+            }
+            else{
+                hover = false;
+            }
         }
-        else{
-            hover = false;
-        }
+
     }
 }
