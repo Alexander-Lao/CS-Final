@@ -149,6 +149,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         else if (screen == -1) {
             levelMaker.keyPressed(e);
         }
+        settings.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {

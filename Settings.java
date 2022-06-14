@@ -134,6 +134,24 @@ public class Settings extends JPanel{
 
     }
 
+    //If esc is pressed
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            previousScreen = GamePanel.screen;
+            previousTime = GamePanel.time;
+            GamePanel.screen(-3);
+        }
+    }
+
+    //Try commenting these two out I dont think we need them overridden for subclasses?
+    public void keyReleased(KeyEvent e) {
+
+    }
+    
+    public void keyTyped(KeyEvent e) {
+        //
+    }
+
     public void mousePosition(int x, int y){
         if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
             if(x > settingsX - Maps.blockSize && x < settingsX + Maps.blockSize && y > settingsY && y < settingsY + Maps.blockSize){
