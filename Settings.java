@@ -16,6 +16,7 @@ public class Settings extends JPanel{
 
     private int settingsX;
     private int settingsY;
+    public double previousTime;
 
     private int height;
     private boolean[] hover = new boolean[3];
@@ -115,7 +116,7 @@ public class Settings extends JPanel{
         if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
             if(settingsHover){ 
                 previousScreen = GamePanel.screen;
-                // previousTime = GamePanel.time;
+                previousTime = GamePanel.time;
                 GamePanel.screen(-3);
             }
         }

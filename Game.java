@@ -4,9 +4,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
 
@@ -18,8 +15,8 @@ public class Game extends JPanel implements KeyListener {
     public Graphics graphics;
     public Player player;
     boolean noteClicked = false, tap = false;
-    public int[] newTiming[] = new int[10000][2];
-    public int newNoteCount = 0;
+    public static int[] newTiming[] = new int[10000][2];
+    public static int newNoteCount = 0;
 
     public Game() {
         player = new Player();
@@ -44,7 +41,7 @@ public class Game extends JPanel implements KeyListener {
         newNoteCount++;
     }
     public void reset() {
-        GamePanel.timeReset = true;
+        GamePanel.timeReset = 0;
         GamePanel.nextNote = 0;
         player.y = 650;
         player.gravity = false;
@@ -52,7 +49,7 @@ public class Game extends JPanel implements KeyListener {
     }
     public void checkCollision() {
         if (player.blockCollision()) reset();
-        if (GamePanel.debugTimer) {
+        if (GamePanel.debug) {
             if (tap) {
                 addNote(Player.xx,player.y);
                 tap = false;
@@ -83,14 +80,14 @@ public class Game extends JPanel implements KeyListener {
                     reset();
                 }
             }
-            if (player.y < 0){
-                player.y = 0;
-                player.touchingSurface = true;
-            }
-            if (player.y + player.height > GamePanel.GAME_HEIGHT){
-                player.y = GamePanel.GAME_HEIGHT - player.height;
-                player.touchingSurface = true;
-            }
+        }
+        if (player.y < 0){
+            player.y = 0;
+            player.touchingSurface = true;
+        }
+        if (player.y + player.height > GamePanel.GAME_HEIGHT){
+            player.y = GamePanel.GAME_HEIGHT - player.height;
+            player.touchingSurface = true;
         }
         //Temporary code to keep player on the map. Falling off the map should "kill" the player
     }
@@ -98,7 +95,7 @@ public class Game extends JPanel implements KeyListener {
         try {
             FileWriter myWriter = new FileWriter("Notes.txt");
             myWriter.write(newNoteCount + "\n");
-            for(int i = 0; i < newNoteCount; i++){
+            for(int i = 0; i < newNoteCount; i++) {
                 myWriter.write(newTiming[i][0] + " " + newTiming[i][1]);
                 if (i != newNoteCount-1) myWriter.write("\n");
             }
@@ -114,7 +111,7 @@ public class Game extends JPanel implements KeyListener {
             noteClicked = true;
             return;
         }
-        if (e.getKeyChar() == 'm' && GamePanel.debugTimer) {
+        if (e.getKeyChar() == 'm' && GamePanel.debug) {
             saveGame();
         }
         player.keyPressed(e);

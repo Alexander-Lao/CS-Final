@@ -23,8 +23,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static int[] noteCount = new int[3];
     public static int screen = 0, setScreen = -100;
     public static double time = 0;
-    public static boolean timeReset = false;
-    public static boolean debugTimer = false; //set true to retime maps
+    public static double timeReset = -100;
+    public static boolean debug = false; //set true to retime maps
 
     public static int parallaxRatio = 10;
 
@@ -103,9 +103,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             delta = delta + (now - lastTime) / ns;
             time += ((now - lastTime) / ns) / 2;
             lastTime = now;
-            if (timeReset) {
-                time = 0;
-                timeReset = false;
+            if (timeReset > -50) {
+                time = timeReset;
+                timeReset = -100;
             }
             if (setScreen!=-100) {
                 screen = setScreen;
@@ -183,6 +183,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
     
     private void displayNotes(Graphics g) {
+        if (debug) {
+            for (int i=0; i<Game.newNoteCount; i++) {
+                int xpos = Game.newTiming[i][0], ypos = Game.newTiming[i][1];
+                g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
+            }
+        }
         for (int i = nextNote; i < noteCount[screen]; i++) {
             int xpos = notes[screen][i][0], ypos = notes[screen][i][1];
             g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
@@ -191,6 +197,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public static void screen(int s) {
         setScreen = s;
-        timeReset = true;
+        timeReset = 0;
     }
 }
