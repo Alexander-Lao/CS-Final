@@ -25,7 +25,7 @@ public class Player extends Rectangle{
         }
     }
 
-    public void blockCollision(){
+    public boolean blockCollision(){
         //Check block above
         //left corner (x,y)
         //bottom right (x+blocksize)
@@ -74,40 +74,13 @@ public class Player extends Rectangle{
         if (xx % Maps.blockSize == 0) xcol--;
         if (GamePanel.grid[GamePanel.screen][yrow][xcol] != 0) {
             //collision
-            GamePanel.time = 0;
+            return true;
         }
         if ((y % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow+1][xcol] != 0)) {
             //collision
-            GamePanel.time = 0;
+            return true;
         }
-        /*
-        if(GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y-1)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize + 1] > 0){
-            //Set player to proper Y position
-            y = (y+49) - (y+49)%Maps.blockSize;
-            blockAbove = true;
-        }
-        else{
-            blockAbove = false;
-        }
-
-        //Check block below
-        if(GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockSize)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y + Maps.blockSize)/Maps.blockSize][(int)(x + (int)GamePanel.time)/Maps.blockSize + 1] > 0){
-            //Set player to proper Y position
-            y = (y+49) - (y+49)%Maps.blockSize;
-            blockBelow = true;
-        }
-        else{
-            blockBelow = false;
-        }
-
-        //Check block infront
-        if(GamePanel.grid[GamePanel.screen][(int)(y)/Maps.blockSize][(int)(x + Maps.blockSize + (int)GamePanel.time)/Maps.blockSize] > 0
-        || GamePanel.grid[GamePanel.screen][(int)(y - 1 + Maps.blockSize)/Maps.blockSize][(int)(x + Maps.blockSize + (int)GamePanel.time)/Maps.blockSize] > 0){
-            // GamePanel.screen(0);
-            GamePanel.time = 0;
-        }*/
+        return false;
     }
 
     public void move(){

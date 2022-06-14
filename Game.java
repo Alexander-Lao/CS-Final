@@ -51,7 +51,7 @@ public class Game extends JPanel implements KeyListener {
         player.touchingSurface = false;
     }
     public void checkCollision() {
-        player.blockCollision();
+        if (player.blockCollision()) reset();
         if (GamePanel.debugTimer) {
             if (tap) {
                 addNote(Player.xx,player.y);
