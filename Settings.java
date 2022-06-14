@@ -18,9 +18,11 @@ public class Settings extends JPanel{
     private int settingsY;
 
     private int height;
-    private boolean[] hover = new boolean[2];
-    private int[][] pos = new int[2][3]; // x y width 
-    private String[] names = new String[2]; //Menu, Keybinds
+    private boolean[] hover = new boolean[3];
+    private int[][] pos = new int[3][3]; // x y width 
+    private String[] names = new String[3]; //Menu, Keybinds back
+
+    private int loopTimes;
 
     public Settings(){
         title = "Settings";
@@ -28,6 +30,7 @@ public class Settings extends JPanel{
 
         names[0] = "Menu";
         names[1] = "Key Binds";
+        names[2] = "Back";
     }
 
     public void paint(Graphics g) {
@@ -77,10 +80,20 @@ public class Settings extends JPanel{
             pos[0][1]= (GamePanel.GAME_HEIGHT - height)/2;
             pos[1][0] = (GamePanel.GAME_WIDTH - pos[1][2])/2;
             pos[1][1] = (GamePanel.GAME_HEIGHT - height)*11/16;
+            pos[2][0] = 50;
+            pos[2][1] = 60;
 
             Graphics2D g2 = (Graphics2D) g;
             g2.setStroke(new BasicStroke(2));
-            for(int i = 0; i < pos.length; i++){      
+
+            if(previousScreen > 0 || previousScreen == -1 || previousScreen == -2){
+                loopTimes = pos.length;
+            }
+            else{
+                loopTimes = pos.length-1;
+            }
+
+            for(int i = 0; i < loopTimes; i++){      
                 if(hover[i]){
                     g.setColor(java.awt.Color.darkGray);
                 }
@@ -94,11 +107,6 @@ public class Settings extends JPanel{
                 g.setColor(java.awt.Color.white);
                 g2.drawString(names[i], pos[i][0], pos[i][1]);
             }
-
-            if(previousScreen > 0){
-
-            }
-
         }
     }
     
@@ -112,14 +120,14 @@ public class Settings extends JPanel{
             }
         }
         else{
-            GamePanel.screen(previousScreen);
-            // GamePanel.timeReset = previousTime;
-
             if(hover[0]){ //Menu
                 GamePanel.screen(0);
             }
             else if(hover[1]){ //Key Binds
                 GamePanel.screen(-4);
+            }
+            else if(hover[2]){ //Back Button
+                GamePanel.screen(previousScreen);
             }
         }
 
@@ -135,7 +143,7 @@ public class Settings extends JPanel{
             }
         }
         else{
-            for(int i = 0; i < pos.length; i++){
+            for(int i = 0; i < loopTimes; i++){
                 if(x > pos[i][0] - Menu.padding && x < pos[i][0] - Menu.padding + pos[i][2] + Menu.padding*2 && y > pos[i][1] - height - Menu.padding && y < pos[i][1] + Menu.padding*2 - 13){
                     hover[i] = true;
                 }

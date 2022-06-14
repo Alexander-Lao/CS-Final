@@ -44,15 +44,22 @@ public class HowToPlay extends JPanel{
         height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
 
         backX = 50;
-        backY = 50;
+        backY = 60;
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
 
         if(backHover){
-            g.setColor(java.awt.Color.red);
+            g.setColor(java.awt.Color.darkGray);
         }
         else{
-            g.setColor(java.awt.Color.green);
+            g.setColor(java.awt.Color.gray);
         }
-        g.drawString(back, backX , backY);
+        g2.drawRoundRect(backX - Menu.padding, backY - height - Menu.padding, backWidth + Menu.padding*2 , height + Menu.padding*2, 30, 30);
+        g2.fillRoundRect(backX - Menu.padding, backY - height - Menu.padding, backWidth + Menu.padding*2 , height + Menu.padding*2, 30, 30);
+        
+        g.setColor(java.awt.Color.white);
+        g2.drawString(back, backX , backY);
     }
 
     public void mousePressed(MouseEvent e){
@@ -63,7 +70,7 @@ public class HowToPlay extends JPanel{
     }
 
     public void mousePosition(int x, int y){
-        if(x > backX && x < backX + backWidth && y > backY - height && y < backY){
+        if(x > backX - Menu.padding && x < backX - Menu.padding + backWidth + Menu.padding*2 && y > backY - height - Menu.padding && y < backY + Menu.padding*2 - 13){
             backHover = true;
         }
         else{
