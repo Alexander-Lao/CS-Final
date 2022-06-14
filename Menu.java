@@ -15,7 +15,7 @@ public class Menu extends JPanel{
 
     private String title;
     private int height;
-    private int padding;
+    public static int padding;
 
 
     public Menu() {
@@ -82,17 +82,12 @@ public class Menu extends JPanel{
         else if(hover[2]){ // How to play
             GamePanel.screen(-2);
         }
-        /*
-        else if(hover[3]){ // Settings
-            GamePanel.screen(-3);
-        }
-        */
         
     }
 
     public void mousePosition(int x, int y){
         for(int i = 0; i < pos.length; i++){
-            if(x > pos[i][0] - padding && x < pos[i][0] - padding + pos[i][2] + padding*2 && y > pos[i][1] - height - padding && y < pos[i][1] + padding*2){
+            if(x > pos[i][0] - padding && x < pos[i][0] - padding + pos[i][2] + padding*2 && y > pos[i][1] - height - padding && y < pos[i][1] + padding*2 - 13){
                 hover[i] = true;
             }
             else{

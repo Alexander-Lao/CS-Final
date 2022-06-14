@@ -8,11 +8,9 @@ public class Settings extends JPanel{
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
-
-    private boolean hover;
-
+    private boolean settingsHover;
     private String title;
-
+    private String volumeSlider;
     private int previousScreen;
     // private double previousTime;
 
@@ -20,8 +18,17 @@ public class Settings extends JPanel{
     private int settingsY;
     public double previousTime;
 
+    private int height;
+    private boolean[] hover = new boolean[2];
+    private int[][] pos = new int[2][3]; // x y width 
+    private String[] names = new String[2]; //Menu, Keybinds
+
     public Settings(){
-        title = "Pause";
+        title = "Settings";
+        volumeSlider = "Volume Slider:";
+
+        names[0] = "Menu";
+        names[1] = "Key Binds";
     }
 
     public void paint(Graphics g) {
@@ -46,7 +53,7 @@ public class Settings extends JPanel{
             g.drawImage(GameFrame.blocks[15], settingsX, settingsY, null);
 
             //Draw hover over settings effect
-            if(hover){
+            if(settingsHover){
 
             }
             else{
@@ -61,13 +68,45 @@ public class Settings extends JPanel{
             g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+
+            for(int i = 0; i < pos.length; i++){
+                pos[i][2] = g.getFontMetrics().stringWidth(names[i]);
+            }
+            height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
+    
+            pos[0][0] = (GamePanel.GAME_WIDTH - pos[0][2])/2;
+            pos[0][1]= (GamePanel.GAME_HEIGHT - height)/2;
+            pos[1][0] = (GamePanel.GAME_WIDTH - pos[1][2])/2;
+            pos[1][1] = (GamePanel.GAME_HEIGHT - height)*11/16;
+
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setStroke(new BasicStroke(2));
+            for(int i = 0; i < pos.length; i++){      
+                if(hover[i]){
+                    g.setColor(java.awt.Color.darkGray);
+                }
+                else{
+                    g.setColor(java.awt.Color.gray);
+                }
+                
+                g2.drawRoundRect(pos[i][0] - Menu.padding, pos[i][1] - height - Menu.padding, pos[i][2] + Menu.padding*2 , height + Menu.padding*2, 30, 30);
+                g2.fillRoundRect(pos[i][0] - Menu.padding, pos[i][1] - height - Menu.padding, pos[i][2] + Menu.padding*2 , height + Menu.padding*2, 30, 30);
+                
+                g.setColor(java.awt.Color.white);
+                g2.drawString(names[i], pos[i][0], pos[i][1]);
+            }
+
+            if(previousScreen > 0){
+
+            }
+
         }
     }
     
 
     public void mousePressed(MouseEvent e){
-        if(GamePanel.screen != -3){
-            if(hover){
+        if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
+            if(settingsHover){ 
                 previousScreen = GamePanel.screen;
                 previousTime = GamePanel.time;
                 GamePanel.screen(-3);
@@ -76,7 +115,13 @@ public class Settings extends JPanel{
         else{
             GamePanel.screen(previousScreen);
             // GamePanel.timeReset = previousTime;
-            GamePanel.timeReset = previousTime;
+
+            if(hover[0]){ //Menu
+                GamePanel.screen(0);
+            }
+            else if(hover[1]){ //Key Binds
+                GamePanel.screen(-4);
+            }
         }
 
     }
@@ -84,10 +129,20 @@ public class Settings extends JPanel{
     public void mousePosition(int x, int y){
         if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
             if(x > settingsX - Maps.blockSize && x < settingsX + Maps.blockSize && y > settingsY && y < settingsY + Maps.blockSize){
-                hover = true;
+                settingsHover = true;
             }
             else{
-                hover = false;
+                settingsHover = false;
+            }
+        }
+        else{
+            for(int i = 0; i < pos.length; i++){
+                if(x > pos[i][0] - Menu.padding && x < pos[i][0] - Menu.padding + pos[i][2] + Menu.padding*2 && y > pos[i][1] - height - Menu.padding && y < pos[i][1] + Menu.padding*2 - 13){
+                    hover[i] = true;
+                }
+                else{
+                    hover[i] = false;
+                }
             }
         }
 
