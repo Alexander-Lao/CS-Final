@@ -18,6 +18,7 @@ public class Settings extends JPanel{
 
     private int settingsX;
     private int settingsY;
+    public double previousTime;
 
     public Settings(){
         title = "Pause";
@@ -65,16 +66,17 @@ public class Settings extends JPanel{
     
 
     public void mousePressed(MouseEvent e){
-        if(GamePanel.screen != -3){ //if not on pause screen, draw pause button in top right corner
-            if(hover){ 
+        if(GamePanel.screen != -3){
+            if(hover){
                 previousScreen = GamePanel.screen;
-                // previousTime = GamePanel.time;
+                previousTime = GamePanel.time;
                 GamePanel.screen(-3);
             }
         }
         else{
             GamePanel.screen(previousScreen);
             // GamePanel.timeReset = previousTime;
+            GamePanel.timeReset = previousTime;
         }
 
     }
