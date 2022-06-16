@@ -32,6 +32,7 @@ public class KeyBinds extends JPanel{
         for(int i = 0; i < pos.length; i++){
             combinedName[i] = key[i] + " - " + keyNames[i];
         }
+
         f = new JFrame();
         t = new JTextField("a", 1);
         l = new JLabel("desc:");
@@ -56,6 +57,7 @@ public class KeyBinds extends JPanel{
         b.addActionListener(e -> {
             f.setVisible(false);
             key[currentlyBinding] = t.getText().charAt(0);
+            currentlyBinding = -1;
         });
 
         f.setLocationRelativeTo(null);
@@ -117,19 +119,23 @@ public class KeyBinds extends JPanel{
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - pos[0][2])/4, (GamePanel.GAME_HEIGHT) / 4);
         g.drawString(title2, (GamePanel.GAME_WIDTH - pos[0][2])*3/4, (GamePanel.GAME_HEIGHT) / 4);
+
+        for(int i = 0; i < pos.length; i++){
+            combinedName[i] = key[i] + " - " + keyNames[i];
+        }
     }
 
     public void mousePressed(MouseEvent e){
         for(int i = 0; i < pos.length; i++){
             if(hover[i]){ 
                 currentlyBinding = i;
-                t.setText(key[currentlyBinding]+"");
+                t.setText(key[i]+"");
+                
+                l.setText(keyNames[i]);
+                t.setText(key[i]+"");
+                f.setVisible(true);
             }
         }
-        
-        f.setVisible(true);
-        l.setText("Lmao nerd");
-        t.setText("2");
     }
 
     public void mousePosition(int x, int y){

@@ -51,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 else if(screen == -2){
                     howToPlay.mousePressed(e);
                 }
-                else if(screen == -4 && KeyBinds.currentlyBinding != -1){
+                else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                     keyBinds.mousePressed(e);
                 }
                 settings.mousePressed(e);
