@@ -245,15 +245,15 @@ public class LevelMaker extends JPanel{
     //This shifts the editor left and right
     //Also currently used for save and load cuz I'm lazy, NEED TO ADD SOME MENU/PAUSE BUTTON TO DO THIS.
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == 'a') {
+        if (e.getKeyChar() == KeyBinds.key[5]) {
             if(screenShifts > 0){
                 screenShifts -= Maps.blockSize;
             }  
         }
-        if (e.getKeyChar() == 'd') {
+        if (e.getKeyChar() == KeyBinds.key[6]) {
             screenShifts += Maps.blockSize;
         }
-        if (e.getKeyChar() == 's') {
+        if (e.getKeyChar() == KeyBinds.key[3]) {
             //Alert dialague
             int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to save?", 
             "WARNING", JOptionPane.YES_NO_OPTION);
@@ -261,7 +261,7 @@ public class LevelMaker extends JPanel{
                 saveGame();
             }
         }
-        if (e.getKeyChar() == 'l') {
+        if (e.getKeyChar() == KeyBinds.key[4]) {
             loadGame();
         }
     }
