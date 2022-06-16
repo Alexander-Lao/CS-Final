@@ -9,7 +9,7 @@ public class Player extends Rectangle{
     public static int xx;
 
     public Player(){
-        super(100, 650, 50, 50);
+        super(100, 600, 50, 50);
     }
 
     public void keyPressed(KeyEvent e){

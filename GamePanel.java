@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static final int GAME_WIDTH = 1200;
-    public static final int GAME_HEIGHT = 750;
+    public static final int GAME_HEIGHT = 700;
     public static final int NOTE_SIZE = 50;
     public Thread gameThread;
     public Image image;
