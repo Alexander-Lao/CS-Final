@@ -106,7 +106,7 @@ public class Game extends JPanel implements KeyListener {
         }
     }
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == 'p' && noteClicked == false) {
+        if (e.getKeyChar() == KeyBinds.key[1] && noteClicked == false) {
             tap = true;
             noteClicked = true;
             return;
@@ -118,12 +118,10 @@ public class Game extends JPanel implements KeyListener {
     }
 
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyChar() == 'p') {noteClicked = false; return;}
+        if (e.getKeyChar() == KeyBinds.key[1]) {noteClicked = false; return;}
         player.keyReleased(e);
-        if (e.getKeyChar() == '1') {
-            GamePanel.screen(2);
-        }
-        if (e.getKeyChar() == 'r') {
+        
+        if (e.getKeyChar() == KeyBinds.key[2]) {
             reset();
         }
     }

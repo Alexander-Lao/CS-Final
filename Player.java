@@ -13,14 +13,14 @@ public class Player extends Rectangle{
     }
 
     public void keyPressed(KeyEvent e){
-        if (e.getKeyChar() == 'q' && !keyIsPressed && touchingSurface) {
+        if (e.getKeyChar() == KeyBinds.key[0] && !keyIsPressed && touchingSurface) {
             keyIsPressed = true;
             if (GamePanel.screen > 0) gravity = !gravity;
         }
     }
 
     public void keyReleased(KeyEvent e){
-        if (e.getKeyChar() == 'q') {
+        if (e.getKeyChar() == KeyBinds.key[0]) {
             keyIsPressed = false;
         }
     }

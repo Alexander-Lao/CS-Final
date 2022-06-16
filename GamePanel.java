@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public HowToPlay howToPlay;
     public Settings settings;
     public LevelMaker levelMaker;
+    public KeyBinds keyBinds;
     public static int nextNote = 0;
     public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
@@ -36,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         howToPlay = new HowToPlay();
         settings = new Settings();
         levelMaker = new LevelMaker();
+        keyBinds = new KeyBinds();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
@@ -48,6 +50,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 }
                 else if(screen == -2){
                     howToPlay.mousePressed(e);
+                }
+                else if(screen == -4){
+                    keyBinds.mousePressed(e);
                 }
                 settings.mousePressed(e);
             }
@@ -84,6 +89,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
         else if(screen == -2){
             howToPlay.draw(g);
+        }
+        else if(screen == -4){
+            keyBinds.draw(g);
         }
         settings.draw(g);
     }
@@ -129,6 +137,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     else if(screen == -2){ 
                         howToPlay.mousePosition(mouseX, mouseY);
                     }
+                    else if(screen == -4){
+                        keyBinds.mousePosition(mouseX, mouseY);
+                    }
                     settings.mousePosition(mouseX, mouseY);
                 }
                 catch (Exception e) {
@@ -149,6 +160,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         else if (screen == -1) {
             levelMaker.keyPressed(e);
         }
+        settings.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {
