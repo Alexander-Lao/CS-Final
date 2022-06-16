@@ -128,7 +128,8 @@ public class Settings extends JPanel{
                 GamePanel.screen(-4);
             }
             else if(hover[2]){ //Back Button
-                GamePanel.screen(previousScreen);
+                GamePanel.setScreen = previousScreen;
+                GamePanel.timeReset = previousTime;
             }
         }
 
@@ -136,7 +137,7 @@ public class Settings extends JPanel{
 
     //If esc is pressed
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE && GamePanel.screen!=-3) {
             previousScreen = GamePanel.screen;
             previousTime = GamePanel.time;
             GamePanel.screen(-3);

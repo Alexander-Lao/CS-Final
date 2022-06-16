@@ -191,7 +191,7 @@ public class LevelMaker extends JPanel{
     }
 
     //This gets called in the run() function which gets constantly called every tick
-    public void drag(){
+    public void drag(){ //ging deez nuts on your face
         if(mouseHeld){
             //100 tick requirement so blocks can be removed without the "hold" bringing it back
             if(ticksMouseHeld > 100 && mouseBlockX < GamePanel.GAME_WIDTH/Maps.blockSize - 7){
