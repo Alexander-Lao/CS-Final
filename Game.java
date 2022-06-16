@@ -124,7 +124,7 @@ public class Game extends JPanel implements KeyListener {
             GamePanel.screen(2);
         }
         if (e.getKeyChar() == 'r') {
-            GamePanel.screen(GamePanel.screen);
+            reset();
         }
     }
     
