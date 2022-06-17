@@ -43,7 +43,7 @@ public class Game extends JPanel implements KeyListener {
     public void reset() {
         GamePanel.timeReset = 0;
         GamePanel.nextNote = 0;
-        player.y = 650;
+        player.y = 600;
         player.gravity = false;
         player.touchingSurface = false;
     }

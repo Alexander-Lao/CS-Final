@@ -66,7 +66,6 @@ public class HowToPlay extends JPanel{
         if(backHover){
             GamePanel.screen(0);
         }
-
     }
 
     public void mousePosition(int x, int y){

@@ -16,7 +16,7 @@ public class LevelMaker extends JPanel{
     public Graphics graphics;
 
     private boolean[] hover = new boolean[15];
-    private int[][] pos = new int[15][2];
+    private int[][] pos = new int[15][2]; //x y
     private int currentBlockNumber;
     private int mouseBlockX;
     private int mouseBlockY;
@@ -27,6 +27,12 @@ public class LevelMaker extends JPanel{
 
     public int ticksMouseHeld;
     private boolean mouseHeld;
+
+    private String[] names = new String[2];
+    private boolean[] hoverText = new boolean[2];
+    private int[][] posText = new int[2][3]; //x y width
+    private int height;
+    private int padding;
 
     public int[][] map = new int[100][500];
 
@@ -40,6 +46,10 @@ public class LevelMaker extends JPanel{
 
         ticksMouseHeld = 0;
         mouseHeld = false;
+
+        names[0] = "Play";
+        names[1] = "Notes";
+        padding = 10;
 
         //Row 1
         pos[8][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
@@ -127,11 +137,39 @@ public class LevelMaker extends JPanel{
         g.drawString("Current:", GamePanel.GAME_WIDTH - (6)*Maps.blockSize, 13*Maps.blockSize - 10);
         //Draw eraser for no block selected
         if(currentBlockNumber == 0){
-            g.drawImage(GameFrame.blocks[13], GamePanel.GAME_WIDTH - (2)*Maps.blockSize, 12*Maps.blockSize, null);
+            g.drawImage(GameFrame.blocks[13], GamePanel.GAME_WIDTH - (3)*Maps.blockSize, 12*Maps.blockSize, null);
         }
         //Draw image of current block otherwise
         else{
-            g.drawImage(GameFrame.blocks[currentBlockNumber-1], GamePanel.GAME_WIDTH - (2)*Maps.blockSize, 12*Maps.blockSize, null);
+            g.drawImage(GameFrame.blocks[currentBlockNumber-1], GamePanel.GAME_WIDTH - (3)*Maps.blockSize, 12*Maps.blockSize, null);
+        }
+
+        //Play & Notes buttons
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+        for(int i = 0; i < posText.length; i++){
+            posText[i][2] = g.getFontMetrics().stringWidth(names[i]);
+        }
+        height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
+        posText[0][0] = (925 - posText[0][2]/2);
+        posText[0][1] = 50;
+        posText[1][0] = (1025 - posText[1][2]/2);
+        posText[1][1] = 50;
+
+        // Graphics2D g2 = (Graphics2D) g;
+        // g2.setStroke(new BasicStroke(2));
+        for(int i = 0; i < posText.length; i++){      
+            if(hoverText[i]){
+                g.setColor(java.awt.Color.darkGray);
+            }
+            else{
+                g.setColor(java.awt.Color.gray);
+            }
+            
+            g2.drawRoundRect(posText[i][0] - padding, posText[i][1] - height - padding, posText[i][2] + padding*2 , height + padding*2, 30, 30);
+            g2.fillRoundRect(posText[i][0] - padding, posText[i][1] - height - padding, posText[i][2] + padding*2 , height + padding*2, 30, 30);
+            
+            g.setColor(java.awt.Color.white);
+            g2.drawString(names[i], posText[i][0], posText[i][1]);
         }
     }
 
@@ -182,6 +220,15 @@ public class LevelMaker extends JPanel{
                 //TODO: handle exception
             } 
         }        
+
+        //The two play and notes buttons
+        if(hoverText[0]){ //Play level made in editor
+            GamePanel.setScreen = -6;
+        }
+        else if(hoverText[1]){ //add notes to editor
+            GamePanel.setScreen = -7;
+        }
+  
     }
 
     //Currently only used for detecting release to stop the "drag" effect
@@ -215,6 +262,15 @@ public class LevelMaker extends JPanel{
             }
             else{
                 hover[i] = false;
+            }
+        }
+
+        for(int i = 0; i < posText.length; i++){
+            if(x > posText[i][0] - padding && x < posText[i][0] - padding + posText[i][2] + padding*2 && y > posText[i][1] - height - padding && y < posText[i][1] + padding*2 - 9){
+                hoverText[i] = true;
+            }
+            else{
+                hoverText[i] = false;
             }
         }
         //Changes mouse position to block position (first block is 0, second is 1 etc...)

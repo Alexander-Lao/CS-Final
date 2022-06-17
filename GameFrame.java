@@ -2,6 +2,15 @@
 It is a child of JFrame because JFrame manages frames
 Runs the constructor in GamePanel class
 
+Screen 1 - > Level 1, Screen 2 -> Level 2 etc...
+Screen 0 -> Menu
+Screen -1 - > Level Editor
+Screen -2 - > How To play
+Screen -3 - > Settings
+Screen -4 - > KeyBinds
+Screen -5 - > "Win screen" between levels
+Screen -6 - > Play editor level
+Screen -7 - > Add notes to level editor (just run play editor level and add the dev note adders)
 */ 
 import java.awt.*;
 import javax.swing.*;
@@ -38,8 +47,6 @@ public class GameFrame extends JFrame{
     this.pack();//makes components fit in window - don't need to set JFrame size, as it will adjust accordingly
     this.setVisible(true); //makes window visible to user
     this.setLocationRelativeTo(null);//set window in middle of screen
-
-    
   }
 
   public void loadImages(){
