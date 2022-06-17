@@ -1,0 +1,17 @@
+Little details:
+You cannot click the close button on the keybinds frame.
+While keybinding, you cannot interact with the game.
+Therefore, until you click confirm, you will not be able to interact with the game.
+This is an intended feature.
+
+The only keybinds that work are single character keybinds
+Space does work if you leave it empty, if you try to use other keys such as shift and enter, the keybind will stay the same.
+
+You can only fit one character into a keybind. Try typing more :)
+
+Keybinds are case sensitive
+
+Esc pulls open the settings menu
+
+
+
