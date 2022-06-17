@@ -51,10 +51,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 else if(screen == -2){
                     howToPlay.mousePressed(e);
                 }
+                //currentlybinding == -1 means nothing is being binded, basicly does not allow user input until binding is finished
                 else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                     keyBinds.mousePressed(e);
                 }
-                settings.mousePressed(e);
+                if(KeyBinds.currentlyBinding == -1){
+                    settings.mousePressed(e);
+                }
             }
 
             public void mouseReleased(MouseEvent e){
@@ -137,10 +140,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     else if(screen == -2){ 
                         howToPlay.mousePosition(mouseX, mouseY);
                     }
-                    else if(screen == -4){
+                    else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                         keyBinds.mousePosition(mouseX, mouseY);
                     }
-                    settings.mousePosition(mouseX, mouseY);
+                    if(KeyBinds.currentlyBinding == -1){
+                        settings.mousePosition(mouseX, mouseY);
+                    }
                 }
                 catch (Exception e) {
                 }

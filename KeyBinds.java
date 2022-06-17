@@ -47,6 +47,7 @@ public class KeyBinds extends JPanel{
         f.setSize(200, 80);
         f.setVisible(false);
         f.setResizable(false);
+        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         t.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) { 
                 if (t.getText().length() >= 1 ) // limit textfield to 1 character
