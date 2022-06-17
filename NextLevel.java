@@ -10,15 +10,18 @@ public class NextLevel extends JPanel{
     public Graphics graphics;
 
     private boolean hover = false;
-    private String buttonName;
+    private static String buttonName;
 
-    private String title;
+    private static String title;
     private int[] pos = new int[3];
     private int height;
-    public static int padding;
+    public static int padding = 15;
 
 
     public NextLevel() {
+    }
+    
+    public static void checkNext() {
         if (GamePanel.nextScreen > GamePanel.lastMap) {
             title = "Congrats you beat the game!";
             buttonName = "Home";
@@ -27,7 +30,7 @@ public class NextLevel extends JPanel{
             title = "YAY!";
             buttonName = "Next level";
         }
-        padding = 15;
+
     }
 
     public void paint(Graphics g) {
@@ -39,7 +42,6 @@ public class NextLevel extends JPanel{
 
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
-
         g.setColor(java.awt.Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
@@ -54,10 +56,10 @@ public class NextLevel extends JPanel{
         pos[1]= (GamePanel.GAME_HEIGHT - height)/2;
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
-        if(hover){
+        if (hover) {
             g.setColor(java.awt.Color.darkGray);
         }
-        else{
+        else {
             g.setColor(java.awt.Color.gray);
         }
         g2.drawRoundRect(pos[0] - padding, pos[1] - height - padding, pos[2] + padding*2 , height + padding*2, 30, 30);

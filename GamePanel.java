@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         settings = new Settings();
         levelMaker = new LevelMaker();
         keyBinds = new KeyBinds();
+        nextLevel = new NextLevel();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
@@ -57,6 +58,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 //currentlybinding == -1 means nothing is being binded, basicly does not allow user input until binding is finished
                 else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                     keyBinds.mousePressed(e);
+                }
+                else if(screen == -5) {
+                    nextLevel.mousePressed(e);
                 }
                 if(KeyBinds.currentlyBinding == -1){
                     settings.mousePressed(e);
@@ -148,6 +152,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     }
                     else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                         keyBinds.mousePosition(mouseX, mouseY);
+                    }
+                    else if (screen == -5) {
+                        nextLevel.mousePosition(mouseX, mouseY);
                     }
                     if(KeyBinds.currentlyBinding == -1){
                         settings.mousePosition(mouseX, mouseY);
