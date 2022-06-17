@@ -74,6 +74,10 @@ public class Player extends Rectangle{
         if (xx % Maps.blockSize == 0) xcol--;
         if (GamePanel.grid[GamePanel.screen][yrow][xcol] != 0) {
             //collision
+            if (GamePanel.grid[GamePanel.screen][yrow][xcol]==14) {
+                GamePanel.nextScreen = GamePanel.screen + 1;
+                GamePanel.setScreen = -5;
+            }
             return true;
         }
         if ((y % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow+1][xcol] != 0)) {
