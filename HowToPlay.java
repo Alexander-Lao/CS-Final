@@ -30,10 +30,12 @@ public class HowToPlay extends JPanel {
         if(drawScreen == 0){
             g.drawImage(GameFrame.gifs[0], 0, 0, 600, 350, null); // Top Left
             g.drawImage(GameFrame.gifs[1], 0, 350, 600, 350, null); // Bottom Left
+            g.drawImage(GameFrame.gifs[5], 600, 0, 600, 700, null); 
         }
         else if(drawScreen == 1){
             g.drawImage(GameFrame.gifs[2], 0, 350, 600, 350, null); // Bottom Left
             g.drawImage(GameFrame.gifs[3], 0, 0, 600, 350, null); // Top Left
+            g.drawImage(GameFrame.gifs[6], 600, 0, 600, 700, null); 
         }
         else if(drawScreen == 2){
             g.drawImage(GameFrame.gifs[4], 0, 0, 1200, 700, null);
