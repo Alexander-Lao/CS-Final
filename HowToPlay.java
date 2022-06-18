@@ -35,8 +35,12 @@ public class HowToPlay extends JPanel{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(GameFrame.gifs[0], 0, 0, 600, 350, this);
-        g.drawImage(GameFrame.gifs[1], 0, 350, 600, 350, this);
+		//Draws the Game Animations onto the HowToPlay page
+        g.drawImage(GameFrame.gifs[0], 0, 0, 600, 350, null); //Top Left
+        g.drawImage(GameFrame.gifs[1], 0, 350, 600, 350, null); // Bottom Left
+ 		g.drawImage(GameFrame.gifs[2], 600, 0, 600, 350, null); //Top Right
+
+		g.drawImage(GameFrame.gifs[3], 600, 350, 600, 350, null); //Bottom Right
         // g.drawString("iterator", 50, 50);
         //1000 -> 4 sec
         // if(GamePanel.time < 1000){
