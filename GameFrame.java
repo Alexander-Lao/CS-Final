@@ -35,7 +35,8 @@ public class GameFrame extends JFrame{
   private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png", "eraser.png", "trashCan.png", "settings.png"};
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
-  public static Image icon;
+  private static String[] icons = {"Gravity_Switch.gif", "Click Notes.gif"};
+  public static Image[] gifs = new Image[icons.length];
 
   public GameFrame(){
     loadImages();
@@ -75,7 +76,10 @@ public class GameFrame extends JFrame{
 
       }
     }
-    icon = new ImageIcon("assets/Click Notes.gif").getImage();
+    for(int i = 0; i < icons.length; i++){
+      gifs[i] = new ImageIcon("assets/" + icons[i]).getImage();    
+    }
+    
 
   }
 

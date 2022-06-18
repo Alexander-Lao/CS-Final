@@ -35,7 +35,8 @@ public class HowToPlay extends JPanel{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(GameFrame.icon, 0, 0, this);
+        g.drawImage(GameFrame.gifs[0], 0, 0, 600, 350, this);
+        g.drawImage(GameFrame.gifs[1], 0, 350, 600, 350, this);
         // g.drawString("iterator", 50, 50);
         //1000 -> 4 sec
         // if(GamePanel.time < 1000){
