@@ -13,5 +13,7 @@ Keybinds are case sensitive
 
 Esc pulls open the settings menu
 
+r resets to beginning of current level
+
 
 

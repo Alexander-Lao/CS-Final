@@ -35,6 +35,7 @@ public class GameFrame extends JFrame{
   private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png", "eraser.png", "trashCan.png", "settings.png"};
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
+  public static Image icon;
 
   public GameFrame(){
     loadImages();
@@ -74,6 +75,8 @@ public class GameFrame extends JFrame{
 
       }
     }
+    icon = new ImageIcon("assets/Click Notes.gif").getImage();
+
   }
 
   public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
