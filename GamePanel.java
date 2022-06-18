@@ -18,7 +18,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public Settings settings;
     public LevelMaker levelMaker;
     public KeyBinds keyBinds;
+    public NextLevel nextLevel;
     public static int nextNote = 0;
+    public static int lastMap = 0;
     public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
     public static int[] noteCount = new int[3];
@@ -26,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static double time = 0;
     public static double timeReset = -100;
     public static boolean debug = false; //set true to retime maps
+    public static int nextScreen = 0;
 
     public static int parallaxRatio = 10;
 
@@ -38,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         settings = new Settings();
         levelMaker = new LevelMaker();
         keyBinds = new KeyBinds();
+        nextLevel = new NextLevel();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
@@ -54,6 +58,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 //currentlybinding == -1 means nothing is being binded, basicly does not allow user input until binding is finished
                 else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                     keyBinds.mousePressed(e);
+                }
+                else if(screen == -5) {
+                    nextLevel.mousePressed(e);
                 }
                 if(KeyBinds.currentlyBinding == -1){
                     settings.mousePressed(e);
@@ -87,14 +94,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             displayNotes(g);
             game.draw(g);
         }
-        else if(screen == -1){
+        else if (screen == -1) {
             levelMaker.draw(g);
         }
-        else if(screen == -2){
+        else if (screen == -2) {
             howToPlay.draw(g);
         }
-        else if(screen == -4){
+        else if (screen == -4) {
             keyBinds.draw(g);
+        }
+        else if (screen == -5) {
+            nextLevel.draw(g);
         }
         settings.draw(g);
     }
@@ -142,6 +152,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                     // }
                     else if(screen == -4 && KeyBinds.currentlyBinding == -1){
                         keyBinds.mousePosition(mouseX, mouseY);
+                    }
+                    else if (screen == -5) {
+                        nextLevel.mousePosition(mouseX, mouseY);
                     }
                     if(KeyBinds.currentlyBinding == -1){
                         settings.mousePosition(mouseX, mouseY);
