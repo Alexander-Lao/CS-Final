@@ -11,20 +11,10 @@ public class HowToPlay extends JPanel {
     public Image image;
     public Graphics graphics;
 
+    private int drawScreen;
+
     public HowToPlay() {
-        // JFrame f = new JFrame();
-        // JPanel p = new JPanel();
-        // JLabel l = new JLabel();
-        // ImageIcon icon = new ImageIcon(GameFrame.icon);
-        // // f.setSize(1200, 700);
-        // l.setIcon(icon);
-        // p.add(l);
-        // f.getContentPane().add(p);
-        // f.setLocationRelativeTo(null);
-        // f.setResizable(false);
-        // f.pack();
-        // f.setVisible(true);
-        // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        drawScreen = 0;
     }
 
     public void paint(Graphics g) {
@@ -36,15 +26,25 @@ public class HowToPlay extends JPanel {
 
     public void draw(Graphics g) {
         // Draws the Game Animations onto the HowToPlay page
-        g.drawImage(GameFrame.gifs[0], 0, 0, 600, 350, null); // Top Left
-        g.drawImage(GameFrame.gifs[1], 0, 350, 600, 350, null); // Bottom Left
-        g.drawImage(GameFrame.gifs[2], 600, 0, 600, 350, null); // Top Right
-        g.drawImage(GameFrame.gifs[3], 600, 350, 600, 350, null); // Bottom Right
 
-        // g.drawString("iterator", 50, 50);
-        // 1000 -> 4 sec
-        // if(GamePanel.time < 1000){
-        // g.drawString("iterator", x, y);
-        // }
+        if(drawScreen == 0){
+            g.drawImage(GameFrame.gifs[0], 0, 0, 600, 350, null); // Top Left
+            g.drawImage(GameFrame.gifs[1], 0, 350, 600, 350, null); // Bottom Left
+        }
+        else if(drawScreen == 1){
+            g.drawImage(GameFrame.gifs[2], 0, 350, 600, 350, null); // Bottom Left
+            g.drawImage(GameFrame.gifs[3], 0, 0, 600, 350, null); // Top Left
+        }
+        else if(drawScreen == 2){
+            g.drawImage(GameFrame.gifs[4], 0, 0, 1200, 700, null);
+        }
+        else{
+            GamePanel.setScreen = 0;
+            drawScreen = 0;
+        }
+    }
+
+    public void keyPressed(KeyEvent e){
+        drawScreen++;
     }
 }
