@@ -35,7 +35,7 @@ public class GameFrame extends JFrame{
   private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png", "eraser.png", "trashCan.png", "settings.png"};
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
-  private static String[] icons = {"Gravity_Switch.gif", "Click Notes.gif"};
+  private static String[] icons = {"Gravity_Switch.gif", "Click Notes.gif", "Load.gif", "Shift Editor.gif"};
   public static Image[] gifs = new Image[icons.length];
 
   public GameFrame(){
