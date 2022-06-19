@@ -20,20 +20,27 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public KeyBinds keyBinds;
     public NextLevel nextLevel;
     public static int nextNote = 0;
-    public static int lastMap = 0;
-    public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
+    public static int[] grid[] = new int[100][20000]; //Change y to GAME_HEIGHT/Maps.blockSize
     public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
     public static int[] noteCount = new int[3];
+    
+    //in-game maps numbered from 1 to lastMap
+    //custom maps numbered from 1 to customMapCount
+    public static int lastMap = 0;
+    public static int customMapCount;
+    public static String[] customMapNames = new String[1000];
+
     public static int screen = 0, setScreen = -100;
     public static double time = 0;
     public static double timeReset = -100;
     public static boolean debug = false; //set true to retime maps
     public static int nextScreen = 0;
-
     public static int parallaxRatio = 10;
+    public static boolean loadSelectedMap = false, saveSelectedMap = false;
 
     public GamePanel() {
         maps = new Maps();
+        System.out.println(customMapCount);
         temporary = new Notes();
         menu = new Menu();
         game = new Game();
@@ -128,7 +135,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             if (setScreen!=-100) {
                 screen = setScreen;
                 setScreen = -100;
-            } 
+            }
+            if (loadSelectedMap) {
+                levelMaker.loadMap();
+                loadSelectedMap = false;
+            }
+            if (saveSelectedMap) {
+                levelMaker.saveMap();
+                saveSelectedMap = false;
+            }
             if (delta >= 1) {
                 try {
                     mouseX = MouseInfo.getPointerInfo().getLocation().x - getLocationOnScreen().x;
@@ -195,16 +210,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         g.drawImage(GameFrame.backgroundImage[1], (int)(-time/parallaxRatio % GAME_WIDTH), 0, GAME_WIDTH, GAME_HEIGHT, null);
         g.drawImage(GameFrame.backgroundImage[1], (int)(-time/parallaxRatio % GAME_WIDTH) + GAME_WIDTH - 1, 0, GAME_WIDTH, GAME_HEIGHT, null);
 
-        for (int i = 0; i < grid[screen].length; i++) {
-            for (int j = 0; j < grid[screen][0].length; j++) {
-                int pos = grid[screen][i][j];                    
-
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) { //TODO find actual grid length
+                int blockType = grid[i][j];
+                if(blockType != 0){
+                    g.drawImage(GameFrame.blocks[blockType-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
+                }
                 //This only loads the blocks on the screen but its laggier for some reason
                 // if (pos != 0 && j < GamePanel.GAME_WIDTH/Maps.blockSize + 10 + time/Maps.blockSize
                 // && j > time/Maps.blockSize - 10) {
-                if(pos != 0){
-                    g.drawImage(GameFrame.blocks[pos-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
-                }
             }
         }
     }

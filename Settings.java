@@ -10,7 +10,7 @@ public class Settings extends JPanel{
     public Graphics graphics;
     private boolean settingsHover;
     private String title;
-    private String volumeSlider;
+    private String volumeSlider; //TODO music stuff
     private int previousScreen;
     // private double previousTime;
 

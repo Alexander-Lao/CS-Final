@@ -35,14 +35,14 @@ public class Player extends Rectangle{
             xcol = (xx)/Maps.blockSize;
             yrow = y/Maps.blockSize + 1;
             if (y % Maps.blockSize == 0) yrow--;
-            if (GamePanel.grid[GamePanel.screen][yrow][xcol] > 0) {
+            if (GamePanel.grid[yrow][xcol] > 0) {
                 //collision
                 if (Math.abs(y - (Maps.blockSize*(yrow - 1))) < 3) {
                     y = Maps.blockSize*(yrow - 1);
                     touchingSurface = true;
                 }
             }
-            if ((xx % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow][xcol+1] > 0)) {
+            if ((xx % Maps.blockSize != 0) && (GamePanel.grid[yrow][xcol+1] > 0)) {
                 //collision
                 if (Math.abs(y - (Maps.blockSize*(yrow - 1))) < 3) {
                     y = Maps.blockSize*(yrow - 1);
@@ -53,14 +53,14 @@ public class Player extends Rectangle{
         else { //gravity going up so check up
             xcol = xx/Maps.blockSize;
             yrow = y/Maps.blockSize;
-            if (GamePanel.grid[GamePanel.screen][yrow][xcol] > 0) {
+            if (GamePanel.grid[yrow][xcol] > 0) {
                 //collision
                 if (Math.abs(y - (Maps.blockSize*(yrow + 1))) < 3) {
                     y = Maps.blockSize*(yrow + 1);
                     touchingSurface = true;
                 }
             }
-            if ((xx % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow][xcol+1] > 0)) {
+            if ((xx % Maps.blockSize != 0) && (GamePanel.grid[yrow][xcol+1] > 0)) {
                 //collision
                 if (Math.abs(y - (Maps.blockSize*(yrow + 1))) < 3) {
                     y = Maps.blockSize*(yrow + 1);
@@ -72,18 +72,18 @@ public class Player extends Rectangle{
         xcol = xx/Maps.blockSize + 1;
         yrow = y/Maps.blockSize;
         if (xx % Maps.blockSize == 0) xcol--;
-        if (GamePanel.grid[GamePanel.screen][yrow][xcol] != 0) {
+        if (GamePanel.grid[yrow][xcol] != 0) {
             //collision
-            if (GamePanel.grid[GamePanel.screen][yrow][xcol]==15) {
+            if (GamePanel.grid[yrow][xcol]==15) {
                 GamePanel.nextScreen = GamePanel.screen + 1;
                 GamePanel.setScreen = -5;
                 NextLevel.checkNext();
             }
             return true;
         }
-        if ((y % Maps.blockSize != 0) && (GamePanel.grid[GamePanel.screen][yrow+1][xcol] != 0)) {
+        if ((y % Maps.blockSize != 0) && (GamePanel.grid[yrow+1][xcol] != 0)) {
             //collision
-            if (GamePanel.grid[GamePanel.screen][yrow+1][xcol]==15) {
+            if (GamePanel.grid[yrow+1][xcol]==15) {
                 GamePanel.nextScreen = GamePanel.screen + 1;
                 GamePanel.setScreen = -5;
                 NextLevel.checkNext();
