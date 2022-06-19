@@ -384,7 +384,7 @@ public class LevelMaker extends JPanel{
         maxX++;
         maxY++;
         try {
-            FileWriter myWriter = new FileWriter("customLevel.txt");
+            FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[savedLevel]+"/Maps.txt");
             myWriter.write(maxX + " " + maxY + "\n");
             for(int i = 0; i < maxX; i++){
                 for(int j = 0; j < maxY; j++){
@@ -395,7 +395,7 @@ public class LevelMaker extends JPanel{
                         myWriter.write(map[i][j] + "");
                     }
                 }
-                myWriter.write("\n");
+                if (i != maxX-1) myWriter.write("\n");
             }
             myWriter.close();
         }
