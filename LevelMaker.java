@@ -228,6 +228,7 @@ public class LevelMaker extends JPanel{
             //TODO
         }
         else if(hoverText[1]){ //add notes to editor
+            NextLevel.inEditor = true;
             if (savedLevel == 0) {
                 JLabel tempLabel = new JLabel("save first plz");
                 tempLabel.setFont(new Font("SansSerif",Font.BOLD,20));

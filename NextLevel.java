@@ -17,13 +17,23 @@ public class NextLevel extends JPanel{
     private int height;
     public static int padding = 15;
 
+    public static boolean inEditor;
+
+
     public NextLevel() {
+        inEditor = false;
     }
     
     public static void checkNext() {
         if (GamePanel.isCustomLevel) {
             title = "YAY!";
-            buttonName = "Home";
+            if(inEditor){
+                buttonName = "Back to editor";
+            }
+            else{
+                buttonName = "Home";
+            }
+            
         }
         else {
             if (GamePanel.currentLevel == GamePanel.lastMap) {
@@ -75,7 +85,13 @@ public class NextLevel extends JPanel{
     public void mousePressed(MouseEvent e){
         if(hover) {
             if (GamePanel.isCustomLevel || GamePanel.currentLevel == GamePanel.lastMap) {
-                GamePanel.setScreen = 0;
+                if(inEditor){
+                    GamePanel.setScreen = -1;
+                }
+                else{
+                    GamePanel.setScreen = 0;
+                }
+                
             }
             else {
                 GamePanel.currentLevel++;
