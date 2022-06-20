@@ -229,6 +229,7 @@ public class LevelMaker extends JPanel{
         }
         else if(hoverText[1]){ //add notes to editor
             GamePanel.setScreen = 2;
+            NextLevel.inEditor = true;
             if (savedLevel == 0) {
                 //TODO add alert telling them to save first
                 return;
