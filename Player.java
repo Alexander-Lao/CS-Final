@@ -2,17 +2,20 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Player extends Rectangle{    
-    public final int velocity = 1;
+    public final int velocity = 1; //Speed of player
+    //These variables are explained in the name
     public boolean touchingSurface = false;
     public boolean gravity = false;
     private boolean keyIsPressed = false;
-    public static int xx;
+    
+    public static int xx; //The x position with time included
 
     public Player(){
         super(100, 600, 50, 50);
     }
 
     public void keyPressed(KeyEvent e){
+        //Gravity switch code
         if (e.getKeyChar() == KeyBinds.key[0] && !keyIsPressed && touchingSurface) {
             keyIsPressed = true;
             if (GamePanel.screen > 0) gravity = !gravity;
@@ -91,6 +94,7 @@ public class Player extends Rectangle{
         return false;
     }
 
+    //Moves the player according to the speed
     public void move(){
         if (gravity) {
             y-=velocity;
@@ -101,9 +105,8 @@ public class Player extends Rectangle{
         touchingSurface = false;
     }
 
+    //Draw the sprite facing up or upside down
     public void draw(Graphics g){
-        // g.setColor(Color.black);
-        // g.fillRect(x, y, width, height);
         if(!gravity){
             g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockSize, Maps.blockSize), x, y, null);
         }

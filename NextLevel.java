@@ -1,5 +1,3 @@
-//Screen 0
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,22 +7,23 @@ public class NextLevel extends JPanel{
     public Image image;
     public Graphics graphics;
 
+    //The buttons for this screen
     private boolean hover = false;
     private static String buttonName;
-
     private static String title;
     private int[] pos = new int[3];
     private int height;
     public static int padding = 15;
 
-    public static boolean inEditor;
+    public static boolean inEditor; //if we were previously in the editor
 
-
+    //Initalization
     public NextLevel() {
         inEditor = false;
     }
     
     public static void checkNext() {
+        //Setting the button titles
         if (GamePanel.isCustomLevel) {
             title = "YAY!";
             if(inEditor){
@@ -47,6 +46,7 @@ public class NextLevel extends JPanel{
         }
     }
 
+    //Double buffer all drawn items
     public void paint(Graphics g) {
         image = createImage(GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);
         graphics = image.getGraphics();
@@ -55,13 +55,17 @@ public class NextLevel extends JPanel{
     }
 
     public void draw(Graphics g) {
+        //Draw background
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
+
+        //Draw title
         g.setColor(java.awt.Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-
+        
+        //button details
         g.getFontMetrics().stringWidth(buttonName);
         height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
         pos[2] = g.getFontMetrics().stringWidth(buttonName);
@@ -70,6 +74,8 @@ public class NextLevel extends JPanel{
         pos[1]= (GamePanel.GAME_HEIGHT - height)/2;
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
+
+        //hover condition and draw button
         if (hover) {
             g.setColor(java.awt.Color.darkGray);
         }

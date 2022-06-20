@@ -3,15 +3,14 @@ import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Notes {
-    public static final int blockSize = 50;
+    public static final int blockSize = 50; //The size of every block in pixels
 
     public Notes() {
-        int mapNumber = 0;
+        //Read the notes file and store values of each note
         try {
             File myObj = new File("Notes.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
-                mapNumber++;
                 int noteCount = myReader.nextInt();
                 GamePanel.noteCount = noteCount;
                 for (int i = 0; i < noteCount; i++) {
@@ -28,6 +27,7 @@ public class Notes {
         }
     }
     public static void loadNotes(String mapName) {
+        ///Load the notes when in that map
         try {
             File myObj = new File("levels/"+mapName+"/Notes.txt");
             Scanner myReader = new Scanner(myObj);
