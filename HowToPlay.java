@@ -2,7 +2,6 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferStrategy;
 
 import javax.swing.*;
 

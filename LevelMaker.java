@@ -35,6 +35,8 @@ public class LevelMaker extends JPanel{
     private int padding;
 
     public int[][] map = new int[100][500];
+    public static int loadedLevel = 0;
+    public static int savedLevel = 0;
 
     //Initalize all variables
     public LevelMaker() {
@@ -310,12 +312,7 @@ public class LevelMaker extends JPanel{
             screenShifts += Maps.blockSize;
         }
         if (e.getKeyChar() == KeyBinds.key[3]) {
-            //Alert dialague
-            int result = JOptionPane.showConfirmDialog(null,"Are you sure you want to save?", 
-            "WARNING", JOptionPane.YES_NO_OPTION);
-            if(result == JOptionPane.YES_OPTION){
-                saveGame();
-            }
+            saveGame();
         }
         if (e.getKeyChar() == KeyBinds.key[4]) {
             loadGame();
@@ -331,39 +328,45 @@ public class LevelMaker extends JPanel{
         //
     }
 
-    //Copid from maps.java
+    //Copied from maps.java
     public void loadGame(){
         clearGrid();
+        new CustomLevelSelect();
+    }
+    public void loadMap() {
         try {
-            File myObj = new File("customLevel.txt");
+            System.out.println(loadedLevel);
+            System.out.println("levels/"+GamePanel.customMapNames[loadedLevel]+"/Map.txt");
+            File myObj = new File("levels/"+GamePanel.customMapNames[loadedLevel]+"/Map.txt");
             Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                int rows = Integer.parseInt(myReader.next());
-                int cols = Integer.parseInt(myReader.next());
-                myReader.nextLine();
-                for (int i = 0; i < rows; i++) {
-                    String data = myReader.nextLine();
-                    for (int j = 0; j < cols; j++) {
-                        try {
-                            //For numbers 0 - 9
-                            map[i][j] = Integer.parseInt(data.charAt(j) + "");
-                        } catch (Exception e) {
-                            //for converting letters to numbers, starting with a = 10
-                            map[i][j] = data.charAt(j) - 'a' + 10;
-                        }
-                        
+            int rows = Integer.parseInt(myReader.next());
+            int cols = Integer.parseInt(myReader.next());
+            myReader.nextLine();
+            for (int i = 0; i < rows; i++) {
+                String data = myReader.nextLine();
+                for (int j = 0; j < cols; j++) {
+                    try {
+                        //For numbers 0 - 9
+                        map[i][j] = Integer.parseInt(data.charAt(j) + "");
+                    } catch (Exception e) {
+                        //for converting letters to numbers, starting with a = 10
+                        map[i][j] = data.charAt(j) - 'a' + 10;
                     }
+                    
                 }
             }
             myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("cant find custom level file");
             e.printStackTrace();
         }
     }
 
-    //Loads current state of game into customLevel.txt file
-    public void saveGame(){     
+    public void saveGame() {
+        new CustomLevelSave();
+    }
+    public void saveMap() {
         int maxX = 0;
         int maxY = 0;
         for(int i = 0; i < map.length; i++){
@@ -381,7 +384,7 @@ public class LevelMaker extends JPanel{
         maxX++;
         maxY++;
         try {
-            FileWriter myWriter = new FileWriter("customLevel.txt");
+            FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[savedLevel]+"/Map.txt");
             myWriter.write(maxX + " " + maxY + "\n");
             for(int i = 0; i < maxX; i++){
                 for(int j = 0; j < maxY; j++){
@@ -392,20 +395,18 @@ public class LevelMaker extends JPanel{
                         myWriter.write(map[i][j] + "");
                     }
                 }
-                myWriter.write("\n");
+                if (i != maxX-1) myWriter.write("\n");
             }
-
             myWriter.close();
-            } 
-            catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("An error occurred.");
-            }
+        }
     }
 
     //Simple turns 10 -> a, 11 -> b etc... Used for the numbers >= 10
     private String getCharForNumber(int i) {
         return i > 0 && i < 27 ? String.valueOf((char)(i + 'a' - 10)) : null;
-
     }
 
     //Sets the entire grid to zero

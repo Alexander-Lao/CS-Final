@@ -10,7 +10,7 @@ public class Settings extends JPanel{
     public Graphics graphics;
     private boolean settingsHover;
     private String title;
-    private String volumeSlider;
+    private String volumeSlider; //TODO music stuff
     private int previousScreen;
     // private double previousTime;
 
@@ -117,15 +117,15 @@ public class Settings extends JPanel{
             if(settingsHover){ 
                 previousScreen = GamePanel.screen;
                 previousTime = GamePanel.time;
-                GamePanel.screen(-3);
+                GamePanel.setScreen = -3;
             }
         }
         else{
             if(hover[0]){ //Menu
-                GamePanel.screen(0);
+                GamePanel.setScreen = 0;
             }
             else if(hover[1]){ //Key Binds
-                GamePanel.screen(-4);
+                GamePanel.setScreen = -4;
             }
             else if(hover[2]){ //Back Button
                 GamePanel.setScreen = previousScreen;
@@ -140,7 +140,7 @@ public class Settings extends JPanel{
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE && GamePanel.screen!=-3) {
             previousScreen = GamePanel.screen;
             previousTime = GamePanel.time;
-            GamePanel.screen(-3);
+            GamePanel.setScreen = -3;
         }
     }
 

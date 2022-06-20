@@ -1,28 +1,28 @@
-//Screen 0
+//Screen 1
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Menu extends JPanel{
+public class LevelSelect extends JPanel{
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
 
-    private boolean[] hover = new boolean[3];
-    private int[][] pos = new int[3][3]; // x y width 
-    private String[] names = new String[3]; //play, howToPlay, settings
+    private boolean[] hover = new boolean[4];
+    private int[][] pos = new int[4][3]; // x y width 
+    private String[] buttonName = new String[4];
 
     private String title;
     private int height;
     public static int padding;
 
-
-    public Menu() {
-        title = "Pellets Lmao";
-        names[0] = "Play";
-        names[1] = "Level Editor";
-        names[2] = "How to Play";
+    public LevelSelect() {
+        title = "Level Select";
+        buttonName[0] = "Level 1";
+        buttonName[1] = "Level 2";
+        buttonName[2] = "Level 3";
+        buttonName[3] = "Custom Levels";
         padding = 15;
     }
 
@@ -35,25 +35,20 @@ public class Menu extends JPanel{
 
     public void draw(Graphics g) {
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
-
         g.setColor(java.awt.Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
-
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-
         for(int i = 0; i < pos.length; i++){
-            pos[i][2] = g.getFontMetrics().stringWidth(names[i]);
+            pos[i][2] = g.getFontMetrics().stringWidth(buttonName[i]);
         }
         height = (g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent());
-
-        pos[0][0] = (GamePanel.GAME_WIDTH - pos[0][2])/2;
-        pos[0][1]= (GamePanel.GAME_HEIGHT - height)/2;
-        pos[1][0] = (GamePanel.GAME_WIDTH - pos[1][2])/2;
-        pos[1][1] = (GamePanel.GAME_HEIGHT - height)*11/16;
-        pos[2][0] = (GamePanel.GAME_WIDTH - pos[2][2]) / 2;
-        pos[2][1] = (GamePanel.GAME_HEIGHT - height)*7/8;
-
+        for (int i=0; i<pos.length; i++) {
+            pos[i][0] = (GamePanel.GAME_WIDTH - pos[i][2])/2;
+        }
+        for (int i=0; i<pos.length; i++) {
+            pos[i][1]= i*(GamePanel.GAME_HEIGHT - 300)/pos.length + 300;
+        }
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
         for(int i = 0; i < pos.length; i++){      
@@ -68,21 +63,29 @@ public class Menu extends JPanel{
             g2.fillRoundRect(pos[i][0] - padding, pos[i][1] - height - padding, pos[i][2] + padding*2 , height + padding*2, 30, 30);
             
             g.setColor(java.awt.Color.white);
-            g2.drawString(names[i], pos[i][0], pos[i][1]);
+            g2.drawString(buttonName[i], pos[i][0], pos[i][1]);
         }
     }
 
     public void mousePressed(MouseEvent e){
-        if(hover[0]){ //play
-            GamePanel.setScreen = 1;
+        if(hover[0]){
+            Maps.loadMap("level_1");
+            GamePanel.setScreen = 2;
+            GamePanel.currentLevel = 1;
         }
-        else if(hover[1]){ // level editor
-            GamePanel.setScreen = -1;
+        else if(hover[1]){
+            Maps.loadMap("level_2");
+            GamePanel.setScreen = 2;
+            GamePanel.currentLevel = 2;
         }
-        else if(hover[2]){ // How to play
-            GamePanel.setScreen = -2;
+        else if(hover[2]){
+            Maps.loadMap("level_3");
+            GamePanel.setScreen = 2;
+            GamePanel.currentLevel = 3;
         }
-        
+        else if (hover[3]) {
+            //TODO custom level select
+        }
     }
 
     public void mousePosition(int x, int y){

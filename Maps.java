@@ -4,41 +4,59 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Maps {
     public static final int blockSize = 50;
-
     public Maps() {
-        int mapNumber = 0;
         try {
-            File myObj = new File("Maps.txt");
+            File myObj = new File("levels/levelList.txt");
             Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                mapNumber++;
-                int rows = Integer.parseInt(myReader.next());
-                int cols = Integer.parseInt(myReader.next());
-                myReader.nextLine();
-                System.out.println(mapNumber);
-                for (int i = 0; i < rows; i++) {
-                    String data = myReader.nextLine();
-                    for (int j = 0; j < cols; j++) {
-                        try {
-                            //For numbers 0 - 9
-                            GamePanel.grid[mapNumber][i][j] = Integer.parseInt(data.charAt(j) + "");
-                        } catch (Exception e) {
-                            //for converting letters to numbers, starting with a = 10
-                            GamePanel.grid[mapNumber][i][j] = data.charAt(j) - 'a' + 10;
-                        }
-                        System.out.print(GamePanel.grid[mapNumber][i][j]);
-                    }
-                    System.out.println();
-                }
-                for(int i = 0; i < rows; i++){
-                    GamePanel.grid[mapNumber][i][cols] = 18;
-                }
+            GamePanel.lastMap = Integer.parseInt(myReader.next());
+            myReader.nextLine();
+            GamePanel.customMapCount = Integer.parseInt(myReader.next());
+            myReader.nextLine();
+            for (int i = 1; i <= GamePanel.customMapCount; i++) {
+                String name = myReader.nextLine();
+                GamePanel.customMapNames[i] = name;
             }
             myReader.close();
-            GamePanel.lastMap = mapNumber;
         }
         catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("level list not found");
+            e.printStackTrace();
+        }
+    }
+    public static void loadMap(String mapName) {
+        try {
+            File myObj = new File("levels/"+mapName+"/Map.txt");
+            Scanner myReader = new Scanner(myObj);
+            int rows = Integer.parseInt(myReader.next());
+            int cols = Integer.parseInt(myReader.next());
+            for (int i = 0; i < GamePanel.grid.length; i++) {
+                for (int j = 0; j < GamePanel.gridLength; j++) {
+                    GamePanel.grid[i][j]=0;
+                }
+            }
+            GamePanel.gridLength = cols;
+            myReader.nextLine();
+            for (int i = 0; i < rows; i++) {
+                String data = myReader.nextLine();
+                for (int j = 0; j < cols; j++) {
+                    try {
+                        //For numbers 0 - 9
+                        GamePanel.grid[i][j] = Integer.parseInt(data.charAt(j) + "");
+                    }
+                    catch (Exception e) {
+                        //for converting letters to numbers, starting with a = 10
+                        GamePanel.grid[i][j] = data.charAt(j) - 'a' + 10;
+                    }
+                }
+            }
+            GamePanel.gridLength++;
+            for(int i = 0; i < rows; i++){
+                GamePanel.grid[i][cols] = 18;
+            }
+            myReader.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Map not found");
             e.printStackTrace();
         }
     }

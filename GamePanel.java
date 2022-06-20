@@ -14,27 +14,35 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public Notes temporary;
     public Menu menu;
     public Game game;
+    public LevelSelect levelSelect;
     public HowToPlay howToPlay;
     public Settings settings;
     public LevelMaker levelMaker;
     public KeyBinds keyBinds;
     public NextLevel nextLevel;
     public static int nextNote = 0;
+    public static int gridLength = 0;
+    public static int[] grid[] = new int[100][20000]; //Change y to GAME_HEIGHT/Maps.blockSize
+    public static int[] notes[] = new int[1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
+    public static int noteCount;
+    
+    //in-game maps numbered from 1 to lastMap
+    //custom maps numbered from 1 to customMapCount
     public static int lastMap = 0;
-    public static int[] grid[][] = new int[3][100][500]; //Change y to GAME_HEIGHT/Maps.blockSize
-    public static int[] notes[][] = new int[3][1000][2]; //first dimension: map, second dimension: note number, third dimension: pair x,y position
-    public static int[] noteCount = new int[3];
+    public static int customMapCount;
+    public static String[] customMapNames = new String[1000];
+    
     public static int screen = 0, setScreen = -100;
+    public static int currentLevel = 0;
     public static double time = 0;
     public static double timeReset = -100;
     public static boolean debug = false; //set true to retime maps
-    public static int nextScreen = 0;
-
     public static int parallaxRatio = 10;
+    public static boolean loadSelectedMap = false, saveSelectedMap = false;
 
     public GamePanel() {
         maps = new Maps();
-        temporary = new Notes();
+        System.out.println(customMapCount);
         menu = new Menu();
         game = new Game();
         howToPlay = new HowToPlay();
@@ -42,12 +50,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         levelMaker = new LevelMaker();
         keyBinds = new KeyBinds();
         nextLevel = new NextLevel();
+        levelSelect = new LevelSelect();
         this.setFocusable(true);
         this.addKeyListener(this);
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if(screen == 0){
                     menu.mousePressed(e);
+                }
+                else if (screen == 1) {
+                    levelSelect.mousePressed(e);
                 }
                 else if(screen == -1){
                     levelMaker.mousePressed(e);
@@ -86,10 +98,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         if (screen == 0) {
             menu.draw(g);
         }
-        else if (screen > 0) {
+        else if (screen == 2) {
             displayMap(g);
             displayNotes(g);
             game.draw(g);
+        }
+        else if (screen == 1) {
+            levelSelect.draw(g);
         }
         else if (screen == -1) {
             levelMaker.draw(g);
@@ -126,19 +141,31 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 timeReset = -100;
             }
             if (setScreen!=-100) {
+                if (screen!=-3) time = 0;
                 screen = setScreen;
                 setScreen = -100;
-            } 
+            }
+            if (loadSelectedMap) {
+                levelMaker.loadMap();
+                loadSelectedMap = false;
+            }
+            if (saveSelectedMap) {
+                levelMaker.saveMap();
+                saveSelectedMap = false;
+            }
             if (delta >= 1) {
                 try {
                     mouseX = MouseInfo.getPointerInfo().getLocation().x - getLocationOnScreen().x;
                     mouseY = MouseInfo.getPointerInfo().getLocation().y - getLocationOnScreen().y;
-                    if (screen > 0) { //level
+                    if (screen > 1) { //level
                         game.move();
                         game.checkCollision();
                     }
                     else if(screen == 0){ // menu
                         menu.mousePosition(mouseX, mouseY);             
+                    }
+                    else if(screen == 1) {
+                        levelSelect.mousePosition(mouseX, mouseY);
                     }
                     else if(screen == -1){ 
                         levelMaker.mousePosition(mouseX, mouseY);
@@ -164,9 +191,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void keyPressed(KeyEvent e) {
         if (screen == 0) {
-            
+            //nothing
         }
-        else if (screen > 0) {
+        else if (screen == 1) {
+            //nothing
+        }
+        else if (screen == 2) {
             game.keyPressed(e);
         }
         else if (screen == -1) {
@@ -180,8 +210,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void keyReleased(KeyEvent e) {
         if (screen == 0) {
-
-        } else if (screen > 0) {
+            //
+        }
+        else if (screen == 2) {
             game.keyReleased(e);
         }
     }
@@ -195,16 +226,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         g.drawImage(GameFrame.backgroundImage[1], (int)(-time/parallaxRatio % GAME_WIDTH), 0, GAME_WIDTH, GAME_HEIGHT, null);
         g.drawImage(GameFrame.backgroundImage[1], (int)(-time/parallaxRatio % GAME_WIDTH) + GAME_WIDTH - 1, 0, GAME_WIDTH, GAME_HEIGHT, null);
 
-        for (int i = 0; i < grid[screen].length; i++) {
-            for (int j = 0; j < grid[screen][0].length; j++) {
-                int pos = grid[screen][i][j];                    
-
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < gridLength; j++) {
+                int blockType = grid[i][j];
+                if(blockType != 0){
+                    g.drawImage(GameFrame.blocks[blockType-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
+                }
                 //This only loads the blocks on the screen but its laggier for some reason
                 // if (pos != 0 && j < GamePanel.GAME_WIDTH/Maps.blockSize + 10 + time/Maps.blockSize
                 // && j > time/Maps.blockSize - 10) {
-                if(pos != 0){
-                    g.drawImage(GameFrame.blocks[pos-1], j * Maps.blockSize - (int) (time), i * Maps.blockSize, null);
-                }
             }
         }
     }
@@ -217,8 +247,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
                 g.drawImage(GameFrame.blocks[16], xpos - (int)(time), ypos, null);
             }
         }
-        for (int i = nextNote; i < noteCount[screen]; i++) {
-            int xpos = notes[screen][i][0], ypos = notes[screen][i][1];
+        for (int i = nextNote; i < noteCount; i++) {
+            int xpos = notes[i][0], ypos = notes[i][1];
             // g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
             g.drawImage(GameFrame.blocks[16], xpos - (int)(time), ypos, null);
         }

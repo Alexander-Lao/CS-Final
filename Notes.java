@@ -13,11 +13,11 @@ public class Notes {
             while (myReader.hasNextLine()) {
                 mapNumber++;
                 int noteCount = myReader.nextInt();
-                GamePanel.noteCount[mapNumber] = noteCount;
+                GamePanel.noteCount = noteCount;
                 for (int i = 0; i < noteCount; i++) {
                     int xpos = myReader.nextInt(), ypos = myReader.nextInt();
-                    GamePanel.notes[mapNumber][i][0] = xpos;
-                    GamePanel.notes[mapNumber][i][1] = ypos;
+                    GamePanel.notes[i][0] = xpos;
+                    GamePanel.notes[i][1] = ypos;
                 }
             }
             myReader.close();

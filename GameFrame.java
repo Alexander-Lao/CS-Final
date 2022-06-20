@@ -2,7 +2,8 @@
 It is a child of JFrame because JFrame manages frames
 Runs the constructor in GamePanel class
 
-Screen 1 - > Level 1, Screen 2 -> Level 2 etc...
+Screen 2 - > Game Screen (all levels will be played here)
+Screen 1 - > Level Select
 Screen 0 -> Menu
 Screen -1 - > Level Editor
 Screen -2 - > How To play

@@ -56,9 +56,9 @@ public class Game extends JPanel implements KeyListener {
             }
             return;
         }
-        if (GamePanel.nextNote != GamePanel.noteCount[GamePanel.screen]) {
+        if (GamePanel.nextNote != GamePanel.noteCount) {
             int i = GamePanel.nextNote;
-            int xpos = GamePanel.notes[GamePanel.screen][i][0], ypos = GamePanel.notes[GamePanel.screen][i][1];
+            int xpos = GamePanel.notes[i][0], ypos = GamePanel.notes[i][1];
             // player: [player.x, player.x+blockSize] [player.y, player.x+blockSize]
             // note: [xpos,xpos+GamePanel.NOTE_SIZE] [ypos,ypos+GamePanel.NOTE_SIZE]
             if (tap) {
