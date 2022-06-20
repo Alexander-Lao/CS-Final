@@ -8,21 +8,23 @@ import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
 import java.util.*;
 
-
 public class Game extends JPanel implements KeyListener {
     public static final int blockSize = 50;
     public Thread gameThread;
     public Image image;
     public Graphics graphics;
-    public Player player;
+
+    public Player player; //Creating object of player class
     boolean noteClicked = false, tap = false;
     public static int[] newTiming[] = new int[10000][2];
     public static int newNoteCount = 0;
 
+    //Initalization
     public Game() {
         player = new Player();
     }
 
+    //Double buffer
     public void paint(Graphics g) {
         image = createImage(GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);
         graphics = image.getGraphics();
@@ -30,17 +32,23 @@ public class Game extends JPanel implements KeyListener {
         g.drawImage(image, 0, 0, this);
     }
 
+    //Send draw over to player class
     public void draw(Graphics g) {
         player.draw(g);
     }
 
+    //Send move over to player class
     public void move() {
         player.move();
     }
+    
+    //Adding notes the the game
     public void addNote(int x,int y) {
         newTiming[newNoteCount][0]=x; newTiming[newNoteCount][1]=y;
         newNoteCount++;
     }
+
+    //Resets the game
     public void reset() {
         GamePanel.timeReset = 0;
         GamePanel.nextNote = 0;
@@ -48,6 +56,8 @@ public class Game extends JPanel implements KeyListener {
         player.gravity = false;
         player.touchingSurface = false;
     }
+
+    //Checks player collision with surfaces, head on contact, and notes
     public void checkCollision() {
         if (player.blockCollision()) {reset(); return;}
         if (GamePanel.editNotes) {
@@ -93,6 +103,8 @@ public class Game extends JPanel implements KeyListener {
         }
         //Temporary code to keep player on the map. Falling off the map should "kill" the player
     }
+
+    //Saves the game by writing to the file
     public void saveGame() {
         try {
             FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[LevelMaker.savedLevel]+"/Notes.txt");
@@ -110,6 +122,8 @@ public class Game extends JPanel implements KeyListener {
             System.out.println(e);
         }
     }
+
+    //Using key to add notes and save notes
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == KeyBinds.key[1] && noteClicked == false) {
             tap = true;
@@ -122,6 +136,7 @@ public class Game extends JPanel implements KeyListener {
         player.keyPressed(e);
     }
 
+    //Ensuring key release before next note can be pressed
     public void keyReleased(KeyEvent e) {
         if (e.getKeyChar() == KeyBinds.key[1]) {noteClicked = false; return;}
         player.keyReleased(e);
@@ -131,7 +146,8 @@ public class Game extends JPanel implements KeyListener {
         }
     }
     
+    //Override
     public void keyTyped(KeyEvent e) {
-        //
+
     }
 }

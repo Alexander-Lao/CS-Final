@@ -10,12 +10,15 @@ public class HowToPlay extends JPanel {
     public Image image;
     public Graphics graphics;
 
-    private int drawScreen;
+    //What screen to be drawn
+    public static int drawScreen;
 
+    //Initalization
     public HowToPlay() {
         drawScreen = 0;
     }
 
+    //Double buffer
     public void paint(Graphics g) {
         image = createImage(GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);
         graphics = image.getGraphics();
@@ -45,12 +48,14 @@ public class HowToPlay extends JPanel {
             g.drawString("In the note adding editor, press [p] to place a note in the desired location", 100, 80);
             g.drawString("Press [m] to save", 100, 150);
         }
+        //Go back to home screen when reaching the end
         else{
             GamePanel.setScreen = 0;
             drawScreen = 0;
         }
     }
 
+    //When enter pressed, change the screen
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             drawScreen++;

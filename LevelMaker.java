@@ -15,26 +15,33 @@ public class LevelMaker extends JPanel{
     public Image image;
     public Graphics graphics;
 
+    //Details for the "blocks" on the side
     private boolean[] hover = new boolean[15];
     private int[][] pos = new int[15][2]; //x y
-    private int currentBlockNumber;
-    private int mouseBlockX;
-    private int mouseBlockY;
-    private int mouseBlockXWithShifts;
-    private int screenShifts;
-    private boolean ifNone;
-    private int xMoves;
 
+    private int currentBlockNumber; //Currently chosen block to be used
+    private int mouseBlockX; //x position in blocks
+    private int mouseBlockY; //y position in blocks
+    private int mouseBlockXWithShifts; //x position with "shifts" included in blocks
+    private int screenShifts; //Number of screenshifts, 50 px at a time
+    private boolean ifNone; //if no block was clicked
+    private int xMoves; //x position with shifts included
+
+    //Self explainatory
     public int ticksMouseHeld;
     private boolean mouseHeld;
-
+    
+    //Detials for the two buttons "notes" and "music"
     private String[] names = new String[2];
     private boolean[] hoverText = new boolean[2];
     private int[][] posText = new int[2][3]; //x y width
     private int height;
     private int padding;
 
+    //initalizing map size
     public int[][] map = new int[100][500];
+
+    //What level currently saved and loaded
     public static int loadedLevel = 0;
     public static int savedLevel = 0;
 
@@ -53,6 +60,7 @@ public class LevelMaker extends JPanel{
         names[1] = "Notes";
         padding = 10;
 
+        //Block positions
         //Row 1
         pos[8][0] = GamePanel.GAME_WIDTH - 6*Maps.blockSize;
         pos[8][1] = 2*Maps.blockSize;
@@ -106,6 +114,7 @@ public class LevelMaker extends JPanel{
         pos[14][1] = 10*Maps.blockSize;
     }
 
+    //Double buffer
     public void paint(Graphics g) {
         image = createImage(GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);
         graphics = image.getGraphics();
@@ -114,9 +123,11 @@ public class LevelMaker extends JPanel{
     }
 
     public void draw(Graphics g) {
+        //Draw background
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
         displayMap(g);
-        //Set width (Currently every other vertical line is thicker IDK why. But it looks nice /shrug)
+
+        //Set width of lines
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(1));
@@ -137,6 +148,7 @@ public class LevelMaker extends JPanel{
         //Draw current block display
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
         g.drawString("Current:", GamePanel.GAME_WIDTH - (6)*Maps.blockSize, 13*Maps.blockSize - 10);
+
         //Draw eraser for no block selected
         if(currentBlockNumber == 0){
             g.drawImage(GameFrame.blocks[13], GamePanel.GAME_WIDTH - (3)*Maps.blockSize, 12*Maps.blockSize, null);
@@ -148,6 +160,7 @@ public class LevelMaker extends JPanel{
 
         //Play & Notes buttons
         g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+        //Button details (width height x y)
         for(int i = 0; i < posText.length; i++){
             posText[i][2] = g.getFontMetrics().stringWidth(names[i]);
         }
@@ -157,8 +170,7 @@ public class LevelMaker extends JPanel{
         posText[1][0] = (1025 - posText[1][2]/2);
         posText[1][1] = 50;
 
-        // Graphics2D g2 = (Graphics2D) g;
-        // g2.setStroke(new BasicStroke(2));
+        //Hover condition and draw buttons
         for(int i = 0; i < posText.length; i++){      
             if(hoverText[i]){
                 g.setColor(java.awt.Color.darkGray);
@@ -175,7 +187,7 @@ public class LevelMaker extends JPanel{
         }
     }
 
-    //Does a lot of damn stuff. Lots of stuff to click haha
+    //Does a lot of damn stuff. Lots of stuff to click!
     public void mousePressed(MouseEvent e){
         mouseHeld = true;
         ifNone = true; //This boolean for checking if none of the blocks were clicked. It will set the block to eraser. Can be removed
@@ -202,6 +214,7 @@ public class LevelMaker extends JPanel{
                     
                 }
             }
+            //Set block to eraser if none pressed
             if(ifNone){
                 currentBlockNumber = 0;
             }
@@ -250,7 +263,7 @@ public class LevelMaker extends JPanel{
     }
 
     //This gets called in the run() function which gets constantly called every tick
-    public void drag(){ //ging deez nuts on your face
+    public void drag(){
         if(mouseHeld){
             //100 tick requirement so blocks can be removed without the "hold" bringing it back
             if(ticksMouseHeld > 100 && mouseBlockX < GamePanel.GAME_WIDTH/Maps.blockSize - 7){
@@ -268,6 +281,8 @@ public class LevelMaker extends JPanel{
     //Uses the mouse X and Y position for game elements
     public void mousePosition(int x, int y){
         xMoves = x + screenShifts;
+
+        //Hover for blocks
         for(int i = 0; i < pos.length; i++){
             if(x > pos[i][0] && x < pos[i][0] + Maps.blockSize && y > pos[i][1] && y < pos[i][1] + Maps.blockSize){
                 hover[i] = true;
@@ -277,6 +292,7 @@ public class LevelMaker extends JPanel{
             }
         }
 
+        //Hover for buttons
         for(int i = 0; i < posText.length; i++){
             if(x > posText[i][0] - padding && x < posText[i][0] - padding + posText[i][2] + padding*2 && y > posText[i][1] - height - padding && y < posText[i][1] + padding*2 - 9){
                 hoverText[i] = true;
@@ -311,7 +327,7 @@ public class LevelMaker extends JPanel{
     }
 
     //This shifts the editor left and right
-    //Also currently used for save and load cuz I'm lazy, NEED TO ADD SOME MENU/PAUSE BUTTON TO DO THIS.
+    //Also currently used for save and load
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == KeyBinds.key[5]) {
             if(screenShifts > 0){
@@ -329,20 +345,22 @@ public class LevelMaker extends JPanel{
         }
     }
 
+    //Useless overrides?
     public void keyReleased(KeyEvent e) {
 
     }
 
-    //here to be overriden
     public void keyTyped(KeyEvent e) {
         //
     }
 
-    //Copied from maps.java
+    //Loads the game
     public void loadGame(){
         clearGrid();
         new CustomLevelSelect();
     }
+
+    //Copied from maps.java to read map into level maker
     public void loadMap() {
         try {
             System.out.println(loadedLevel);
@@ -362,7 +380,6 @@ public class LevelMaker extends JPanel{
                         //for converting letters to numbers, starting with a = 10
                         map[i][j] = data.charAt(j) - 'a' + 10;
                     }
-                    
                 }
             }
             myReader.close();
@@ -376,6 +393,8 @@ public class LevelMaker extends JPanel{
     public void saveGame() {
         new CustomLevelSave();
     }
+
+    //Writes current level editor details to a file
     public void saveMap() {
         int maxX = 14;
         int maxY = 10;

@@ -2,11 +2,12 @@ import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
-import javax.management.relation.Role;
-
 public class Maps {
-    public static final int blockSize = 50;
+    public static final int blockSize = 50; //Block size
+    
+    //Read map from files and store into an array where it will be read
     public Maps() {
+        //Read all maps
         try {
             File myObj = new File("levels/levelList.txt");
             Scanner myReader = new Scanner(myObj);
@@ -25,6 +26,8 @@ public class Maps {
             e.printStackTrace();
         }
     }
+
+    //Load specific map onto grid
     public static void loadMap(String mapName) {
         try {
             File myObj = new File("levels/"+mapName+"/Map.txt");
@@ -51,6 +54,8 @@ public class Maps {
                     }
                 }
             }
+            
+            //Add finish line at the end
             GamePanel.gridLength++;
             for(int i = 0; i < rows; i++){
                 GamePanel.grid[i][cols] = 18;
@@ -67,23 +72,3 @@ public class Maps {
         }
     }
 }
-/*
-17
-952 50
-1499 600
-1594 600
-2170 358
-2695 550
-3195 600
-3595 50
-3666 50
-4434 600
-4504 600
-4577 600
-4647 600
-5114 50
-5191 50
-5721 50
-6147 50
-6695 50
-*/

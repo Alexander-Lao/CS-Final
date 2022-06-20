@@ -9,6 +9,7 @@ public class Menu extends JPanel{
     public Image image;
     public Graphics graphics;
 
+    //Button details
     private boolean[] hover = new boolean[3];
     private int[][] pos = new int[3][3]; // x y width 
     private String[] names = new String[3]; //play, howToPlay, settings
@@ -17,7 +18,7 @@ public class Menu extends JPanel{
     private int height;
     public static int padding;
 
-
+    //Initialization
     public Menu() {
         title = "Pellets Lmao";
         names[0] = "Play";
@@ -26,6 +27,7 @@ public class Menu extends JPanel{
         padding = 15;
     }
 
+    //Double buffer
     public void paint(Graphics g) {
         image = createImage(GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);
         graphics = image.getGraphics();
@@ -34,14 +36,17 @@ public class Menu extends JPanel{
     }
 
     public void draw(Graphics g) {
+        //Draw background
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
 
+        //Draw title
         g.setColor(java.awt.Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 
+        //create values for the position and details related to the button
         for(int i = 0; i < pos.length; i++){
             pos[i][2] = g.getFontMetrics().stringWidth(names[i]);
         }
@@ -56,6 +61,8 @@ public class Menu extends JPanel{
 
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
+
+        //hover condition and draw actual buttons
         for(int i = 0; i < pos.length; i++){      
             if(hover[i]){
                 g.setColor(java.awt.Color.darkGray);
@@ -72,6 +79,7 @@ public class Menu extends JPanel{
         }
     }
 
+    //find what button is pressed
     public void mousePressed(MouseEvent e){
         if(hover[0]){ //play
             GamePanel.setScreen = 1;
@@ -84,6 +92,7 @@ public class Menu extends JPanel{
         }
     }
 
+    //mouse location to find whether mouse is hovering over a button
     public void mousePosition(int x, int y){
         for(int i = 0; i < pos.length; i++){
             if(x > pos[i][0] - padding && x < pos[i][0] - padding + pos[i][2] + padding*2 && y > pos[i][1] - height - padding && y < pos[i][1] + padding*2 - 13){

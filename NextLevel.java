@@ -89,17 +89,18 @@ public class NextLevel extends JPanel{
     }
 
     public void mousePressed(MouseEvent e){
+        //mouse hovering over button condition
         if(hover) {
             if (GamePanel.isCustomLevel || GamePanel.currentLevel == GamePanel.lastMap) {
+                //if in editor, go back to editor, otherwise, back to menu screen
                 if(inEditor){
                     GamePanel.setScreen = -1;
                 }
                 else{
                     GamePanel.setScreen = 0;
                 }
-                
             }
-            else {
+            else { //Go the next available level
                 GamePanel.currentLevel++;
                 Maps.loadMap("level_"+GamePanel.currentLevel);
                 GamePanel.setScreen = 2;
@@ -107,6 +108,7 @@ public class NextLevel extends JPanel{
         }
     }
 
+    //use mouse position to see if button is hovered or not
     public void mousePosition(int x, int y){
         if(x > pos[0] - padding && x < pos[0] - padding + pos[2] + padding*2 && y > pos[1] - height - padding && y < pos[1] + padding*2 - 13){
             hover = true;

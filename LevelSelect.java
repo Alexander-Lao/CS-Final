@@ -9,6 +9,7 @@ public class LevelSelect extends JPanel{
     public Image image;
     public Graphics graphics;
 
+    //Button details
     private boolean[] hover = new boolean[4];
     private int[][] pos = new int[4][3]; // x y width 
     private String[] buttonName = new String[4];
@@ -17,6 +18,7 @@ public class LevelSelect extends JPanel{
     private int height;
     public static int padding;
 
+    //Initalization
     public LevelSelect() {
         title = "Level Select";
         buttonName[0] = "Level 1";
@@ -26,6 +28,7 @@ public class LevelSelect extends JPanel{
         padding = 15;
     }
 
+    //Double buffer
     public void paint(Graphics g) {
         image = createImage(GamePanel.GAME_WIDTH, GamePanel.GAME_HEIGHT);
         graphics = image.getGraphics();
@@ -34,11 +37,16 @@ public class LevelSelect extends JPanel{
     }
 
     public void draw(Graphics g) {
+        //Background
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
+        //Title
         g.setColor(java.awt.Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+
+        //Initalizing all button detials (height width x y etc...)
         for(int i = 0; i < pos.length; i++){
             pos[i][2] = g.getFontMetrics().stringWidth(buttonName[i]);
         }
@@ -51,7 +59,9 @@ public class LevelSelect extends JPanel{
         }
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
-        for(int i = 0; i < pos.length; i++){      
+
+        for(int i = 0; i < pos.length; i++){   
+            //hover condition and draw button
             if(hover[i]){
                 g.setColor(java.awt.Color.darkGray);
             }
@@ -67,6 +77,7 @@ public class LevelSelect extends JPanel{
         }
     }
 
+    //if buttons are hovered, do on mouse pressed
     public void mousePressed(MouseEvent e){
         if(hover[0]){
             Maps.loadMap("level_1");
@@ -88,6 +99,7 @@ public class LevelSelect extends JPanel{
         }
     }
 
+    //use mouse position to see if hovering over a button
     public void mousePosition(int x, int y){
         for(int i = 0; i < pos.length; i++){
             if(x > pos[i][0] - padding && x < pos[i][0] - padding + pos[i][2] + padding*2 && y > pos[i][1] - height - padding && y < pos[i][1] + padding*2 - 13){

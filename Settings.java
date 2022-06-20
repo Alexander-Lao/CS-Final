@@ -124,6 +124,7 @@ public class Settings extends JPanel{
             if(hover[0]){ //Menu
                 GamePanel.setScreen = 0;
                 NextLevel.inEditor = false;
+                HowToPlay.drawScreen = 0;
             }
             else if(hover[1]){ //Key Binds
                 GamePanel.setScreen = -4;

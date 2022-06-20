@@ -22,5 +22,7 @@ The updated keybinds can be viewed in settings -> key binds
 Hitting back on the settings screen (when in the middle of a game) will resume the previous position
 Changing the screen to menu however, resets the level.
 
+Clicking none of the blocks sets the block to "eraser"
+Re-clicking a block with the same block will remove the block
 
 
