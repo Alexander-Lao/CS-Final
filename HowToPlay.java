@@ -52,6 +52,8 @@ public class HowToPlay extends JPanel {
     }
 
     public void keyPressed(KeyEvent e){
-        drawScreen++;
+        if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+            drawScreen++;
+        }
     }
 }
