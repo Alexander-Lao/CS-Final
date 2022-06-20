@@ -30,6 +30,9 @@ public class Maps {
                     }
                     System.out.println();
                 }
+                for(int i = 0; i < rows; i++){
+                    GamePanel.grid[mapNumber][i][cols] = 18;
+                }
             }
             myReader.close();
             GamePanel.lastMap = mapNumber;
