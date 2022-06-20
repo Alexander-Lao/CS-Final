@@ -56,7 +56,7 @@ public class NextLevel extends JPanel{
 
     public void draw(Graphics g) {
         //Draw background
-        g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
+        g.drawImage(GameFrame.backgroundImage[5], 0, 0, this);
 
         //Draw title
         g.setColor(java.awt.Color.black);

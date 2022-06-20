@@ -27,14 +27,8 @@ public class KeyBinds extends JPanel{
     private int[][] pos = new int[7][3]; // x y width 
     private int height;
 
-    //Title on left and right
-    public String title;
-    public String title2;
-
     //Initalization
     public KeyBinds(){
-        title = "Game";
-        title2 = "Editor";
         currentlyBinding = -1;
         for(int i = 0; i < pos.length; i++){
             combinedName[i] = key[i] + " - " + keyNames[i];
@@ -84,7 +78,7 @@ public class KeyBinds extends JPanel{
 
     public void draw(Graphics g) {
         //Draw background image
-        g.drawImage(GameFrame.backgroundImage[3], 0, 0, this);
+        g.drawImage(GameFrame.backgroundImage[2], 0, 0, this);
 
         //Button details
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
@@ -129,12 +123,6 @@ public class KeyBinds extends JPanel{
             g.setColor(java.awt.Color.white);
             g2.drawString(combinedName[i], pos[i][0], pos[i][1]);
         }
-
-        //Set titles here becuase I need the x values from above to align
-        g.setColor(java.awt.Color.black);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-        g.drawString(title, (GamePanel.GAME_WIDTH - pos[0][2])/4, (GamePanel.GAME_HEIGHT) / 4);
-        g.drawString(title2, (GamePanel.GAME_WIDTH - pos[0][2])*3/4, (GamePanel.GAME_HEIGHT) / 4);
 
         //The combinded name that will be displayed
         for(int i = 0; i < pos.length; i++){

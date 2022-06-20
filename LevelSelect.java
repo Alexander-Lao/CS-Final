@@ -14,13 +14,11 @@ public class LevelSelect extends JPanel{
     private int[][] pos = new int[4][3]; // x y width 
     private String[] buttonName = new String[4];
 
-    private String title;
     private int height;
     public static int padding;
 
     //Initalization
     public LevelSelect() {
-        title = "Level Select";
         buttonName[0] = "Level 1";
         buttonName[1] = "Level 2";
         buttonName[2] = "Level 3";
@@ -38,11 +36,7 @@ public class LevelSelect extends JPanel{
 
     public void draw(Graphics g) {
         //Background
-        g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
-        //Title
-        g.setColor(java.awt.Color.black);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-        g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+        g.drawImage(GameFrame.backgroundImage[3], 0, 0, this);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 

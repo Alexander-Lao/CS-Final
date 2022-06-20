@@ -14,13 +14,11 @@ public class Menu extends JPanel{
     private int[][] pos = new int[3][3]; // x y width 
     private String[] names = new String[3]; //play, howToPlay, settings
 
-    private String title;
     private int height;
     public static int padding;
 
     //Initialization
     public Menu() {
-        title = "Pellets Lmao";
         names[0] = "Play";
         names[1] = "Level Editor";
         names[2] = "How to Play";
@@ -39,11 +37,7 @@ public class Menu extends JPanel{
         //Draw background
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
 
-        //Draw title
         g.setColor(java.awt.Color.black);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-        g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
-
         g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 
         //create values for the position and details related to the button

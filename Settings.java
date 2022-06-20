@@ -9,7 +9,6 @@ public class Settings extends JPanel{
     public Image image;
     public Graphics graphics;
     private boolean settingsHover;
-    private String title;
     private int previousScreen;
 
     //Position of settings title
@@ -27,7 +26,6 @@ public class Settings extends JPanel{
 
     //Initalization
     public Settings(){
-        title = "Settings";
         names[0] = "Menu";
         names[1] = "Key Binds";
         names[2] = "Back";
@@ -58,12 +56,7 @@ public class Settings extends JPanel{
         }
         else{ //When in the settings panel
             //Draw background
-            g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
-
-            //Draw title
-            g.setColor(java.awt.Color.black);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-            g.drawString(title, (GamePanel.GAME_WIDTH - g.getFontMetrics().stringWidth(title)) / 2, (GamePanel.GAME_HEIGHT) / 4);
+            g.drawImage(GameFrame.backgroundImage[4], 0, 0, this);
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
 

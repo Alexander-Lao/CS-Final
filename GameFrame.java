@@ -25,7 +25,9 @@ public class GameFrame extends JFrame{
 GamePanel panel;
 
 //Background Images
-private static String[] images = {"blueLand.png", "blueDesert.png", "blueShroom.png", "greenLand.png", "greenGrass.png", "coloredDesert.png", "coloredShroom.png"};
+// private static String[] images = {"blueLand.png", "blueDesert.png", "greenLand.png", "greenGrass.png", "coloredDesert.png"};
+//Last one is temporary, will need to add different images for when we get to "next level" or "win".
+private static String[] images = {"menu.png", "blueDesert.png", "keyBinds.png", "levelSelect.png", "settingsBG.png", "greenGrass.png"};
 public static BufferedImage[] backgroundImage = new BufferedImage[images.length];
 
 //Sprites
