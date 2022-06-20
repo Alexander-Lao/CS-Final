@@ -13,7 +13,6 @@ public class CustomLevelSelect extends JFrame implements ItemListener,ActionList
         f.setSize(1000, 250);
         f.setLocationRelativeTo(null);
         f.setLayout(new FlowLayout());
-        JComboBox<String> dropdownList = new JComboBox<>(); 
         cb = new JComboBox<String>(Arrays.copyOfRange(GamePanel.customMapNames,1,GamePanel.customMapCount+1));
         cb.addItemListener(this);
         cb.setFont(new Font("Serif",Font.BOLD,30));

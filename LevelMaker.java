@@ -336,8 +336,8 @@ public class LevelMaker extends JPanel{
     public void loadMap() {
         try {
             System.out.println(loadedLevel);
-            System.out.println("levels/"+GamePanel.customMapNames[loadedLevel]+"/Maps.txt");
-            File myObj = new File("levels/"+GamePanel.customMapNames[loadedLevel]+"/Maps.txt");
+            System.out.println("levels/"+GamePanel.customMapNames[loadedLevel]+"/Map.txt");
+            File myObj = new File("levels/"+GamePanel.customMapNames[loadedLevel]+"/Map.txt");
             Scanner myReader = new Scanner(myObj);
             int rows = Integer.parseInt(myReader.next());
             int cols = Integer.parseInt(myReader.next());
@@ -384,7 +384,7 @@ public class LevelMaker extends JPanel{
         maxX++;
         maxY++;
         try {
-            FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[savedLevel]+"/Maps.txt");
+            FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[savedLevel]+"/Map.txt");
             myWriter.write(maxX + " " + maxY + "\n");
             for(int i = 0; i < maxX; i++){
                 for(int j = 0; j < maxY; j++){

@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.StandardOpenOption;
 public class CustomLevelSave extends JFrame implements ItemListener,ActionListener {
     static JFrame f;
     static JLabel txt,txt2;
@@ -19,7 +18,6 @@ public class CustomLevelSave extends JFrame implements ItemListener,ActionListen
         f.setSize(1200, 300);
         f.setLocationRelativeTo(null);
         f.setLayout(new FlowLayout());
-        JComboBox<String> dropdownList = new JComboBox<>(); 
         cb = new JComboBox<String>(Arrays.copyOfRange(GamePanel.customMapNames,1,GamePanel.customMapCount+1));
         cb.addItemListener(this);
         cb.setFont(new Font("Serif",Font.BOLD,30));
@@ -74,7 +72,7 @@ public class CustomLevelSave extends JFrame implements ItemListener,ActionListen
         }
         //make a new folder and do stuff
         new File("levels/"+fileNameIn.getText()).mkdirs();
-        File myObj = new File("levels/"+fileNameIn.getText()+"/Maps.txt");
+        File myObj = new File("levels/"+fileNameIn.getText()+"/Map.txt");
         try {
             myObj.createNewFile();
         }

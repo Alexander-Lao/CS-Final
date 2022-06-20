@@ -29,6 +29,12 @@ public class Maps {
             Scanner myReader = new Scanner(myObj);
             int rows = Integer.parseInt(myReader.next());
             int cols = Integer.parseInt(myReader.next());
+            for (int i = 0; i < GamePanel.grid.length; i++) {
+                for (int j = 0; j < GamePanel.gridLength; j++) {
+                    GamePanel.grid[i][j]=0;
+                }
+            }
+            GamePanel.gridLength = cols;
             myReader.nextLine();
             for (int i = 0; i < rows; i++) {
                 String data = myReader.nextLine();
