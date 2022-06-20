@@ -32,7 +32,7 @@ public class GameFrame extends JFrame{
   public static BufferedImage[] sprites = new BufferedImage[sprite.length];
 
   //Terrain
-  private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png", "eraser.png", "trashCan.png", "settings.png"};
+  private static String[] terrain = {"none.png", "T.png", "R.png", "B.png", "L.png", "TR.png", "BR.png", "BL.png", "TL.png", "TRC.png", "BRC.png", "BLC.png", "TLC.png", "eraser.png", "trashCan.png", "settings.png", "Note.png"};
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
   //How To Play Gifs && Side images

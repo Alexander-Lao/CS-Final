@@ -213,12 +213,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         if (debug) {
             for (int i=0; i<Game.newNoteCount; i++) {
                 int xpos = Game.newTiming[i][0], ypos = Game.newTiming[i][1];
-                g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
+                // g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
+                g.drawImage(GameFrame.blocks[16], xpos - (int)(time), ypos, null);
             }
         }
         for (int i = nextNote; i < noteCount[screen]; i++) {
             int xpos = notes[screen][i][0], ypos = notes[screen][i][1];
-            g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
+            // g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);
+            g.drawImage(GameFrame.blocks[16], xpos - (int)(time), ypos, null);
         }
     }
 

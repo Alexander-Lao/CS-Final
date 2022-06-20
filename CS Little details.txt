@@ -15,5 +15,12 @@ Esc pulls open the settings menu
 
 r resets to beginning of current level
 
+HowToPlay shows the default (and recommended) keybinds.
+They do not display customly changed keybinds.
+The updated keybinds can be viewed in settings -> key binds
+
+Hitting back on the settings screen (when in the middle of a game) will resume the previous position
+Changing the screen to menu however, resets the level.
+
 
 
