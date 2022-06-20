@@ -49,7 +49,7 @@ public class Game extends JPanel implements KeyListener {
     }
     public void checkCollision() {
         if (player.blockCollision()) reset();
-        if (GamePanel.debug) {
+        if (GamePanel.editNotes) {
             if (tap) {
                 addNote(Player.xx,player.y);
                 tap = false;
@@ -93,16 +93,18 @@ public class Game extends JPanel implements KeyListener {
     }
     public void saveGame() {
         try {
-            FileWriter myWriter = new FileWriter("Notes.txt");
+            FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[LevelMaker.savedLevel]+"/Notes.txt");
             myWriter.write(newNoteCount + "\n");
+            //TODO maybe sort the notes before writing?
             for(int i = 0; i < newNoteCount; i++) {
                 myWriter.write(newTiming[i][0] + " " + newTiming[i][1]);
                 if (i != newNoteCount-1) myWriter.write("\n");
             }
             myWriter.close();
-        } 
+        }
         catch (IOException e) {
             System.out.println("An error occurred.");
+            System.out.println(e);
         }
     }
     public void keyPressed(KeyEvent e) {
@@ -111,7 +113,7 @@ public class Game extends JPanel implements KeyListener {
             noteClicked = true;
             return;
         }
-        if (e.getKeyChar() == 'm' && GamePanel.debug) {
+        if (e.getKeyChar() == 'm' && GamePanel.editNotes) {
             saveGame();
         }
         player.keyPressed(e);

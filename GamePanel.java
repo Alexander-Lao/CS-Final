@@ -34,10 +34,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     
     public static int screen = 0, setScreen = -100;
     public static int currentLevel = 0;
+    public static boolean isCustomLevel = false;
     public static double time = 0;
     public static double timeReset = -100;
-    public static boolean debug = false; //set true to retime maps
+    public static boolean editNotes = false; //set true to retime maps
     public static int parallaxRatio = 10;
+    public static boolean debug;
     public static boolean loadSelectedMap = false, saveSelectedMap = false;
 
     public GamePanel() {
@@ -240,7 +242,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
     
     private void displayNotes(Graphics g) {
-        if (debug) {
+        if (editNotes) {
             for (int i=0; i<Game.newNoteCount; i++) {
                 int xpos = Game.newTiming[i][0], ypos = Game.newTiming[i][1];
                 // g.fillRect(xpos - (int)(time), ypos, NOTE_SIZE, NOTE_SIZE);

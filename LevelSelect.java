@@ -84,7 +84,7 @@ public class LevelSelect extends JPanel{
             GamePanel.currentLevel = 3;
         }
         else if (hover[3]) {
-            //TODO custom level select
+            new CustomLevelDropdown();
         }
     }
 

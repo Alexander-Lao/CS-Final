@@ -49,7 +49,7 @@ public class LevelMaker extends JPanel{
         ticksMouseHeld = 0;
         mouseHeld = false;
 
-        names[0] = "Play";
+        names[0] = "Song";
         names[1] = "Notes";
         padding = 10;
 
@@ -223,14 +223,21 @@ public class LevelMaker extends JPanel{
             } 
         }        
 
-        //The two play and notes buttons
-        if(hoverText[0]){ //Play level made in editor
-            GamePanel.setScreen = -6;
+        //The two song and notes buttons
+        if(hoverText[0]){ //change the song
+            //TODO
         }
         else if(hoverText[1]){ //add notes to editor
-            GamePanel.setScreen = -7;
+            GamePanel.setScreen = 2;
+            if (savedLevel == 0) {
+                //TODO add alert telling them to save first
+                return;
+            }
+            GamePanel.currentLevel = savedLevel;
+            Maps.loadMap(GamePanel.customMapNames[savedLevel]);
+            GamePanel.isCustomLevel = true;
+            GamePanel.editNotes = true;
         }
-  
     }
 
     //Currently only used for detecting release to stop the "drag" effect

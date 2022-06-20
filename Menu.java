@@ -77,6 +77,7 @@ public class Menu extends JPanel{
             GamePanel.setScreen = 1;
         }
         else if(hover[1]){ // level editor
+            LevelMaker.savedLevel = 0;
             GamePanel.setScreen = -1;
         }
         else if(hover[2]){ // How to play

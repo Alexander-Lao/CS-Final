@@ -22,13 +22,19 @@ public class NextLevel extends JPanel{
     }
     
     public static void checkNext() {
-        if (GamePanel.currentLevel == GamePanel.lastMap) {
-            title = "Congrats you beat the game!";
+        if (GamePanel.isCustomLevel) {
+            title = "YAY!";
             buttonName = "Home";
         }
         else {
-            title = "YAY!";
-            buttonName = "Next level";
+            if (GamePanel.currentLevel == GamePanel.lastMap) {
+                title = "Congrats you beat the game!";
+                buttonName = "Home";
+            }
+            else {
+                title = "YAY!";
+                buttonName = "Next level";
+            }
         }
     }
 
@@ -69,7 +75,7 @@ public class NextLevel extends JPanel{
 
     public void mousePressed(MouseEvent e){
         if(hover) {
-            if (GamePanel.currentLevel == GamePanel.lastMap) {
+            if (GamePanel.isCustomLevel || GamePanel.currentLevel == GamePanel.lastMap) {
                 GamePanel.setScreen = 0;
             }
             else {

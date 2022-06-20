@@ -27,4 +27,24 @@ public class Notes {
             e.printStackTrace();
         }
     }
+    public static void loadNotes(String mapName) {
+        try {
+            File myObj = new File("levels/"+mapName+"/Notes.txt");
+            Scanner myReader = new Scanner(myObj);
+            int nc = Integer.parseInt(myReader.next());
+            GamePanel.noteCount = nc;
+            myReader.nextLine();
+            for (int i = 0; i < nc; i++) {
+                int xpos = Integer.parseInt(myReader.next());
+                int ypos = Integer.parseInt(myReader.next());
+                GamePanel.notes[i][0] = xpos; GamePanel.notes[i][1] = ypos;
+                myReader.nextLine();
+            }
+            myReader.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Map not found");
+            e.printStackTrace();
+        }
+    }
 }
