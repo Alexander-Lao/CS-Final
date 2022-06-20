@@ -11,6 +11,7 @@ public class CustomLevelSave extends JFrame implements ItemListener,ActionListen
     static JLabel txt,txt2;
     static JComboBox<String> cb;
     static JTextField fileNameIn = new JTextField(20);
+    static int cl = 0;
     JButton b;
     public CustomLevelSave() {
         // create a new frame
@@ -43,16 +44,19 @@ public class CustomLevelSave extends JFrame implements ItemListener,ActionListen
         p2.add(fileNameIn);
         f.add(p2);
         f.add(b);
-        LevelMaker.savedLevel = 1;
+        if (GamePanel.customMapCount == 0) cl = 0;
+        else cl = 1;
     }
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() == cb) {
-            LevelMaker.savedLevel = cb.getSelectedIndex() + 1;
+            cl = cb.getSelectedIndex() + 1;
         }
     }
     public void actionPerformed(ActionEvent e) {
         //close window and load map
         if (fileNameIn.getText().equals("")) {
+            if (cl == 0) return;
+            LevelMaker.savedLevel = cl;
             GamePanel.saveSelectedMap = true;
             f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
             return;

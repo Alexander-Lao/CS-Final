@@ -6,6 +6,7 @@ public class CustomLevelSelect extends JFrame implements ItemListener,ActionList
     static JFrame f;
     static JLabel txt;
     static JComboBox<String> cb;
+    public static int ll = 0;
     JButton b;
     public CustomLevelSelect() {
         // create a new frame
@@ -29,16 +30,20 @@ public class CustomLevelSelect extends JFrame implements ItemListener,ActionList
         b.setFont(new Font("SansSerif",Font.BOLD,30));
         b.addActionListener(this);
         f.add(b);
-        LevelMaker.loadedLevel = 1;
+        if (GamePanel.customMapCount == 0) ll = 0;
+        else ll = 1;
     }
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() == cb) {
-            LevelMaker.loadedLevel = cb.getSelectedIndex() + 1;
+            ll = cb.getSelectedIndex() + 1;
         }
     }
     public void actionPerformed(ActionEvent e) {
         //close window and load map
-        GamePanel.loadSelectedMap = true;
-        f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+        if (ll != 0) {
+            LevelMaker.loadedLevel = ll;
+            GamePanel.loadSelectedMap = true;
+            f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+        }
     }
 }

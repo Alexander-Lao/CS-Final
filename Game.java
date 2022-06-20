@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
+import java.util.*;
 
 
 public class Game extends JPanel implements KeyListener {
@@ -48,36 +49,37 @@ public class Game extends JPanel implements KeyListener {
         player.touchingSurface = false;
     }
     public void checkCollision() {
-        if (player.blockCollision()) reset();
+        if (player.blockCollision()) {reset(); return;}
         if (GamePanel.editNotes) {
             if (tap) {
                 addNote(Player.xx,player.y);
                 tap = false;
             }
-            return;
         }
-        if (GamePanel.nextNote != GamePanel.noteCount) {
-            int i = GamePanel.nextNote;
-            int xpos = GamePanel.notes[i][0], ypos = GamePanel.notes[i][1];
-            // player: [player.x, player.x+blockSize] [player.y, player.x+blockSize]
-            // note: [xpos,xpos+GamePanel.NOTE_SIZE] [ypos,ypos+GamePanel.NOTE_SIZE]
-            if (tap) {
-                tap = false;
-                if (Player.xx+blockSize < xpos) { //clicked too early
-                    reset();
-                }
-                else {
-                    if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
-                        GamePanel.nextNote++;
-                    }
-                    else { //missed note vertically
+        else {
+            if (GamePanel.nextNote != GamePanel.noteCount) {
+                int i = GamePanel.nextNote;
+                int xpos = GamePanel.notes[i][0], ypos = GamePanel.notes[i][1];
+                // player: [player.x, player.x+blockSize] [player.y, player.x+blockSize]
+                // note: [xpos,xpos+GamePanel.NOTE_SIZE] [ypos,ypos+GamePanel.NOTE_SIZE]
+                if (tap) {
+                    tap = false;
+                    if (Player.xx+blockSize < xpos) { //clicked too early
                         reset();
                     }
+                    else {
+                        if (((player.y <= ypos) && (ypos <= player.y+blockSize)) || ((player.y <= ypos+GamePanel.NOTE_SIZE) && (ypos+GamePanel.NOTE_SIZE <= player.y+blockSize))) {
+                            GamePanel.nextNote++;
+                        }
+                        else { //missed note vertically
+                            reset();
+                        }
+                    }
                 }
-            }
-            else {
-                if (xpos+GamePanel.NOTE_SIZE < Player.xx) { //did not click note
-                    reset();
+                else {
+                    if (xpos+GamePanel.NOTE_SIZE < Player.xx) { //did not click note
+                        reset();
+                    }
                 }
             }
         }
@@ -95,6 +97,7 @@ public class Game extends JPanel implements KeyListener {
         try {
             FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[LevelMaker.savedLevel]+"/Notes.txt");
             myWriter.write(newNoteCount + "\n");
+            Arrays.sort(newTiming, 0, newNoteCount, (a, b) -> Double.compare(a[0], b[0]));
             //TODO maybe sort the notes before writing?
             for(int i = 0; i < newNoteCount; i++) {
                 myWriter.write(newTiming[i][0] + " " + newTiming[i][1]);

@@ -228,11 +228,13 @@ public class LevelMaker extends JPanel{
             //TODO
         }
         else if(hoverText[1]){ //add notes to editor
-            GamePanel.setScreen = 2;
             if (savedLevel == 0) {
-                //TODO add alert telling them to save first
+                JLabel tempLabel = new JLabel("save first plz");
+                tempLabel.setFont(new Font("SansSerif",Font.BOLD,20));
+                JOptionPane.showMessageDialog(null, tempLabel,"Error",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
+            GamePanel.setScreen = 2;
             GamePanel.currentLevel = savedLevel;
             Maps.loadMap(GamePanel.customMapNames[savedLevel]);
             GamePanel.isCustomLevel = true;
@@ -374,21 +376,17 @@ public class LevelMaker extends JPanel{
         new CustomLevelSave();
     }
     public void saveMap() {
-        int maxX = 0;
-        int maxY = 0;
+        int maxX = 14;
+        int maxY = 10;
         for(int i = 0; i < map.length; i++){
             for(int j = 0; j < map[0].length; j++){
                 if(map[i][j] != 0){
-                    if(i > maxX){
-                        maxX = i;
-                    }
                     if(j > maxY){
                         maxY = j;
                     }
                 }
             }
         }
-        maxX++;
         maxY++;
         try {
             FileWriter myWriter = new FileWriter("levels/"+GamePanel.customMapNames[savedLevel]+"/Map.txt");

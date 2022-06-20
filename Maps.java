@@ -2,6 +2,8 @@ import java.io.File; // Import the File class
 import java.io.FileNotFoundException; // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
+import javax.management.relation.Role;
+
 public class Maps {
     public static final int blockSize = 50;
     public Maps() {
@@ -52,6 +54,10 @@ public class Maps {
             GamePanel.gridLength++;
             for(int i = 0; i < rows; i++){
                 GamePanel.grid[i][cols] = 18;
+            }
+            for (int i=0; i<rows; i++) {
+                for (int j=0; j<=cols; j++) System.out.print(GamePanel.grid[i][j]+" ");
+                System.out.println();
             }
             myReader.close();
         }

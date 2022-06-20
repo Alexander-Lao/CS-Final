@@ -17,7 +17,6 @@ public class NextLevel extends JPanel{
     private int height;
     public static int padding = 15;
 
-
     public NextLevel() {
     }
     
