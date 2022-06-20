@@ -39,6 +39,12 @@ public class HowToPlay extends JPanel {
         else if(drawScreen == 2){
             g.drawImage(GameFrame.gifs[4], 0, 0, 1200, 700, null);
         }
+        else if(drawScreen == 3){
+            g.drawImage(GameFrame.gifs[7], 0, 0, 1200, 700, null);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+            g.drawString("In the note adding editor, press [p] to place a note in the desired location", 100, 80);
+            g.drawString("Press [m] to save", 100, 150);
+        }
         else{
             GamePanel.setScreen = 0;
             drawScreen = 0;

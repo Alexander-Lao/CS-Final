@@ -37,7 +37,7 @@ public class GameFrame extends JFrame{
   public static BufferedImage[] blocks = new BufferedImage[terrain.length];
 
   //How To Play Gifs && Side images
-  private static String[] icons = {"Gravity_Switch.gif", "Click Notes.gif", "Load.gif", "Shift Editor.gif", "Using_Editor.gif", "HowToPlay1.png", "HowToPlay2.png"};
+  private static String[] icons = {"Gravity_Switch.gif", "Click Notes.gif", "Load.gif", "Shift Editor.gif", "Using_Editor.gif", "HowToPlay1.png", "HowToPlay2.png", "Place Notes.gif"};
   public static Image[] gifs = new Image[icons.length];
 
 
