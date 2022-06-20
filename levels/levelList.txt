@@ -1,5 +1,2 @@
 3
-3
-customLevel_1
-customLevel_2
-customLevel_3
+0
