@@ -126,6 +126,7 @@ public class LevelMaker extends JPanel{
         //Draw background
         g.drawImage(GameFrame.backgroundImage[0], 0, 0, this);
         displayMap(g);
+        g.setColor(java.awt.Color.black);
 
         //Set width of lines
         super.paintComponent(g);
@@ -324,6 +325,8 @@ public class LevelMaker extends JPanel{
                 }
             }
         }
+        g.setColor(java.awt.Color.green);
+        g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockSize, Maps.blockSize), 100 - (int) (screenShifts), 600, null);
     }
 
     //This shifts the editor left and right
