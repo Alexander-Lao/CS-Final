@@ -325,6 +325,8 @@ public class LevelMaker extends JPanel{
                 }
             }
         }
+
+        //Draw player inital position
         g.setColor(java.awt.Color.green);
         g.drawImage(GameFrame.resize(GameFrame.sprites[0], Maps.blockSize, Maps.blockSize), 100 - (int) (screenShifts), 600, null);
     }

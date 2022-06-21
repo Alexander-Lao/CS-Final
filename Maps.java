@@ -64,6 +64,9 @@ public class Maps {
                 for (int j=0; j<=cols; j++) System.out.print(GamePanel.grid[i][j]+" ");
                 System.out.println();
             }
+
+            //Make block where player starts always zero
+            GamePanel.grid[12][2] = 0;
             myReader.close();
         }
         catch (FileNotFoundException e) {
